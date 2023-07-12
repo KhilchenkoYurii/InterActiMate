@@ -14,4 +14,4 @@ const categorySchema = new Schema({
         unique: true
     }
 });
-export default moongoose.model('Category', categorySchema);
+module.exports = moongoose.model('Category', categorySchema);

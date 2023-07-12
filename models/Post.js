@@ -49,4 +49,4 @@ const postSchema = new Schema({
         unique: false
     }
 });
-export default moongoose.model('Post', postSchema);
+module.exports = moongoose.model('Post', postSchema);

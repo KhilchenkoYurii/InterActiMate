@@ -1,4 +1,16 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const password = "xkSgKV0Xya3Zjiwx";
+const Attachment = require('./models/Attachment.js');
+const Category = require('./models/Category.js');
+const Chat = require('./models/Chat.js');
+const Message = require('./models/Message.js');
+const Post = require('./models/Post.js');
+const User = require('./models/User.js');
+
+const mongoDB = `mongodb+srv://yukh414:${password}@cluster0.glvsu2c.mongodb.net/`
+mongoose.connect(mongoDB);
+
 const app = express();
 // serve up production assets
 app.use(express.static('client/build'));
