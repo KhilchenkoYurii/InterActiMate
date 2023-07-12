@@ -1,3 +1,11 @@
-h1 {
-  margin: 0;
+@use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
+
+.cards-container {
+  @include  mixins.display-flex();
+  // TODO maybe display with grid?
+  flex-wrap: wrap;
+  background-color: variables.$white50;
+  gap: 18px;
+  padding: 30px 20px;
 }
