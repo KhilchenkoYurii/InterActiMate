@@ -1,0 +1,27 @@
+const moongoose = require('mongoose');
+
+const Schema = moongoose.Schema;
+
+const messageSchema = new Schema({
+    messagetId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    sender: {
+        type: String,
+        required: true,
+        unique: false
+    },
+    chatId:{
+        type: String,
+        required: true,
+        unique: false
+    },
+    body:{
+        type: String,
+        required: true,
+        unique: false
+    }
+});
+export default moongoose.model('Message', messageSchema);
