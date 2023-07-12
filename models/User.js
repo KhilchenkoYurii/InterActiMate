@@ -84,4 +84,4 @@ const userSchema = new Schema({
         unique: false
     }
 });
-export default moongoose.model('User', userSchema);
+module.exports = moongoose.model('User', userSchema);

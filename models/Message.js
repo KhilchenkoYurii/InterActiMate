@@ -24,4 +24,4 @@ const messageSchema = new Schema({
         unique: false
     }
 });
-export default moongoose.model('Message', messageSchema);
+module.exports = moongoose.model('Message', messageSchema);

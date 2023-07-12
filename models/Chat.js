@@ -19,4 +19,4 @@ const chatSchema = new Schema({
         unique: false
     }
 });
-export default moongoose.model('Chat', chatSchema);
+module.exports = moongoose.model('Chat', chatSchema);

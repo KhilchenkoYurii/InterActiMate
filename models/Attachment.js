@@ -24,4 +24,4 @@ const attachmentSchema = new Schema({
         unique: true
     }
 });
-export default moongoose.model('Attachment', attachmentSchema);
+module.exports = moongoose.model('Attachment', attachmentSchema);
