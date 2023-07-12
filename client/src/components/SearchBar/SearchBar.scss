@@ -1,0 +1,14 @@
+.searchbar-container {
+  display: flex;
+  flex: 1;
+  height: 30px;
+  padding: 0 15px;
+  border-radius: 45px;
+  background: #FFF;
+}
+
+.search {
+  width: calc(100% - 30px);
+  border: none;
+  outline: none;
+}

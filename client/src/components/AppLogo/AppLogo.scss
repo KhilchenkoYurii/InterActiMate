@@ -1,0 +1,21 @@
+@use "../../config/GlobalStyles/variables";
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 161px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 78px;
+  background: #FFF;
+}
+
+.logo-text {
+  color: variables.$primary100;
+  font-family: 'Kokoro';
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

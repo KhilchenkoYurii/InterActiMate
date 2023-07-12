@@ -1,3 +1,6 @@
+# InterActiMate
+Єдиний онлайн-простір можливостей (сайт), на якому студенти ЗВО Львівської області зможуть взаємодіяти
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
