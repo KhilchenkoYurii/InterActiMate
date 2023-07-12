@@ -1,0 +1,20 @@
+@use "../../config/GlobalStyles/variables";
+
+.button-container {
+  background-color: variables.$white100;
+  border-radius: 4px;
+  padding: 5px 15px;
+  color: variables.$primary100;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+
+  &-outline {
+    background-color: variables.$primary100;
+    color: variables.$white100;
+    border: 1px solid variables.$white100;
+  }
+}

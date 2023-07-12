@@ -1,0 +1,7 @@
+@use "../../config/GlobalStyles/variables";
+
+.app-footer {
+  height: 67px;
+  width: 100%;
+  background-color: variables.$primary100;
+}
