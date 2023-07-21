@@ -1,34 +1,39 @@
    [{
+        "userId":"USR1",
         "nickname":"keksik",
         "name": "Yurii",
         "surname": "Khilchenko",
         "email": "yu.kh414@gmail.com",
         "phone": "380965310509",
-        "password": "Test12345!"
+        "password": "$2b$10$LkV8lzmcyPMKcAtnlWVCAe16KzAzK9PSK94l8lTrlAMYc8BlQ4HYS"
     },
     {
+        "userId":"USR2",
         "nickname":"bulker",
         "name": "Yaroslav",
         "surname": "Kuziv",
         "email": "ya.kuz123@gmail.com",
         "phone": "380961234567",
-        "password": "Test12345!"
+        "password": "$2b$10$LkV8lzmcyPMKcAtnlWVCAe16KzAzK9PSK94l8lTrlAMYc8BlQ4HYS"
     },
     {
+        "userId":"USR3",
         "nickname":"lessbulker",
         "name": "Andrii",
         "surname": "Iatskiv",
         "email": "an.ia321@gmail.com",
         "phone": "380971234567",
-        "password": "Test12345!"
+        "password": "$2b$10$LkV8lzmcyPMKcAtnlWVCAe16KzAzK9PSK94l8lTrlAMYc8BlQ4HYS",
+        "showOnlyNickname":true
     },
     {
+        "userId":"USR4",
         "nickname":"babyshark",
         "name": "Solomiia",
         "surname": "Iatskiv",
         "email": "sl.ia321@gmail.com",
         "phone": "380981234567",
-        "password": "Test12345!",
+        "password": "$2b$10$LkV8lzmcyPMKcAtnlWVCAe16KzAzK9PSK94l8lTrlAMYc8BlQ4HYS",
         "role":"Admin"
     }
 ]

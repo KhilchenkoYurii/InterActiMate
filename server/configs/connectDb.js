@@ -1,6 +1,7 @@
-//const fs = require('fs');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const User = require('../models/userModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -17,22 +18,25 @@ const connectDb = async () => {
   }
 };
 
-module.exports = connectDb;
-// //READ JSON FILE
-// const tours = JSON.parse(
-//   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf8'),
-// );
+//READ JSON FILE
+const users = JSON.parse(
+  fs.readFileSync(`${__dirname}/../data/defaultUsers.json`, 'utf8'),
+);
 
-// //IMPORT DATA IN DATABASE
-// const importData = async () => {
-//   try {
-//     await Tour.create(tours);
-//     console.log('Data Imported');
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   process.exit();
-// };
+//IMPORT DATA IN DATABASE
+//command in Terminal
+// $env:DATAPROCESS="IMPORT"
+// nmp start  
+// after that need to change DATAPROCESS to another value because it will try to IMPORT every npm start
+const importData = async () => {
+  try {
+    await User.create(users);
+    console.log('Data Imported');
+  } catch (err) {
+    console.log(err);
+  }
+  process.exit();
+};
 
 // //DELETE DATA FROM DATABASE
 // const deleteData = async () => {
@@ -44,8 +48,12 @@ module.exports = connectDb;
 //   }
 //   process.exit();
 // };
-// if (process.env.DATAPROCESS === 'IMPORT') {
-//   importData();
-// } else if (process.env.DATAPROCESS === 'DELETE') {
+console.log(process.env);
+if (process.env.DATAPROCESS === 'IMPORT') {
+  importData();
+}
+//else if (process.env.DATAPROCESS === 'DELETE') {
 //   deleteData();
 // }
+
+module.exports = connectDb;
