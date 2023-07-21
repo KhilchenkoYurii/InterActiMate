@@ -1,0 +1,34 @@
+   [{
+        "nickname":"keksik",
+        "name": "Yurii",
+        "surname": "Khilchenko",
+        "email": "yu.kh414@gmail.com",
+        "phone": "380965310509",
+        "password": "Test12345!"
+    },
+    {
+        "nickname":"bulker",
+        "name": "Yaroslav",
+        "surname": "Kuziv",
+        "email": "ya.kuz123@gmail.com",
+        "phone": "380961234567",
+        "password": "Test12345!"
+    },
+    {
+        "nickname":"lessbulker",
+        "name": "Andrii",
+        "surname": "Iatskiv",
+        "email": "an.ia321@gmail.com",
+        "phone": "380971234567",
+        "password": "Test12345!"
+    },
+    {
+        "nickname":"babyshark",
+        "name": "Solomiia",
+        "surname": "Iatskiv",
+        "email": "sl.ia321@gmail.com",
+        "phone": "380981234567",
+        "password": "Test12345!",
+        "role":"Admin"
+    }
+]
