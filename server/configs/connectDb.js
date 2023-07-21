@@ -26,7 +26,7 @@ const users = JSON.parse(
 //IMPORT DATA IN DATABASE
 //command in Terminal
 // $env:DATAPROCESS="IMPORT"
-// nmp start  
+// nmp start
 // after that need to change DATAPROCESS to another value because it will try to IMPORT every npm start
 const importData = async () => {
   try {
@@ -38,22 +38,24 @@ const importData = async () => {
   process.exit();
 };
 
-// //DELETE DATA FROM DATABASE
-// const deleteData = async () => {
-//   try {
-//     await Tour.deleteMany();
-//     console.log('Data Deleted');
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   process.exit();
-// };
-console.log(process.env);
+//DELETE DATA FROM DATABASE
+//command in Terminal
+// $env:DATAPROCESS="DELETE"
+// nmp start
+// after that need to change DATAPROCESS to another value because it will try to DELETE every npm start
+const deleteData = async () => {
+  try {
+    await User.deleteMany();
+    console.log('Data Deleted');
+  } catch (err) {
+    console.log(err);
+  }
+  process.exit();
+};
 if (process.env.DATAPROCESS === 'IMPORT') {
   importData();
+} else if (process.env.DATAPROCESS === 'DELETE') {
+  deleteData();
 }
-//else if (process.env.DATAPROCESS === 'DELETE') {
-//   deleteData();
-// }
 
 module.exports = connectDb;
