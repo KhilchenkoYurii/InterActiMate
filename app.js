@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const userRouter = require('./server/routes/userRoutes');
+const postRouter = require('./server/routes/postRoutes');
 
 const app = express();
 // serve up production assets
@@ -12,7 +13,7 @@ app.use(express.static('client/build'));
 // serve up the index.html if express does'nt recognize the route
 
 app.use('/users', userRouter);
-
+app.use('/posts', postRouter);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });

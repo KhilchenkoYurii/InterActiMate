@@ -17,16 +17,19 @@ const postSchema = new Schema({
     type: String,
     required: true,
     unique: false,
+    default: '',
   },
   attachments: {
     type: Array,
     required: false,
     unique: false,
+    default: [],
   },
   participators: {
     type: Array,
     required: false,
     unique: false,
+    default: [],
   },
   title: {
     type: String,
@@ -47,6 +50,7 @@ const postSchema = new Schema({
     type: String,
     required: true,
     unique: false,
+    default: 'Active',
   },
 });
 module.exports = moongoose.model('Post', postSchema);
