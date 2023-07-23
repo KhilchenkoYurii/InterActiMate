@@ -2,6 +2,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const User = require('../models/userModel');
+const Post = require('../models/postModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -22,6 +23,9 @@ const connectDb = async () => {
 const users = JSON.parse(
   fs.readFileSync(`${__dirname}/../data/defaultUsers.json`, 'utf8'),
 );
+const posts = JSON.parse(
+  fs.readFileSync(`${__dirname}/../data/defaultPosts.json`, 'utf8'),
+);
 
 //IMPORT DATA IN DATABASE
 //command in Terminal
@@ -31,6 +35,7 @@ const users = JSON.parse(
 const importData = async () => {
   try {
     await User.create(users);
+    await Post.create(posts);
     console.log('Data Imported');
   } catch (err) {
     console.log(err);
@@ -46,6 +51,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await User.deleteMany();
+    await Post.deleteMany();
     console.log('Data Deleted');
   } catch (err) {
     console.log(err);

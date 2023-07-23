@@ -1,0 +1,43 @@
+[
+    {
+        "postId": "PST1",
+        "owner": "USR1",
+        "body": "Want to learn JS",
+        "attachments": [],
+        "participators": [],
+        "title": "JS tuitor",
+        "categories": [
+            "JS",
+            "Computer Scients"
+        ],
+        "dateOfCreation": "2023-07-23T11:57:20.017Z",
+        "status": "Active"
+    },
+    {
+        "postId": "PST2",
+        "owner": "USR1",
+        "body": "Want to learn PHP",
+        "attachments": [],
+        "participators": [],
+        "title": "JS tuitor",
+        "categories": [
+            "PHP",
+            "Computer Scients"
+        ],
+        "dateOfCreation": "2023-07-23T12:00:20.017Z",
+        "status": "Active"
+    },
+    {
+        "postId": "PST3",
+        "owner": "USR2",
+        "body": "Lets bulk together",
+        "attachments": [],
+        "participators": [],
+        "title": "Bulking together",
+        "categories": [
+            "Sport"
+        ],
+        "dateOfCreation": "2023-07-23T12:27:20.017Z",
+        "status": "Active"
+    }
+]
