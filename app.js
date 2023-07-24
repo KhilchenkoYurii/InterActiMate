@@ -3,6 +3,7 @@ const path = require('path');
 
 const userRouter = require('./server/routes/userRoutes');
 const postRouter = require('./server/routes/postRoutes');
+const chatRouter = require('./server/routes/chatRoutes');
 
 const app = express();
 // serve up production assets
@@ -14,6 +15,7 @@ app.use(express.static('client/build'));
 
 app.use('/users', userRouter);
 app.use('/posts', postRouter);
+app.use('/chats', chatRouter);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
