@@ -119,7 +119,7 @@ exports.updateChat = async (req, res) => {
 
 exports.deleteChat = async (req, res) => {
   try {
-    await Chat.findOneAndDelete({ ChatId: req.params.chatId });
+    await Chat.findOneAndDelete({ chatId: req.params.chatId });
     await Message.deleteMany({ chatId: req.params.chatId });
     const chatUsers = User.find().$where('this.chats.includes(chatId)');
     chatUsers.forEach((user) => {

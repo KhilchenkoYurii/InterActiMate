@@ -3,7 +3,7 @@ const moongoose = require('mongoose');
 const { Schema } = moongoose;
 
 const messageSchema = new Schema({
-  messagetId: {
+  messageId: {
     type: String,
     required: true,
     unique: true,
