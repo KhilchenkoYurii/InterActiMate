@@ -6,6 +6,7 @@ const Post = require('../models/postModel');
 const Chat = require('../models/chatModel');
 const Message = require('../models/messageModel');
 const Category = require('../models/categoryModel');
+const Attachment = require('../models/attachmentModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -38,6 +39,9 @@ const messages = JSON.parse(
 const categories = JSON.parse(
   fs.readFileSync(`${__dirname}/../data/defaultCategories.json`, 'utf8'),
 );
+const attachments = JSON.parse(
+  fs.readFileSync(`${__dirname}/../data/defaultAttachments.json`, 'utf8'),
+);
 
 //IMPORT DATA IN DATABASE
 //command in Terminal
@@ -51,6 +55,7 @@ const importData = async () => {
     await Chat.create(chats);
     await Message.create(messages);
     await Category.create(categories);
+    await Attachment.create(attachments);
     console.log('Data Imported');
   } catch (err) {
     console.log(err);
@@ -70,6 +75,7 @@ const deleteData = async () => {
     await Chat.deleteMany();
     await Message.deleteMany();
     await Category.deleteMany();
+    await Attachment.deleteMany();
     console.log('Data Deleted');
   } catch (err) {
     console.log(err);
