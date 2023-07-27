@@ -1,0 +1,16 @@
+[
+    {
+        "chatId": "CHT1",
+        "ownerId": "USR1",
+        "chatUsers": [
+            "USR2"
+        ]
+    },
+    {
+        "chatId": "CHT2",
+        "ownerId": "USR1",
+        "chatUsers": [
+            "USR3"
+        ]
+    }
+]

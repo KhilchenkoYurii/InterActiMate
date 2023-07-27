@@ -1,0 +1,26 @@
+[
+    {
+        "messageId": "MSG1_2023-07-25T19:50:13.466Z",
+        "sender": "USR1",
+        "chatId": "CHT1",
+        "body": "Hello chat"
+    },
+    {
+        "messageId": "MSG2_2023-07-25T19:50:24.045Z",
+        "sender": "USR2",
+        "chatId": "CHT1",
+        "body": "Hello "
+    },
+    {
+        "messageId": "MSG1_2023-07-25T19:52:13.466Z",
+        "sender": "USR1",
+        "chatId": "CHT2",
+        "body": "Hello chat2"
+    },
+    {
+        "messageId": "MSG2_2023-07-25T19:55:24.045Z",
+        "sender": "USR3",
+        "chatId": "CHT2",
+        "body": "Hello chort1"
+    }
+]

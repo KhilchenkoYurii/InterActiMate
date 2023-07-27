@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const User = require('../models/userModel');
 const Post = require('../models/postModel');
+const Chat = require('../models/chatModel');
+const Message = require('../models/messageModel');
 
 dotenv.config({ path: './config.env' });
 
@@ -26,6 +28,12 @@ const users = JSON.parse(
 const posts = JSON.parse(
   fs.readFileSync(`${__dirname}/../data/defaultPosts.json`, 'utf8'),
 );
+const chats = JSON.parse(
+  fs.readFileSync(`${__dirname}/../data/defaultChats.json`, 'utf8'),
+);
+const messages = JSON.parse(
+  fs.readFileSync(`${__dirname}/../data/defaultMessages.json`, 'utf8'),
+);
 
 //IMPORT DATA IN DATABASE
 //command in Terminal
@@ -36,6 +44,8 @@ const importData = async () => {
   try {
     await User.create(users);
     await Post.create(posts);
+    await Chat.create(chats);
+    await Message.create(messages);
     console.log('Data Imported');
   } catch (err) {
     console.log(err);
@@ -52,6 +62,8 @@ const deleteData = async () => {
   try {
     await User.deleteMany();
     await Post.deleteMany();
+    await Chat.deleteMany();
+    await Message.deleteMany();
     console.log('Data Deleted');
   } catch (err) {
     console.log(err);

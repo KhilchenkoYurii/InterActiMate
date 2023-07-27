@@ -22,35 +22,26 @@ exports.getAllChats = async (req, res) => {
 
 exports.getChat = async (req, res) => {
   try {
-    const chat = await Chat.findOne({ chatId: req.params.chatId });
-    const messages = await Message.find({ chatId: chat.chatId });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        chat,
-        messages,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
-  }
-};
-
-exports.getChatsByUserId = async (req, res) => {
-  try {
-    const chatsIds = await User.find({ userId: req.params.ownerId }).get(
-      'chats',
-    );
-    const chats = await Chat.find({ chatId: { $in: chatsIds } });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        chats,
-      },
-    });
+    if (req.params.chatId.includes('CHT')) {
+      const chat = await Chat.findOne({ chatId: req.params.chatId });
+      const messages = await Message.find({ chatId: chat.chatId });
+      res.status(200).json({
+        status: 'success',
+        data: {
+          chat,
+          messages,
+        },
+      });
+    } else if (req.params.chatId.includes('USR')) {
+      const user = await User.findOne({ userId: req.params.chatId });
+      const chats = await Chat.find({ chatId: { $in: user.chats } });
+      res.status(200).json({
+        status: 'success',
+        data: {
+          chats,
+        },
+      });
+    }
   } catch (err) {
     res.status(400).json({
       status: 'Failed',
@@ -66,7 +57,7 @@ exports.createChat = async (req, res) => {
     data.chatId = `CHT${length + 1}`;
     const owner = await User.findOne({ userId: req.params.ownerId });
     const participator = await User.findOne({
-      userId: req.body.participatorId,
+      userId: req.body.chatUsers[0],
     });
     data.ownerId = owner.userId;
     const newChat = await Chat.create(data);
@@ -119,13 +110,30 @@ exports.updateChat = async (req, res) => {
 
 exports.deleteChat = async (req, res) => {
   try {
+    const chatUsers = await User.find({ chats: req.params.chatId });
+    // eslint-disable-next-line no-restricted-syntax
+    // for (const user of chatUsers) {
+    //   user.chats = user.chats.filter((chat) => chat !== req.params.chatId);
+    //   User.findOneAndUpdate(
+    //     { userId: user.userId },
+    //     { chats: user.chats },
+    //     {
+    //       new: true,
+    //     },
+    //   );
+    // }
+    chatUsers.forEach(async (user) => {
+      user.chats = user.chats.filter((chat) => chat !== req.params.chatId);
+      await User.findOneAndUpdate(
+        { userId: user.userId },
+        { chats: user.chats },
+        {
+          new: true,
+        },
+      );
+    });
     await Chat.findOneAndDelete({ chatId: req.params.chatId });
     await Message.deleteMany({ chatId: req.params.chatId });
-    const chatUsers = User.find().$where('this.chats.includes(chatId)');
-    chatUsers.forEach((user) => {
-      user.chats = user.chats.filter((chat) => chat === req.params.chatId);
-    });
-    await User.updateMany(chatUsers);
     res.status(204).json({
       status: 'success',
       data: null,
@@ -133,7 +141,7 @@ exports.deleteChat = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: 'Failed',
-      message: err.message || err,
+      message: err,
     });
   }
 };
