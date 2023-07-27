@@ -6,6 +6,7 @@ const postRouter = require('./server/routes/postRoutes');
 const chatRouter = require('./server/routes/chatRoutes');
 const messageRouter = require('./server/routes/messageRoutes');
 const categoryRouter = require('./server/routes/categoryRoutes');
+const attachmentRouter = require('./server/routes/attachmentRoutes');
 
 const app = express();
 // serve up production assets
@@ -20,6 +21,7 @@ app.use('/posts', postRouter);
 app.use('/chats', chatRouter);
 app.use('/messages', messageRouter);
 app.use('/categories', categoryRouter);
+app.use('/attachments', attachmentRouter);
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });

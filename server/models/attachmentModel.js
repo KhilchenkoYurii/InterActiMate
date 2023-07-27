@@ -13,11 +13,6 @@ const attachmentSchema = new Schema({
     required: true,
     unique: false,
   },
-  ownerType: {
-    type: String,
-    required: true,
-    unique: false,
-  },
   address: {
     type: String,
     required: true,
