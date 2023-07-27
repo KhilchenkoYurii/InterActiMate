@@ -1,0 +1,18 @@
+[
+    {
+        "categoryId": "CTG1",
+        "name": "Sport"
+    },
+    {
+        "categoryId": "CTG2",
+        "name": "JS"
+    },
+    {
+        "categoryId": "CTG3",
+        "name": "PHP"
+    },
+    {
+        "categoryId": "CTG4",
+        "name": "Computer Scients"
+    }
+]
