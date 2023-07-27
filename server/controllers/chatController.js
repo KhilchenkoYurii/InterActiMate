@@ -111,17 +111,6 @@ exports.updateChat = async (req, res) => {
 exports.deleteChat = async (req, res) => {
   try {
     const chatUsers = await User.find({ chats: req.params.chatId });
-    // eslint-disable-next-line no-restricted-syntax
-    // for (const user of chatUsers) {
-    //   user.chats = user.chats.filter((chat) => chat !== req.params.chatId);
-    //   User.findOneAndUpdate(
-    //     { userId: user.userId },
-    //     { chats: user.chats },
-    //     {
-    //       new: true,
-    //     },
-    //   );
-    // }
     chatUsers.forEach(async (user) => {
       user.chats = user.chats.filter((chat) => chat !== req.params.chatId);
       await User.findOneAndUpdate(
