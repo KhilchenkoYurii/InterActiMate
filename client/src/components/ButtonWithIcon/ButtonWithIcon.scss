@@ -1,9 +1,12 @@
 @use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
 
 .button-container {
-  background-color: variables.$white100;
+  @include  mixins.display-flex();
+  background: variables.$white100;
   border-radius: 4px;
-  padding: 5px 15px;
+  padding: 0 10px;
+  height: 30px;
   color: variables.$primary100;
   text-align: center;
   font-size: 16px;
@@ -13,7 +16,7 @@
   cursor: pointer;
 
   &-outline {
-    background-color: variables.$primary100;
+    background: variables.$primary100;
     color: variables.$white100;
     border: 1px solid variables.$white100;
   }

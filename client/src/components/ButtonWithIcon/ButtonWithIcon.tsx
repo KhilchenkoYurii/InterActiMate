@@ -17,6 +17,7 @@ interface IButtonWithIcon {
 export const ButtonWithIcon = ({ icon, text, onClick, buttonType = ButtonTypes.primary, containerStyles }: IButtonWithIcon) => {
   return (
     <div className={`button-container ${buttonType === ButtonTypes.outline ? "button-container-outline" : ""}`} style={containerStyles}>
+      {!!icon && <img src={icon} />}
       {text}
     </div>
   );

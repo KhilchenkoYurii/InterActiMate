@@ -3,5 +3,6 @@
 .card {
   width: 265px;
   height: 250px;
-  background-color: variables.$white100;
+  background: variables.$white100;
+  border-radius: 4px;
 }
