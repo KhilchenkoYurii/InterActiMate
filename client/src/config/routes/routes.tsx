@@ -5,6 +5,7 @@ import { LoginPage } from "../../pages/auth/LoginPage";
 import { ReactElement } from "react";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
+import { SignUpPage } from "../../pages/auth/SignUpPage";
 
 const DisplayedRoute = (element: ReactElement, hasWrappers: boolean = true) => {
   return hasWrappers ?
@@ -27,8 +28,13 @@ export const allRoutes: IRoute[] = [
     component: <HomePage />,
   },
   {
-    path: '/Login',
+    path: '/login',
     component: <LoginPage />,
+    hasWrappers: false,
+  },
+  {
+    path: '/sign-up',
+    component: <SignUpPage />,
     hasWrappers: false,
   }
 ];
