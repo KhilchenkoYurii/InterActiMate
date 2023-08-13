@@ -5,7 +5,6 @@ interface IInputWithIcon {
 };
 
 export const InputWithIcon = ({ icon }: IInputWithIcon) =>  {
-  console.log('icon::', icon);
   return (
     <div className="container">
       <img src={icon} />
