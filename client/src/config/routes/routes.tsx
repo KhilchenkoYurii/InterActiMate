@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "../../pages/Home/HomePage";
 import { IRoute } from "./routes.interface";
-import { LoginPage } from "../../pages/Login/LoginPage";
+import { LoginPage } from "../../pages/auth/LoginPage";
 import { ReactElement } from "react";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
@@ -23,7 +23,7 @@ const DisplayedRoute = (element: ReactElement, hasWrappers: boolean = true) => {
 
 export const allRoutes: IRoute[] = [
   {
-    path: '/Home',
+    path: '/',
     component: <HomePage />,
   },
   {
