@@ -28,28 +28,30 @@ export const LoginPage = () => {
             </button>
           </Link>
         </div>
-        <div className="input-row">
-          <span className="input-title">
-            Електронна пошта
+        <div className="animated">
+          <div className="input-row">
+            <span className="input-title">
+              Електронна пошта
+            </span>
+            <InputWithIcon icon={MailIcon} />
+          </div>
+          <div className="input-row">
+            <span className="input-title">
+              Пароль
+            </span>
+            <InputWithIcon icon={KeyIcon} />
+          </div>
+          <Link to={'/resetpassword'} className="link-forget">
+            Забули пароль?
+          </Link>
+          <button className="button button-submit">Увійти</button>
+          <span className="terms-text">
+            Під час входу ви погоджуєтеся з нашими
           </span>
-          <InputWithIcon icon={MailIcon} />
+          <Link to={'/terms-and-conditions'} className="terms-text terms-text-bold">
+            Умовами користування.
+          </Link>
         </div>
-        <div className="input-row">
-          <span className="input-title">
-            Пароль
-          </span>
-          <InputWithIcon icon={KeyIcon} />
-        </div>
-        <Link to={'/resetpassword'} className="link-forget">
-          Забули пароль?
-        </Link>
-        <button className="button button-submit">Увійти</button>
-        <span className="terms-text">
-          Під час входу ви погоджуєтеся з нашими
-        </span>
-        <Link to={'/terms-and-conditions'} className="terms-text terms-text-bold">
-          Умовами користування.
-        </Link>
       </div>
     </div>
   );

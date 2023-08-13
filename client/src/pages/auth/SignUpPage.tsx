@@ -29,31 +29,33 @@ export const SignUpPage = () => {
             </button>
           </Link>
         </div>
-        <div className="input-row">
-          <span className="input-title">
-            Нікнейм
+        <div className="animated">
+          <div className="input-row">
+            <span className="input-title">
+              Нікнейм
+            </span>
+            <InputWithIcon icon={AtIcon} />
+          </div>
+          <div className="input-row">
+            <span className="input-title">
+              Електронна пошта
+            </span>
+            <InputWithIcon icon={MailIcon} />
+          </div>
+          <div className="input-row">
+            <span className="input-title">
+              Пароль
+            </span>
+            <InputWithIcon icon={KeyIcon} />
+          </div>
+          <span className="terms-text terms-text-left">
+            Створюючи профіль на InterActiMate, ви погоджуєтеся з
           </span>
-          <InputWithIcon icon={AtIcon} />
+          <Link to={'/terms-and-conditions'} className="terms-text terms-text-bold terms-text-left">
+            Умовами користування.
+          </Link>
+          <button className="button button-signup">Зареєструватися</button>
         </div>
-        <div className="input-row">
-          <span className="input-title">
-            Електронна пошта
-          </span>
-          <InputWithIcon icon={MailIcon} />
-        </div>
-        <div className="input-row">
-          <span className="input-title">
-            Пароль
-          </span>
-          <InputWithIcon icon={KeyIcon} />
-        </div>
-        <span className="terms-text terms-text-left">
-          Створюючи профіль на InterActiMate, ви погоджуєтеся з
-        </span>
-        <Link to={'/terms-and-conditions'} className="terms-text terms-text-bold terms-text-left">
-          Умовами користування.
-        </Link>
-        <button className="button button-signup">Зареєструватися</button>
       </div>
     </div>
   );
