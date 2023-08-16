@@ -1,7 +1,7 @@
 @use "../../config/GlobalStyles/variables";
 
 .App-header {
-  background-color: variables.$primary100;
+  background: variables.$primary100;
   height: 67px;
   padding: 0 20px;
   display: flex;
@@ -18,5 +18,5 @@
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  background-color: variables.$white100;
+  background: variables.$white100;
 }

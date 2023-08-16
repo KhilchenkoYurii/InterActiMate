@@ -1,0 +1,8 @@
+@use "../../config/GlobalStyles/variables";
+
+.card {
+  width: 265px;
+  height: 250px;
+  background: variables.$white100;
+  border-radius: 4px;
+}

@@ -1,0 +1,148 @@
+@use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
+
+.background-container {
+  @include mixins.display-flex();
+  width: 100%;
+  height: 100vh;
+  background: variables.$primary100;
+}
+
+.auth-container {
+  @include mixins.display-flex($direction: column);
+  background: variables.$white100;
+  padding: 30px 24px 21px 24px;
+  text-align: start;
+}
+
+.animated {
+  @include mixins.display-flex($direction: column);
+  width: 100%;
+  @keyframes slideInFromLeft {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+}
+
+.or-section {
+  @include mixins.display-flex($justify-content: space-between);
+  width: 100%;
+  gap: 9px;
+  font-size: 24px;
+  font-weight: 400;
+  color: variables.$primary100;
+  text-transform: uppercase;
+  margin: 9px 0 11px 0;
+
+  hr {
+    flex: 1;
+    border-color: variables.$light-blue;
+  }
+}
+
+.buttons-row {
+  @include mixins.display-flex($justify-content: space-between);
+  gap: 58px;
+  border-bottom: 1px solid variables.$light-blue;
+  margin-bottom: 22px;
+
+  &-signup {
+    margin-bottom: 7px;
+  }
+}
+
+button {
+  width: 168px;
+  height: 34px;
+  flex-shrink: 0;
+  color: variables.$primary100;
+  background: variables.$white100;
+  border: none;
+  border-radius: 4px 4px 0px 0px;
+  cursor: pointer;
+
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.link-forget {
+  align-self: baseline;
+  color: variables.$primary100;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 13px 0 26px 0;
+}
+
+button.active {
+  background: variables.$aquamarine;
+  border-bottom: 1px solid variables.$dark-blue;
+  margin-bottom: -2px;
+}
+
+.input-row {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 9px;
+}
+
+.input-title {
+  color: #176B87;
+  font-family: Jura;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.button {
+  height: 54px;
+  width: 100%;
+  border-radius: 4px;
+  font-size: 24px;
+
+  &-google {
+    @include mixins.display-flex();
+    background-color: #D9D9D9;
+    font-weight: 400;
+  }
+
+  &-submit {
+    background: variables.$primary100;
+    color: variables.$white100;
+    margin-bottom: 15px;
+  }
+
+  &-signup {
+    background: variables.$primary100;
+    color: variables.$white100;
+    margin-top: 15px;
+  }
+}
+
+.terms-text {
+  color: variables.$primary100;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+
+  &-bold{
+    font-weight: 600;
+  }
+
+  &-left {
+    width: 100%;
+    text-align: left;
+  }
+}
