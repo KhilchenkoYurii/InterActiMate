@@ -1,0 +1,27 @@
+[
+    {
+        "attachmentId": "ATT1",
+        "ownerId": "USR1",
+        "address": "https://cdn-icons-png.flaticon.com/512/616/616408.png"
+    },
+    {
+        "attachmentId": "ATT2",
+        "ownerId": "USR2",
+        "address": "https://cdn-icons-png.flaticon.com/512/1864/1864472.png"
+    },
+    {
+        "attachmentId": "ATT3",
+        "ownerId": "CHT1",
+        "address": "https://cdn-icons-png.flaticon.com/512/3069/3069172.png "
+    },
+    {
+        "attachmentId": "ATT4",
+        "ownerId": "PST1",
+        "address": "https://cdn-icons-png.flaticon.com/512/10560/10560047.png "
+    },
+    {
+        "attachmentId": "ATT5",
+        "ownerId": "USR1",
+        "address": "https://cdn-icons-png.flaticon.com/512/10911/10911768.png "
+    }
+]
