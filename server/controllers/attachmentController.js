@@ -1,8 +1,14 @@
 const Attachment = require('../models/attachmentModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllAttachments = async (req, res) => {
   try {
-    const attachments = await Attachment.find();
+    const features = new APIFeatures(Attachment.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination();
+    const attachments = await features.query;
     res.status(200).json({
       status: 'success',
       results: attachments.length,

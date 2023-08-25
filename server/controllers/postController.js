@@ -1,10 +1,16 @@
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const PostStatuses = require('../configs/postStatuses');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const features = new APIFeatures(Post.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination();
+    const posts = await features.query;
     res.status(200).json({
       status: 'success',
       results: posts.length,

@@ -1,10 +1,16 @@
 const Chat = require('../models/chatModel');
 const User = require('../models/userModel');
 const Message = require('../models/messageModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllChats = async (req, res) => {
   try {
-    const Chats = await Chat.find();
+    const features = new APIFeatures(Chat.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination();
+    const Chats = await features.query;
     res.status(200).json({
       status: 'success',
       results: Chats.length,

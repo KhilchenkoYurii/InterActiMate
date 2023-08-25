@@ -69,6 +69,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: false,
+    select: false,
   },
   status: {
     type: String,

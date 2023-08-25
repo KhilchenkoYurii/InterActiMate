@@ -1,8 +1,14 @@
 const Message = require('../models/messageModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllMessages = async (req, res) => {
   try {
-    const messages = await Message.find();
+    const features = new APIFeatures(Message.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination();
+    const messages = await features.query;
     res.status(200).json({
       status: 'success',
       results: messages.length,

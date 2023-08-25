@@ -1,9 +1,15 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const features = new APIFeatures(User.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .pagination();
+    const users = await features.query;
     res.status(200).json({
       status: 'success',
       results: users.length,
