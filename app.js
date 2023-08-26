@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const userRouter = require('./server/routes/userRoutes');
 const postRouter = require('./server/routes/postRoutes');
@@ -13,6 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static('client/build'));
+app.use(cors({ origin: `http://localhost:${process.env.PORT || 7000}` }));
 // let the react app to handle any unknown routes
 // serve up the index.html if express does'nt recognize the route
 
