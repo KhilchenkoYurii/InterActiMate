@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static('client/build'));
-app.use(cors({ origin: `http://localhost:${process.env.PORT || 7000}` }));
+app.use(cors({ origin: `http://localhost:${process.env.PORT || 3001}` }));
 // let the react app to handle any unknown routes
 // serve up the index.html if express does'nt recognize the route
 
