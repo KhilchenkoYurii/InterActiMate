@@ -1,7 +1,7 @@
-import Placeholder from '../Placeholder/Placeholder';
-import './IssueCard.scss';
+import Placeholder from '../Placeholder';
+import './RequestCardPlaceHolder.scss';
 
-export const IssueCard = () => {
+export const RequestCardPlaceHolder = () => {
   return (
     <div className="card">
       <Placeholder type="rect" width={245} height={132} borderRadius="4px" margin="10px auto" />
