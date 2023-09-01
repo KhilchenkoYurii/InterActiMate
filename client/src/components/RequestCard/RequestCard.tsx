@@ -1,5 +1,4 @@
 import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
-import Placeholder from '../Placeholders/Placeholder';
 import './RequestCard.scss';
 import HeartIcon from "../../assets/icons/heart.svg";
 
@@ -21,9 +20,9 @@ export const RequestCard = ({ title, body, categories }: IRequestCard) => {
         </div>
         <span className='text-body'>{body}</span>
         <div className="categories-list">
-          {categories.map(cat => (
+          {categories.map((cat, index) => (
             <span className='text-body text-body_category'>
-              {cat}
+              {`${cat} ${index !== categories?.length - 1 ? '|' : ''} `}
             </span>
           ))}
         </div>
