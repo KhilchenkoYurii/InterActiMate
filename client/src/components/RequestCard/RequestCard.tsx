@@ -22,6 +22,19 @@ export const RequestCard = ({ title, body, categories }: IRequestCard) => {
       <div className="info">
         <div className="row">
           <span className="text-title">{title}</span>
+        </div>
+
+        <span className="text-body">{body}</span>
+
+        <div className="card-footer">
+          <div className="categories-list">
+            {categories.map((cat, index) => (
+              <span key={index} className="text-body text-body_category">
+                {`${cat} ${index !== categories?.length - 1 ? '|' : ''} `}
+              </span>
+            ))}
+          </div>
+
           <ButtonWithIcon
             icon={<HeartIcon />}
             isSvg={true}
@@ -29,14 +42,6 @@ export const RequestCard = ({ title, body, categories }: IRequestCard) => {
             onClick={() => {}}
             buttonType="primary"
           />
-        </div>
-        <span className="text-body">{body}</span>
-        <div className="categories-list">
-          {categories.map((cat, index) => (
-            <span key={index} className="text-body text-body_category">
-              {`${cat} ${index !== categories?.length - 1 ? '|' : ''} `}
-            </span>
-          ))}
         </div>
       </div>
     </div>

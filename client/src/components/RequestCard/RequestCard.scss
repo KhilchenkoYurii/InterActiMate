@@ -22,19 +22,31 @@
     }
   }
 
+  .card-footer{
+    @include mixins.display-flex($direction: row, $justify-content: space-between, $align-items: flex-start);
+    margin-top: 10px;
+    width: 100%;
+
+    .categories-list{
+      cursor: pointer;
+      color: variables.$primary100;
+      opacity: 0.6;
+      transition: 0.2s;
+    }
+    .categories-list:hover{
+      opacity: 1;
+    }
+  }
+
   .text-title {
-    font-weight: bold;
     font-size: 20px;
+    margin-bottom: 5px;
   }
 
   .text-body {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: variables.$primary100;
-
-    &_category {
-      color: green;
-    }
   }
 
   .info {
