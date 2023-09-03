@@ -1,9 +1,9 @@
-import { CSSProperties } from "react";
-import "./ButtonWithIcon.scss";
+import { CSSProperties } from 'react';
+import './ButtonWithIcon.scss';
 
 const ButtonTypes = {
-  primary: "primary",
-  outline: "outline",
+  primary: 'primary',
+  outline: 'outline',
 };
 
 interface IButtonWithIcon {
@@ -11,13 +11,25 @@ interface IButtonWithIcon {
   text: string;
   onClick: (props?: any) => void;
   buttonType?: string;
+  isSvg?: boolean;
   containerStyles?: CSSProperties;
 }
 
-export const ButtonWithIcon = ({ icon, text, onClick, buttonType = ButtonTypes.primary, containerStyles }: IButtonWithIcon) => {
+export const ButtonWithIcon = ({
+  icon,
+  text,
+  onClick,
+  isSvg,
+  buttonType = ButtonTypes.primary,
+  containerStyles,
+}: IButtonWithIcon) => {
   return (
-    <div className={`button-container ${buttonType === ButtonTypes.outline ? "button-container-outline" : ""}`} style={containerStyles}>
-      {!!icon && <img src={icon} />}
+    <div
+      className={`${isSvg ? 'svg-container' : 'button-container'} 
+      ${buttonType === ButtonTypes.outline ? 'button-container-outline' : ''}`}
+      style={containerStyles}
+    >
+      {isSvg ? icon : !!icon && <img src={icon} />}
       {text}
     </div>
   );

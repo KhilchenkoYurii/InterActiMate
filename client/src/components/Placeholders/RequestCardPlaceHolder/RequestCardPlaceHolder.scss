@@ -1,7 +1,7 @@
 @use "../../../config/GlobalStyles/variables";
 
 .card {
-  width: 265px;
+  width: variables.$card-width;
   height: 250px;
   background: variables.$white100;
   border-radius: 4px;

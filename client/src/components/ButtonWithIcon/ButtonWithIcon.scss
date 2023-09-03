@@ -21,3 +21,19 @@
     border: 1px solid variables.$white100;
   }
 }
+
+.svg-container {
+  svg {
+    cursor: pointer;
+    opacity: 0.2;
+    transition: 0.5s;
+  }
+  
+  svg:hover{
+    opacity: 1;
+  }
+  
+  svg path:hover{
+    fill:#176B87;
+  }
+}

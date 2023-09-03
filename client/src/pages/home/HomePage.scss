@@ -2,7 +2,7 @@
 @use "../../config/GlobalStyles/mixins";
 
 .cards-container {
-  @include  mixins.display-flex();
+  @include  mixins.display-flex($justify-content:none);
   // TODO maybe display with grid?
   flex-wrap: wrap;
   background: variables.$white50;
