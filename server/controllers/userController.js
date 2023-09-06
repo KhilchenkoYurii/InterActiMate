@@ -1,136 +1,111 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const features = new APIFeatures(User.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .pagination();
-    const users = await features.query;
-    res.status(200).json({
-      status: 'success',
-      results: users.length,
-      data: {
-        users,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(User.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .pagination();
+  const users = await features.query;
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
+  });
+});
+
+exports.getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ userId: req.params.id });
+  if (!user) {
+    return next(new AppError(`No user found with id ${req.params.id}`, 404));
   }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});
 
-exports.getUser = async (req, res) => {
-  try {
-    const user = await User.findOne({ userId: req.params.id });
-    res.status(200).json({
-      status: 'success',
-      data: {
-        user,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
-  }
-};
-
-exports.getAnotherUser = async (req, res) => {
-  try {
-    const user = await User.findOne({ userId: req.params.userId });
-    if (user.showOnlyNickname) {
-      res.status(200).json({
-        status: 'success',
-        data: {
-          userId: user.userId,
-          nickname: user.nickname,
-          bio: user.bio,
-          createdPosts: user.createdPosts,
-        },
-      });
-    } else {
-      res.status(200).json({
-        status: 'success',
-        data: {
-          userId: user.userId,
-          nickname: user.nickname,
-          name: user.name,
-          surname: user.surname,
-          bio: user.bio,
-          createdPosts: user.createdPosts,
-        },
-      });
-    }
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
-  }
-};
-
-exports.createUser = async (req, res) => {
-  try {
-    const data = req.body;
-    const { length } = await User.find();
-    data.userId = `USR${length + 1}`;
-    data.password = await bcrypt.hash(req.body.password, 10);
-    const newUser = await User.create(data);
-    res.status(201).json({
-      status: 'Success',
-      data: {
-        user: newUser,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
-  }
-};
-
-exports.updateUser = async (req, res) => {
-  try {
-    const user = await User.findOneAndUpdate(
-      { userId: req.params.id },
-      req.body,
-      {
-        new: true,
-      },
+exports.getAnotherUser = catchAsync(async (req, res, next) => {
+  // can by replaced by using filters in query params of request
+  const user = await User.findOne({ userId: req.params.userId });
+  if (!user) {
+    return next(
+      new AppError(`No user found with id ${req.params.userId}`, 404),
     );
+  }
+  if (user.showOnlyNickname) {
     res.status(200).json({
       status: 'success',
       data: {
-        user,
+        userId: user.userId,
+        nickname: user.nickname,
+        bio: user.bio,
+        createdPosts: user.createdPosts,
       },
     });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
-    });
-  }
-};
-
-exports.deleteUser = async (req, res) => {
-  try {
-    await User.findOneAndDelete({ userId: req.params.id });
-    res.status(204).json({
+  } else {
+    res.status(200).json({
       status: 'success',
-      data: null,
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'Failed',
-      message: err.message || err,
+      data: {
+        userId: user.userId,
+        nickname: user.nickname,
+        name: user.name,
+        surname: user.surname,
+        bio: user.bio,
+        createdPosts: user.createdPosts,
+      },
     });
   }
-};
+});
+
+exports.createUser = catchAsync(async (req, res) => {
+  const data = req.body;
+  const { length } = await User.find();
+  data.userId = `USR${length + 1}`;
+  data.password = await bcrypt.hash(req.body.password, 10);
+  const newUser = await User.create(data);
+  res.status(201).json({
+    status: 'Success',
+    data: {
+      user: newUser,
+    },
+  });
+});
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const user = await User.findOneAndUpdate(
+    { userId: req.params.id },
+    req.body,
+    {
+      new: true,
+    },
+  );
+  if (!user) {
+    return next(new AppError(`No user found with id ${req.params.id}`, 404));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
+});
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const user = await User.findOneAndDelete({ userId: req.params.id });
+  if (!user) {
+    return next(new AppError(`No user found with id ${req.params.id}`, 404));
+  }
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});

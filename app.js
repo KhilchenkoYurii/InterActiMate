@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path');
+//const path = require('path');
 const cors = require('cors');
 
 const userRouter = require('./server/routes/userRoutes');
@@ -8,6 +8,8 @@ const chatRouter = require('./server/routes/chatRoutes');
 const messageRouter = require('./server/routes/messageRoutes');
 const categoryRouter = require('./server/routes/categoryRoutes');
 const attachmentRouter = require('./server/routes/attachmentRoutes');
+const AppError = require('./server/utils/appError');
+const globalErrorHandler = require('./server/controllers/errorController');
 
 const app = express();
 // serve up production assets
@@ -24,8 +26,13 @@ app.use('/chats', chatRouter);
 app.use('/messages', messageRouter);
 app.use('/categories', categoryRouter);
 app.use('/attachments', attachmentRouter);
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
+// error handeling does not works with this part
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+// });
+app.use(globalErrorHandler);
 
 module.exports = app;
