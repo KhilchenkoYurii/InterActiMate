@@ -47,10 +47,9 @@ const sendErrorProd = (err, res) => {
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
-  console.log(process.env.NODE_ENV);
-  if (process.env.NODE_ENV === 'DEVELOPMENT') {
+  if (process.env.ERROR_LEVEL === 'DEVELOPMENT') {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === 'PRODUCTION') {
+  } else if (process.env.ERROR_LEVEL === 'PRODUCTION') {
     // eslint-disable-next-line node/no-unsupported-features/es-syntax
     let error = err;
     if (error.name === 'CastError') {
