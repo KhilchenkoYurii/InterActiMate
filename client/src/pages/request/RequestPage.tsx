@@ -1,0 +1,25 @@
+import { useEffect, useState } from "react";
+// import { useSearchParams } from "react-router-dom";
+import ApiService from "../../services/api.service";
+import { IRequestCard } from "../../components/RequestCard/RequestCard";
+
+export const RequestPage = () => {
+  // TODO: update it after actual posts could be fetched
+  const id = 'PST1';
+  // const [searchParams] = useSearchParams();
+  // const id = searchParams.get('id');
+  const [request, setRequest] = useState<IRequestCard>(null as unknown as IRequestCard);
+  
+  useEffect(() => {
+    const getRequestById = async() => {
+      const { data: fetchedData } = await ApiService.get(`posts/${id}`);
+      setRequest(fetchedData?.data?.post);
+    };
+
+    getRequestById();
+  }, []);
+
+  return <div className="container">
+    <span>{request?.title}</span>
+  </div>
+};
