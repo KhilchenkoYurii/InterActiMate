@@ -25,6 +25,7 @@ export const ButtonWithIcon = ({
 }: IButtonWithIcon) => {
   return (
     <div
+      onClick={onClick}
       className={`${isSvg ? 'svg-container' : 'button-container'} 
       ${buttonType === ButtonTypes.outline ? 'button-container-outline' : ''}`}
       style={containerStyles}

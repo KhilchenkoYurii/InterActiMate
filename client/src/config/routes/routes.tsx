@@ -7,6 +7,7 @@ import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
 import { SignUpPage } from "../../pages/auth/SignUpPage";
 import { RequestPage } from "../../pages/request/RequestPage";
+import { AddRequestPage } from "../../pages/add-request/AddRequestPage";
 
 const DisplayedRoute = (element: ReactElement, hasWrappers: boolean = true) => {
   return hasWrappers ?
@@ -41,7 +42,12 @@ export const allRoutes: IRoute[] = [
   {
     path: '/request',
     component: <RequestPage />,
-    hasWrappers: false,
+    hasWrappers: true,
+  },
+  {
+    path: '/add-request',
+    component: <AddRequestPage />,
+    hasWrappers: true,
   }
 ];
 
