@@ -1,0 +1,107 @@
+@use '../../config/GlobalStyles/variables';
+@use '../../config/GlobalStyles/mixins';
+
+.card-body {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: flex-start
+  );
+  gap: 10px;
+  text-align: start;
+}
+
+.card-title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: variables.$primary100;
+}
+
+.card-description {
+  color: variables.$dark-blue;
+  margin-bottom: 15px;
+}
+
+.card-categories {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: flex-start,
+    $align-items: flex-start
+  );
+  gap: 5px;
+  color: black;
+
+  div {
+    cursor: pointer;
+    padding: 3px;
+    background-color: white;
+    border: 1.9px solid variables.$primary100;
+    border-radius: variables.$border-radius;
+    transition: 0.5s;
+  }
+  div:hover {
+    color: white;
+    background-color: variables.$primary100;
+  }
+}
+
+.card-container {
+  display: block;
+  background-color: white;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: variables.$border-radius;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.card-other {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: space-between,
+    $align-items: center
+  );
+  color: variables.$dark-blue;
+  opacity: 0.5;
+  gap: 100px;
+}
+
+.card-icons {
+  rect {
+    stroke: variables.$dark-blue;
+  }
+  path {
+    stroke: variables.$dark-blue;
+  }
+  width: 18px;
+  height: auto;
+}
+
+.card-date {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: center
+  );
+  gap: 3px;
+}
+
+.card-participators {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: center
+  );
+  gap: 3px;
+}
+
+.card-owner {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: center
+  );
+  gap: 3px;
+}

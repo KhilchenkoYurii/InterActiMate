@@ -9,6 +9,9 @@ export interface IRequestCard {
   categories: string[];
   _id: string;
   postId: string;
+  dateOfCreation: string;
+  owner: string;
+  participators: any;
 }
 
 export const RequestCard = ({ title, body, categories, _id }: IRequestCard) => {
@@ -17,7 +20,7 @@ export const RequestCard = ({ title, body, categories, _id }: IRequestCard) => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
     console.log('queryParams::', queryParams.toString());
     navigate(`request?${queryParams}`);
-  }
+  };
 
   return (
     <div className="card" onClick={navigateToRequest}>
