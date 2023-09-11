@@ -6,7 +6,7 @@ import { Card } from '../../components/Card/Card';
 
 export const RequestPage = () => {
   // TODO: update it after actual posts could be fetched
-  const id = 'PST1';
+  const id = 'PST3';
   // const [searchParams] = useSearchParams();
   // const id = searchParams.get('id');
   const [request, setRequest] = useState<IRequestCard>(
@@ -16,7 +16,14 @@ export const RequestPage = () => {
   useEffect(() => {
     const getRequestById = async () => {
       const { data: fetchedData } = await ApiService.get(`posts/${id}`);
-      setRequest(fetchedData?.data?.post);
+      const { data: userData } = await ApiService.get(
+        `users/${fetchedData?.data?.post?.owner}`,
+      );
+      const combinedRequest = {
+        ...fetchedData?.data?.post,
+        ...userData?.data?.user,
+      };
+      setRequest(combinedRequest);
     };
 
     getRequestById();

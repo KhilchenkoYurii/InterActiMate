@@ -7,6 +7,7 @@
     $justify-content: center,
     $align-items: flex-start
   );
+  flex-wrap: wrap;
   gap: 10px;
   text-align: start;
 }
@@ -29,6 +30,7 @@
     $justify-content: flex-start,
     $align-items: flex-start
   );
+  flex-wrap: wrap;
   gap: 5px;
   color: black;
 
@@ -63,9 +65,9 @@
     $justify-content: space-between,
     $align-items: center
   );
+  flex-wrap: wrap;
   color: variables.$dark-blue;
-  opacity: 0.5;
-  gap: 100px;
+  gap: 50px;
 }
 
 .card-icons {
@@ -79,29 +81,49 @@
   height: auto;
 }
 
-.card-date {
+.card-other-container {
   @include mixins.display-flex(
     $direction: row,
     $justify-content: center,
     $align-items: center
   );
-  gap: 3px;
+  flex-wrap: wrap;
+  gap: 5px;
+  opacity: 0.5;
+  transition: variables.$transition-time;
+  font-size: 13px;
 }
 
-.card-participators {
+.card-other-header {
   @include mixins.display-flex(
     $direction: row,
-    $justify-content: center,
+    $justify-content: start,
     $align-items: center
   );
-  gap: 3px;
+  color: variables.$dark-blue;
+  opacity: 0.5;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 13px;
 }
 
-.card-owner {
+.card-other-header .card-other-container {
+  cursor: pointer;
+}
+
+.card-other-container:hover {
+  opacity: 1;
+}
+
+.card-other-user {
   @include mixins.display-flex(
     $direction: row,
-    $justify-content: center,
+    $justify-content: start,
     $align-items: center
   );
-  gap: 3px;
+  gap: 10px;
+}
+
+.card-hr {
+  opacity: 0.3;
 }
