@@ -7,6 +7,9 @@ import { ReactComponent as EmailIcon } from '../../assets/icons/Email_Icon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/PhoneIcon.svg';
 import { ReactComponent as NickNameIcon } from '../../assets/icons/NickName.svg';
 import { Store } from 'react-notifications-component';
+import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
+import ApplyIcon from '../../assets/icons/Apply.svg';
+import ApiService from '../../services/api.service';
 
 export const Card = ({
   title,
@@ -20,9 +23,14 @@ export const Card = ({
   phone,
   email,
   nickname,
+  postId,
 }: any) => {
   const getDate = (date: string): string | undefined => {
     return new Date(date).toLocaleString('ru-RU').split(',').shift();
+  };
+
+  const applyPost = (participators: any) => {
+    ApiService.put(`posts/${postId}`, { participators });
   };
 
   return (
@@ -42,68 +50,68 @@ export const Card = ({
             </div>
             <div className="card-container">
               <div className="card-other-header">
-                <div className="card-other-container">
+                <div
+                  className="card-other-container prevent-select"
+                  role="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(phone);
+                    Store.addNotification({
+                      message: `Phone ${phone} copied!`,
+                      type: 'info',
+                      insert: 'top',
+                      container: 'top-right',
+                      animationIn: ['animate__animated', 'animate__fadeIn'],
+                      animationOut: ['animate__animated', 'animate__fadeOut'],
+                      dismiss: {
+                        duration: 100,
+                      },
+                    });
+                  }}
+                >
                   <PhoneIcon />
-                  <div
-                    onClick={() => {
-                      navigator.clipboard.writeText(phone);
-                      Store.addNotification({
-                        message: `Phone ${phone} copied!`,
-                        type: 'info',
-                        insert: 'top',
-                        container: 'top-right',
-                        animationIn: ['animate__animated', 'animate__fadeIn'],
-                        animationOut: ['animate__animated', 'animate__fadeOut'],
-                        dismiss: {
-                          duration: 100,
-                        },
-                      });
-                    }}
-                  >
-                    {phone}
-                  </div>
+                  <div>{phone}</div>
                 </div>
-                <div className="card-other-container">
+                <div
+                  className="card-other-container prevent-select"
+                  role="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(email);
+                    Store.addNotification({
+                      message: `Email ${email} copied!`,
+                      type: 'info',
+                      insert: 'top',
+                      container: 'top-right',
+                      animationIn: ['animate__animated', 'animate__fadeIn'],
+                      animationOut: ['animate__animated', 'animate__fadeOut'],
+                      dismiss: {
+                        duration: 100,
+                      },
+                    });
+                  }}
+                >
                   <EmailIcon />
-                  <div
-                    onClick={() => {
-                      navigator.clipboard.writeText(email);
-                      Store.addNotification({
-                        message: `Email ${email} copied!`,
-                        type: 'info',
-                        insert: 'top',
-                        container: 'top-right',
-                        animationIn: ['animate__animated', 'animate__fadeIn'],
-                        animationOut: ['animate__animated', 'animate__fadeOut'],
-                        dismiss: {
-                          duration: 100,
-                        },
-                      });
-                    }}
-                  >
-                    {email}
-                  </div>
+                  <div>{email}</div>
                 </div>
-                <div className="card-other-container">
+                <div
+                  className="card-other-container prevent-select"
+                  role="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(nickname);
+                    Store.addNotification({
+                      message: `Nickname ${nickname} copied!`,
+                      type: 'info',
+                      insert: 'top',
+                      container: 'top-right',
+                      animationIn: ['animate__animated', 'animate__fadeIn'],
+                      animationOut: ['animate__animated', 'animate__fadeOut'],
+                      dismiss: {
+                        duration: 100,
+                      },
+                    });
+                  }}
+                >
                   <NickNameIcon />
-                  <div
-                    onClick={() => {
-                      navigator.clipboard.writeText(nickname);
-                      Store.addNotification({
-                        message: `Nickname ${nickname} copied!`,
-                        type: 'info',
-                        insert: 'top',
-                        container: 'top-right',
-                        animationIn: ['animate__animated', 'animate__fadeIn'],
-                        animationOut: ['animate__animated', 'animate__fadeOut'],
-                        dismiss: {
-                          duration: 100,
-                        },
-                      });
-                    }}
-                  >
-                    {nickname}
-                  </div>
+                  <div>{nickname}</div>
                 </div>
               </div>
               <hr className="card-hr" />
@@ -125,6 +133,14 @@ export const Card = ({
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="card-apply-btn">
+              <ButtonWithIcon
+                buttonType="outline"
+                text="Подати заявку"
+                icon={ApplyIcon}
+                onClick={() => applyPost([{ nickname, phone }])}
+              />
             </div>
           </div>
           <div className="card-container">

@@ -12,7 +12,12 @@ const post = async(url: string, params?: any) => {
   return await axiosService.post(`${baseURL}/${url}`, params);
 };
 
+const put = async(url: string, params?: any) => {
+  return await axiosService.put(`${baseURL}/${url}`, params);
+};
+
 export default {
   get,
-  post
+  post,
+  put
 };
