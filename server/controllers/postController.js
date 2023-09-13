@@ -66,6 +66,115 @@ exports.updatePost = catchAsync(async (req, res, next) => {
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      post,
+    },
+  });
+});
+
+exports.answerPost = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ userId: req.body.userId });
+  if (!user) {
+    return next(new AppError(`No user found with id ${req.body.userId}`, 404));
+  }
+  if (
+    user.answeredPosts.includes(req.body.postId) ||
+    user.createdPosts.includes(req.body.postId)
+  ) {
+    return next(
+      new AppError(
+        `User ${req.body.userId} already answered on post ${req.body.postId} `,
+        400,
+      ),
+    );
+  }
+  user.answeredPosts.push(req.body.postId);
+  await User.findOneAndUpdate(
+    { userId: user.userId },
+    { answeredPosts: user.answeredPosts },
+  );
+
+  const post = await Post.findOne({ postId: req.body.postId });
+  if (!post) {
+    return next(new AppError(`No post found with id ${req.body.postId}`, 404));
+  }
+  if (
+    post.participators.includes(req.body.userId) ||
+    post.owner === req.body.userId
+  ) {
+    return next(
+      new AppError(
+        `User ${req.body.userId} already answered on post ${req.body.postId} `,
+        400,
+      ),
+    );
+  }
+  post.participators.push(req.body.userId);
+  await Post.findOneAndUpdate(
+    { postId: post.postId },
+    { participators: post.participators },
+  );
+  res.status(200).json({
+    status: 'success',
+    data: {
+      post,
+    },
+  });
+});
+
+exports.leavePost = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ userId: req.body.userId });
+  if (!user) {
+    return next(new AppError(`No user found with id ${req.body.userId}`, 404));
+  }
+  if (user.createdPosts.includes(req.body.postId)) {
+    return next(
+      new AppError(`Owner can not leave created post ${req.body.postId} `, 400),
+    );
+  }
+  if (!user.answeredPosts.includes(req.body.postId)) {
+    return next(
+      new AppError(
+        `User ${req.body.userId} already left post ${req.body.postId} `,
+        400,
+      ),
+    );
+  }
+  user.answeredPosts = user.answeredPosts.filter(
+    (post) => post !== req.body.postId,
+  );
+  await User.findOneAndUpdate(
+    { userId: user.userId },
+    { answeredPosts: user.answeredPosts },
+  );
+
+  const post = await Post.findOne({ postId: req.body.postId });
+  if (!post) {
+    return next(new AppError(`No post found with id ${req.body.postId}`, 404));
+  }
+  if (post.owner === req.body.userId) {
+    return next(
+      new AppError(`Owner can not leave created post ${req.body.postId} `, 400),
+    );
+  }
+  if (!post.participators.includes(req.body.userId)) {
+    return next(
+      new AppError(
+        `User ${req.body.userId} already left post ${req.body.postId} `,
+        400,
+      ),
+    );
+  }
+  post.participators = post.participators.filter(
+    (usr) => usr !== req.body.userId,
+  );
+  await Post.findOneAndUpdate(
+    { postId: post.postId },
+    { participators: post.participators },
+  );
   res.status(200).json({
     status: 'success',
     data: {

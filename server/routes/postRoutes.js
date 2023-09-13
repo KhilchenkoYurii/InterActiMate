@@ -4,6 +4,8 @@ const PostController = require('../controllers/postController');
 const router = express.Router();
 
 router.route('/').get(PostController.getAllPosts);
+router.route('/answerPost').post(PostController.answerPost);
+router.route('/leavePost').post(PostController.leavePost);
 router
   .route('/:id')
   .get(PostController.getPost)

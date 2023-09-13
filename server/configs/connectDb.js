@@ -66,7 +66,7 @@ const importData = async () => {
 //DELETE DATA FROM DATABASE
 //command in Terminal
 // $env:DATAPROCESS="DELETE"
-// nmp start
+// npm start
 // after that need to change DATAPROCESS to another value because it will try to DELETE every npm start
 const deleteData = async () => {
   try {
