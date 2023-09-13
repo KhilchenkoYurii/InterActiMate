@@ -6,6 +6,7 @@ import { ReactComponent as UserIcon } from '../../assets/icons/User_alt_fill.svg
 import { ReactComponent as EmailIcon } from '../../assets/icons/Email_Icon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/PhoneIcon.svg';
 import { ReactComponent as NickNameIcon } from '../../assets/icons/NickName.svg';
+import { Store } from 'react-notifications-component';
 
 export const Card = ({
   title,
@@ -46,6 +47,17 @@ export const Card = ({
                   <div
                     onClick={() => {
                       navigator.clipboard.writeText(phone);
+                      Store.addNotification({
+                        message: `Phone ${phone} copied!`,
+                        type: 'info',
+                        insert: 'top',
+                        container: 'top-right',
+                        animationIn: ['animate__animated', 'animate__fadeIn'],
+                        animationOut: ['animate__animated', 'animate__fadeOut'],
+                        dismiss: {
+                          duration: 100,
+                        },
+                      });
                     }}
                   >
                     {phone}
@@ -56,6 +68,17 @@ export const Card = ({
                   <div
                     onClick={() => {
                       navigator.clipboard.writeText(email);
+                      Store.addNotification({
+                        message: `Email ${email} copied!`,
+                        type: 'info',
+                        insert: 'top',
+                        container: 'top-right',
+                        animationIn: ['animate__animated', 'animate__fadeIn'],
+                        animationOut: ['animate__animated', 'animate__fadeOut'],
+                        dismiss: {
+                          duration: 100,
+                        },
+                      });
                     }}
                   >
                     {email}
@@ -66,6 +89,17 @@ export const Card = ({
                   <div
                     onClick={() => {
                       navigator.clipboard.writeText(nickname);
+                      Store.addNotification({
+                        message: `Nickname ${nickname} copied!`,
+                        type: 'info',
+                        insert: 'top',
+                        container: 'top-right',
+                        animationIn: ['animate__animated', 'animate__fadeIn'],
+                        animationOut: ['animate__animated', 'animate__fadeOut'],
+                        dismiss: {
+                          duration: 100,
+                        },
+                      });
                     }}
                   >
                     {nickname}
