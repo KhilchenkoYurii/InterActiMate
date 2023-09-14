@@ -184,6 +184,27 @@ exports.leavePost = catchAsync(async (req, res, next) => {
 });
 
 exports.deletePost = catchAsync(async (req, res, next) => {
+  const postUsers = await User.find({
+    $or: [{ answeredPosts: req.params.id }, { createdPosts: req.params.id }],
+  });
+  if (!postUsers) {
+    return next(new AppError(`No post found with id ${req.params.id}`, 404));
+  }
+  postUsers.forEach(async (user) => {
+    user.answeredPosts = user.answeredPosts.filter(
+      (post) => post !== req.params.id,
+    );
+    user.createdPosts = user.createdPosts.filter(
+      (post) => post !== req.params.id,
+    );
+    await User.findOneAndUpdate(
+      { userId: user.userId },
+      { answeredPosts: user.answeredPosts, createdPosts: user.createdPosts },
+      {
+        new: true,
+      },
+    );
+  });
   const post = await Post.findOneAndDelete({ postId: req.params.id });
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
