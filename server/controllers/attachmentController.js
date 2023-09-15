@@ -38,8 +38,9 @@ exports.getAttachment = catchAsync(async (req, res, next) => {
 
 exports.createAttachment = catchAsync(async (req, res) => {
   const data = req.body;
-  const { length } = await Attachment.find();
-  data.attachmentId = `ATT${length + 1}`;
+  const lastAttachment = await Attachment.find().limit(1).sort({ _id: -1 });
+  const lastNumber = lastAttachment[0].attachmentId.slice(3);
+  data.attachmentId = `ATT${Number(lastNumber) + 1}`;
   const newAttachment = await Attachment.create(data);
   res.status(201).json({
     status: 'Success',

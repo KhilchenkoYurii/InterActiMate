@@ -38,8 +38,10 @@ exports.getCategory = catchAsync(async (req, res, next) => {
 
 exports.createCategory = catchAsync(async (req, res) => {
   const data = req.body;
-  const { length } = await Category.find();
-  data.categoryId = `CTG${length + 1}`;
+
+  const lastCategory = await Category.find().limit(1).sort({ _id: -1 });
+  const lastNumber = lastCategory[0].categoryId.slice(3);
+  data.categoryId = `CTG${Number(lastNumber) + 1}`;
   const newCategory = await Category.create(data);
   res.status(201).json({
     status: 'Success',

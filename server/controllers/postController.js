@@ -36,8 +36,9 @@ exports.getPost = catchAsync(async (req, res, next) => {
 
 exports.createPost = catchAsync(async (req, res, next) => {
   const data = req.body;
-  const { length } = await Post.find();
-  data.postId = `PST${length + 1}`;
+  const lastPost = await Post.find().limit(1).sort({ _id: -1 });
+  const lastNumber = lastPost[0].postId.slice(3);
+  data.postId = `PST${Number(lastNumber) + 1}`;
   const user = await User.findOne({ userId: req.params.id });
   data.owner = user.userId;
   data.dateOfCreation = new Date();
