@@ -6,7 +6,7 @@ import { Card } from '../../components/Card/Card';
 
 export const RequestPage = () => {
   // TODO: update it after actual posts could be fetched
-  const id = 'PST5';
+  const id = 'PST3';
   // const [searchParams] = useSearchParams();
   // const id = searchParams.get('id');
   const [request, setRequest] = useState<IRequestCard>(

@@ -11,6 +11,8 @@ import { Store } from 'react-notifications-component';
 import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
 import ApplyIcon from '../../assets/icons/Apply.svg';
 import ApiService from '../../services/api.service';
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
 
 export const Card = ({
   title,
@@ -25,6 +27,7 @@ export const Card = ({
   email,
   nickname,
   postId,
+  attachments,
 }: any) => {
   const userId = 'USR3';
   const [isApplied, setApplying] = useState<Boolean | undefined>(undefined);
@@ -171,11 +174,16 @@ export const Card = ({
               />
             </div>
           </div>
-          <div className="card-container">
-            <img
-              src="https://i1.sndcdn.com/artworks-000390427707-vxbf7b-t500x500.jpg"
-              alt="Gachi"
-            />
+          <div className="card-container card-imgs">
+            <AwesomeSlider
+              bullets={false}
+              organicArrows={true}
+              className="aws-btn"
+            >
+              {attachments.map((e: any, i: number) => (
+                <div key={i} data-src={e.url} />
+              ))}
+            </AwesomeSlider>
           </div>
         </>
       ) : (
