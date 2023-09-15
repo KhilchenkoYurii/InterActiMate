@@ -181,7 +181,7 @@ export const Card = ({
               className="aws-btn"
             >
               {attachments.map((e: any, i: number) => (
-                <div key={i} data-src={e.url} />
+                <div key={i} data-src={e.address} />
               ))}
             </AwesomeSlider>
           </div>
