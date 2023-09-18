@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { useSearchParams } from "react-router-dom";
 import ApiService from '../../services/api.service';
 import { IRequestCard } from '../../components/RequestCard/RequestCard';
 import { Card } from '../../components/Card/Card';
@@ -14,17 +13,14 @@ export const RequestPage = () => {
 
   useEffect(() => {
     const _id = searchParams.get('id');
+
     //getRequestById
     (async () => {
       const {
         data: {
-          data: { posts: notFiltredPosts },
+          data: { post: fetchedData },
         },
-      } = await ApiService.get(`posts`);
-
-      const fetchedData = notFiltredPosts
-        .filter((post: any) => post._id === _id)
-        .pop();
+      } = await ApiService.get(`posts/${_id}`);
 
       const { data: userData } = await ApiService.get(
         `users/${fetchedData?.owner}`,
