@@ -59,9 +59,11 @@ exports.getMessage = catchAsync(async (req, res, next) => {
 
 exports.createMessage = catchAsync(async (req, res) => {
   const data = req.body;
-  const { length } = await Message.find();
+  const lastMessage = await Message.find().limit(1).sort({ _id: -1 });
+  let lastNumber = lastMessage[0].messageId.slice(3);
+  lastNumber = lastNumber.substr(0, lastNumber.indexOf('_'));
   const date = new Date().toISOString();
-  data.messageId = `MSG${length + 1}_${date}`;
+  data.messageId = `MSG${Number(lastNumber) + 1}_${date}`;
   const newMessage = await Message.create(data);
   res.status(201).json({
     status: 'Success',

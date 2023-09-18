@@ -18,5 +18,10 @@ const attachmentSchema = new Schema({
     required: true,
     unique: true,
   },
+  alt: {
+    type: String,
+    required: true,
+    unique: false,
+  },
 });
 module.exports = moongoose.model('Attachment', attachmentSchema);

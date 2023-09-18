@@ -1,69 +1,64 @@
 [
-    {
-        "postId": "PST1",
-        "owner": "USR1",
-        "body": "Want to learn JS",
-        "attachments": [],
-        "participators": [],
-        "title": "JS tuitor",
-        "categories": [
-            "JS",
-            "Computer Scients"
-        ],
-        "dateOfCreation": "2023-07-23T11:57:20.017Z",
-        "status": "Active"
-    },
-    {
-        "postId": "PST2",
-        "owner": "USR1",
-        "body": "Want to learn PHP",
-        "attachments": [],
-        "participators": [],
-        "title": "JS tuitor",
-        "categories": [
-            "PHP",
-            "Computer Scients"
-        ],
-        "dateOfCreation": "2023-07-23T12:00:20.017Z",
-        "status": "Active"
-    },
-    {
-        "postId": "PST3",
-        "owner": "USR2",
-        "body": "Lets bulk together",
-        "attachments": [],
-        "participators": [],
-        "title": "Bulking together",
-        "categories": [
-            "Sport"
-        ],
-        "dateOfCreation": "2023-07-23T12:27:20.017Z",
-        "status": "Active"
-    },
-    {
-        "postId": "PST4",
-        "owner": "USR2",
-        "body": "Lets bulk together",
-        "attachments": [],
-        "participators": [],
-        "title": "Bulking together",
-        "categories": [
-            "Sport"
-        ],
-        "dateOfCreation": "2023-07-23T12:27:20.017Z",
-        "status": "Active"
-    },
-    {
-        "postId": "PST5",
-        "owner": "USR2",
-        "body": "Lets bulk together",
-        "attachments": [],
-        "participators": [],
-        "title": "Bulking together",
-        "categories": [
-            "Sport"
-        ],
-        "dateOfCreation": "2023-07-23T12:27:20.017Z",
-        "status": "Active"
-    }
+  {
+    "postId": "PST1",
+    "owner": "USR1",
+    "body": "Want to learn JS",
+    "attachments": [
+      "https://cdn-icons-png.flaticon.com/512/3069/3069172.png",
+      "https://cdn-icons-png.flaticon.com/512/10560/10560047.png ",
+      "https://cdn-icons-png.flaticon.com/512/10911/10911768.png "
+    ],
+    "participators": [],
+    "title": "JS tuitor",
+    "categories": ["JS", "Computer Scients"],
+    "dateOfCreation": "2023-07-23T11:57:20.017Z",
+    "status": "Active"
+  },
+  {
+    "postId": "PST2",
+    "owner": "USR1",
+    "body": "Want to learn PHP",
+    "attachments": [
+      "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+      "https://cdn-icons-png.flaticon.com/512/1864/1864472.png"
+    ],
+    "participators": [],
+    "title": "JS tuitor",
+    "categories": ["PHP", "Computer Scients"],
+    "dateOfCreation": "2023-07-23T12:00:20.017Z",
+    "status": "Active"
+  },
+  {
+    "postId": "PST3",
+    "owner": "USR2",
+    "body": "Lets bulk together",
+    "attachments": [],
+    "participators": [],
+    "title": "Bulking together",
+    "categories": ["Sport"],
+    "dateOfCreation": "2023-07-23T12:27:20.017Z",
+    "status": "Active"
+  },
+  {
+    "postId": "PST4",
+    "owner": "USR2",
+    "body": "Lets bulk together",
+    "attachments": [],
+    "participators": [],
+    "title": "Bulking together",
+    "categories": ["Sport"],
+    "dateOfCreation": "2023-07-23T12:27:20.017Z",
+    "status": "Active"
+  },
+  {
+    "postId": "PST5",
+    "owner": "USR2",
+    "body": "Lets bulk together",
+    "attachments": [],
+    "participators": [],
+    "title": "Bulking together",
+    "categories": ["Sport"],
+    "dateOfCreation": "2023-07-23T12:27:20.017Z",
+    "status": "Active"
+  }
 ]

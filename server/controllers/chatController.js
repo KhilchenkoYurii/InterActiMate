@@ -56,8 +56,9 @@ exports.getChat = catchAsync(async (req, res, next) => {
 
 exports.createChat = catchAsync(async (req, res) => {
   const data = req.body;
-  const { length } = await Chat.find();
-  data.chatId = `CHT${length + 1}`;
+  const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
+  const lastNumber = lastChat[0].chatId.slice(3);
+  data.chatId = `CHT${Number(lastNumber) + 1}`;
   const owner = await User.findOne({ userId: req.params.ownerId });
   const participator = await User.findOne({
     userId: req.body.chatUsers[0],
