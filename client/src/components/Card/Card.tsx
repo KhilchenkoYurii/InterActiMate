@@ -177,12 +177,17 @@ export const Card = ({
           <div className="card-container card-imgs">
             <AwesomeSlider
               bullets={false}
-              organicArrows={true}
+              infinite={attachments.length > 0 ? true : false}
+              organicArrows={attachments.length > 0 ? true : false}
               className="aws-btn"
             >
-              {attachments.map((e: any, i: number) => (
-                <div key={i} data-src={e.address} />
-              ))}
+              {attachments.length > 0 ? (
+                attachments.map((e: any) => (
+                  <div key={e.alt} data-src={e.address} />
+                ))
+              ) : (
+                <div data-src="https://thegravix.com/wp-content/uploads/2022/06/fuck_you-ctena.jpg" />
+              )}
             </AwesomeSlider>
           </div>
         </>

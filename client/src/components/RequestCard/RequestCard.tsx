@@ -18,7 +18,6 @@ export const RequestCard = ({ title, body, categories, _id }: IRequestCard) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
-    console.log('queryParams::', queryParams.toString());
     navigate(`request?${queryParams}`);
   };
 
