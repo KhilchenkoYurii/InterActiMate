@@ -22,7 +22,9 @@ exports.getAllPosts = catchAsync(async (req, res) => {
 });
 
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findOne({ postId: req.params.id });
+  const post = await Post.findOne({
+    $or: [{ postId: req.params.id }, { _id: req.params.id }],
+  });
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }
