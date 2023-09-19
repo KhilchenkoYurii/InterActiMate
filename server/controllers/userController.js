@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
@@ -71,7 +70,6 @@ exports.createUser = catchAsync(async (req, res) => {
   const lastUser = await User.find().limit(1).sort({ _id: -1 });
   const lastNumber = lastUser[0].userId.slice(3);
   data.userId = `USR${Number(lastNumber) + 1}`;
-  data.password = await bcrypt.hash(req.body.password, 10);
   const newUser = await User.create(data);
   res.status(201).json({
     status: 'Success',

@@ -1,4 +1,6 @@
 const moongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const { Schema } = moongoose;
 
@@ -29,6 +31,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    validate: [validator.isEmail, 'Please, tell your correct email'],
   },
   phone: {
     type: String,
@@ -67,8 +70,8 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
-    unique: false,
+    required: [true, 'Please, write your password'],
+    minlength: 8,
     select: false,
   },
   status: {
@@ -96,4 +99,13 @@ const userSchema = new Schema({
     default: [],
   },
 });
+
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  this.password = await bcrypt.hash(this.password, 12);
+  this.passwordConfirm = undefined; //i
+  next();
+});
+
 module.exports = moongoose.model('User', userSchema);
