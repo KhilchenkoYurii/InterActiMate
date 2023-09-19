@@ -1,4 +1,3 @@
-// import { IRequestCard } from '../RequestCard/RequestCard';
 import './Card.scss';
 import { useEffect, useState } from 'react';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar_light.svg';
@@ -14,6 +13,7 @@ import ApiService from '../../services/api.service';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
 
+//TODO: Create an Interface for the props
 export const Card = ({
   title,
   body,
