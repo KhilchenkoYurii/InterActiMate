@@ -3,6 +3,7 @@ import './RequestCard.scss';
 import { ReactComponent as HeartIcon } from '../../assets/icons/FavIconFilled.svg';
 import { useNavigate } from 'react-router-dom';
 
+//TODO: Add type for participators
 export interface IRequestCard {
   title: string;
   body: string;
