@@ -170,3 +170,8 @@
   --loader-bar-color: rgba(23, 107, 135, 0.2) !important;
   --loader-bar-height: 1px !important;
 }
+
+.card-placeholder {
+  width: 100%;
+  height: calc(100vh - 134px);
+}

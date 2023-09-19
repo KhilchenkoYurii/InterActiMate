@@ -6,12 +6,13 @@ import { ReactComponent as UserIcon } from '../../assets/icons/User_alt_fill.svg
 import { ReactComponent as EmailIcon } from '../../assets/icons/Email_Icon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/PhoneIcon.svg';
 import { ReactComponent as NickNameIcon } from '../../assets/icons/NickName.svg';
-import { Store } from 'react-notifications-component';
 import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
 import ApplyIcon from '../../assets/icons/Apply.svg';
 import ApiService from '../../services/api.service';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
+import { notify } from '../../services/notification.service';
+import Placeholder from '../Placeholders/Placeholder';
 
 //TODO: Create an Interface for the props
 export const Card = ({
@@ -45,155 +46,126 @@ export const Card = ({
   const applyPost = () => {
     ApiService.post(`posts/answerPost`, { userId, postId });
     setApplying(true);
-    Store.addNotification({
-      title: `Заявку подано!`,
-      type: 'info',
-      insert: 'top',
-      container: 'top-right',
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 1200,
-      },
-    });
+    notify({ duration: 1200, title: 'Заявку подано!' });
   };
 
   return (
-    <div className="card-body">
+    <>
       {_id ? (
         <>
-          <div>
-            <div className="card-container">
-              <div className="card-title">{title}</div>
-              <div className="card-description">{body}</div>
-              <hr className="card-hr" />
-              <div className="card-categories">
-                {categories.map((e: string, i: number) => (
-                  <div key={i}>{e}</div>
-                ))}
-              </div>
-            </div>
-            <div className="card-container">
-              <div className="card-other-header">
-                <div
-                  className="card-other-container prevent-select"
-                  role="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(phone);
-                    Store.addNotification({
-                      message: `Phone ${phone} copied!`,
-                      type: 'info',
-                      insert: 'top',
-                      container: 'top-right',
-                      animationIn: ['animate__animated', 'animate__fadeIn'],
-                      animationOut: ['animate__animated', 'animate__fadeOut'],
-                      dismiss: {
-                        duration: 100,
-                      },
-                    });
-                  }}
-                >
-                  <PhoneIcon />
-                  <div>{phone}</div>
-                </div>
-                <div
-                  className="card-other-container prevent-select"
-                  role="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(email);
-                    Store.addNotification({
-                      message: `Email ${email} copied!`,
-                      type: 'info',
-                      insert: 'top',
-                      container: 'top-right',
-                      animationIn: ['animate__animated', 'animate__fadeIn'],
-                      animationOut: ['animate__animated', 'animate__fadeOut'],
-                      dismiss: {
-                        duration: 100,
-                      },
-                    });
-                  }}
-                >
-                  <EmailIcon />
-                  <div>{email}</div>
-                </div>
-                <div
-                  className="card-other-container prevent-select"
-                  role="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(nickname);
-                    Store.addNotification({
-                      message: `Nickname ${nickname} copied!`,
-                      type: 'info',
-                      insert: 'top',
-                      container: 'top-right',
-                      animationIn: ['animate__animated', 'animate__fadeIn'],
-                      animationOut: ['animate__animated', 'animate__fadeOut'],
-                      dismiss: {
-                        duration: 100,
-                      },
-                    });
-                  }}
-                >
-                  <NickNameIcon />
-                  <div>{nickname}</div>
+          <div className="card-body">
+            <div>
+              <div className="card-container">
+                <div className="card-title">{title}</div>
+                <div className="card-description">{body}</div>
+                <hr className="card-hr" />
+                <div className="card-categories">
+                  {categories.map((e: string, i: number) => (
+                    <div key={i}>{e}</div>
+                  ))}
                 </div>
               </div>
-              <hr className="card-hr" />
-              <div className="card-other">
-                <div className="card-other-container">
-                  <CalendarIcon />
-                  <div>{getDate(dateOfCreation)}</div>
+              <div className="card-container">
+                <div className="card-other-header">
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(phone);
+                      notify({
+                        duration: 100,
+                        message: `Phone ${phone} copied!`,
+                      });
+                    }}
+                  >
+                    <PhoneIcon />
+                    <div>{phone}</div>
+                  </div>
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(email);
+                      notify({
+                        duration: 100,
+                        message: `Email ${email} copied!`,
+                      });
+                    }}
+                  >
+                    <EmailIcon />
+                    <div>{email}</div>
+                  </div>
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(nickname);
+                      notify({
+                        duration: 100,
+                        message: `Nickname ${nickname} copied!`,
+                      });
+                    }}
+                  >
+                    <NickNameIcon />
+                    <div>{nickname}</div>
+                  </div>
                 </div>
-                <div className="card-other-user">
+                <hr className="card-hr" />
+                <div className="card-other">
                   <div className="card-other-container">
-                    <UserIcon />
-                    <div>
-                      {surname} {name}
+                    <CalendarIcon />
+                    <div>{getDate(dateOfCreation)}</div>
+                  </div>
+                  <div className="card-other-user">
+                    <div className="card-other-container">
+                      <UserIcon />
+                      <div>
+                        {surname} {name}
+                      </div>
+                    </div>
+                    <div className="card-other-container">
+                      <DoneIcon />
+                      <div>{participators.length}</div>
                     </div>
                   </div>
-                  <div className="card-other-container">
-                    <DoneIcon />
-                    <div>{participators.length}</div>
-                  </div>
                 </div>
               </div>
+              <div
+                className={
+                  isApplied
+                    ? 'card-apply-btn-not-allowed prevent-select'
+                    : 'card-apply-btn'
+                }
+              >
+                <ButtonWithIcon
+                  buttonType="outline"
+                  text={isApplied ? 'Заявку подано' : 'Подати заявку'}
+                  icon={isApplied ? null : ApplyIcon}
+                  onClick={() => applyPost()}
+                />
+              </div>
             </div>
-            <div
-              className={
-                isApplied
-                  ? 'card-apply-btn-not-allowed prevent-select'
-                  : 'card-apply-btn'
-              }
-            >
-              <ButtonWithIcon
-                buttonType="outline"
-                text={isApplied ? 'Заявку подано' : 'Подати заявку'}
-                icon={isApplied ? null : ApplyIcon}
-                onClick={() => applyPost()}
-              />
+            <div className="card-container card-imgs">
+              <AwesomeSlider
+                bullets={false}
+                infinite={attachments.length > 0 ? true : false}
+                organicArrows={attachments.length > 0 ? true : false}
+                className="aws-btn"
+              >
+                {attachments.length > 0 ? (
+                  attachments.map((e: any) => (
+                    <div key={e.alt} data-src={e.address} />
+                  ))
+                ) : (
+                  <div data-src="https://thegravix.com/wp-content/uploads/2022/06/fuck_you-ctena.jpg" />
+                )}
+              </AwesomeSlider>
             </div>
-          </div>
-          <div className="card-container card-imgs">
-            <AwesomeSlider
-              bullets={false}
-              infinite={attachments.length > 0 ? true : false}
-              organicArrows={attachments.length > 0 ? true : false}
-              className="aws-btn"
-            >
-              {attachments.length > 0 ? (
-                attachments.map((e: any) => (
-                  <div key={e.alt} data-src={e.address} />
-                ))
-              ) : (
-                <div data-src="https://thegravix.com/wp-content/uploads/2022/06/fuck_you-ctena.jpg" />
-              )}
-            </AwesomeSlider>
           </div>
         </>
       ) : (
-        <div>No</div>
+        <Placeholder type="rect" className="card-placeholder" />
       )}
-    </div>
+    </>
   );
 };
