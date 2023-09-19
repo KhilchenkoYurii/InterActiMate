@@ -73,7 +73,7 @@ export const Card = ({
                     onClick={() => {
                       navigator.clipboard.writeText(phone);
                       notify({
-                        duration: 100,
+                        duration: 500,
                         message: `Phone ${phone} copied!`,
                       });
                     }}
@@ -87,7 +87,7 @@ export const Card = ({
                     onClick={() => {
                       navigator.clipboard.writeText(email);
                       notify({
-                        duration: 100,
+                        duration: 500,
                         message: `Email ${email} copied!`,
                       });
                     }}
@@ -101,7 +101,7 @@ export const Card = ({
                     onClick={() => {
                       navigator.clipboard.writeText(nickname);
                       notify({
-                        duration: 100,
+                        duration: 500,
                         message: `Nickname ${nickname} copied!`,
                       });
                     }}
