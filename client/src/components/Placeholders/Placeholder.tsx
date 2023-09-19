@@ -9,14 +9,25 @@ interface PlaceholderInterface {
   margin?: 'none' | string;
   backgroundColor?: string;
   borderRadius?: string;
+  className?: string;
 }
 
-const Placeholder = ({ width, height, rows, type = 'textRow', borderRadius, backgroundColor, margin = 'none' }: PlaceholderInterface) => (
+const Placeholder = ({
+  width,
+  height,
+  rows,
+  type = 'textRow',
+  borderRadius,
+  backgroundColor,
+  margin = 'none',
+  className,
+}: PlaceholderInterface) => (
   <ReactPlaceholder
     showLoadingAnimation
     type={type}
     rows={rows}
     ready={false}
+    className={className}
     style={{
       width,
       height: !height && type === 'textRow' ? 17 : height,

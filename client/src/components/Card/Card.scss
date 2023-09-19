@@ -1,0 +1,177 @@
+@use '../../config/GlobalStyles/variables';
+@use '../../config/GlobalStyles/mixins';
+
+.card-body {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: flex-start
+  );
+  flex-wrap: wrap;
+  gap: 10px;
+  text-align: start;
+}
+
+.card-title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: variables.$primary100;
+}
+
+.card-description {
+  color: variables.$dark-blue;
+  margin-bottom: 15px;
+}
+
+.card-categories {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: flex-start,
+    $align-items: flex-start
+  );
+  flex-wrap: wrap;
+  gap: 5px;
+  color: black;
+
+  div {
+    cursor: pointer;
+    padding: 3px;
+    background-color: white;
+    border: 1.9px solid variables.$primary100;
+    border-radius: variables.$border-radius;
+    transition: 0.5s;
+  }
+  div:hover {
+    color: white;
+    background-color: variables.$primary100;
+  }
+}
+
+.card-container {
+  display: block;
+  background-color: white;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: variables.$border-radius;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.card-other {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: space-between,
+    $align-items: center
+  );
+  flex-wrap: wrap;
+  color: variables.$dark-blue;
+  gap: 50px;
+}
+
+.card-icons {
+  rect {
+    stroke: variables.$dark-blue;
+  }
+  path {
+    stroke: variables.$dark-blue;
+  }
+  width: 18px;
+  height: auto;
+}
+
+.card-other-container {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: center,
+    $align-items: center
+  );
+  flex-wrap: wrap;
+  gap: 5px;
+  opacity: 0.5;
+  transition: variables.$transition-time;
+  font-size: 13px;
+}
+
+.card-other-header {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: start,
+    $align-items: center
+  );
+  color: variables.$dark-blue;
+  opacity: 0.5;
+  flex-wrap: wrap;
+  gap: 15px;
+  font-size: 13px;
+}
+
+.card-other-header .card-other-container {
+  cursor: pointer;
+}
+
+.card-other-container:hover {
+  opacity: 1;
+}
+
+.card-other-user {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: start,
+    $align-items: center
+  );
+  gap: 10px;
+}
+
+.card-hr {
+  opacity: 0.3;
+}
+
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.card-apply-btn div {
+  border: none;
+  margin-top: 20px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.card-apply-btn-not-allowed div {
+  pointer-events: none;
+  background: grey;
+  opacity: 0.5;
+  border: none;
+  margin-top: 20px;
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.card-apply-btn-not-allowed {
+  cursor: not-allowed;
+}
+
+.card-imgs {
+  height: 100%;
+  width: 425px;
+}
+
+.aws-btn {
+  --organic-arrow-thickness: 3px !important;
+  --organic-arrow-border-radius: 0px !important;
+  --organic-arrow-height: 23px !important;
+  --organic-arrow-color: rgba(23, 107, 135, 0.84) !important;
+  --loader-bar-color: rgba(23, 107, 135, 0.2) !important;
+  --loader-bar-height: 1px !important;
+}
+
+.card-placeholder {
+  width: 100%;
+  height: calc(100vh - 134px);
+}
