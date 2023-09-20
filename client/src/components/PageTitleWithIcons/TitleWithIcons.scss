@@ -1,0 +1,21 @@
+@use "../../config/globalstyles/variables";
+@use "../../config/globalstyles/mixins";
+
+.title-with-icon {
+  @include mixins.display-flex();
+
+  span {
+    color: variables.$primary100;
+    text-align: center;
+    font-family: Jura;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0 5px;
+  }
+
+  img:last-child {
+    transform: rotateY(180deg);
+  }
+}
