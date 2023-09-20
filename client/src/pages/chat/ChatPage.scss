@@ -1,0 +1,17 @@
+@use "../../config/GlobalStyles/mixins";
+
+.chat-container {
+  @include mixins.display-flex($justify-content: space-between);
+  height: 100%;
+
+  .users-container {
+    flex: 1;
+    background: red;
+    height: 100%;
+  }
+  .messages-container {
+    flex: 5;
+    height: 100%;
+    background: green;
+  }
+}

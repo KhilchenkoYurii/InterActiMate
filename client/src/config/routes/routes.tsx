@@ -8,20 +8,18 @@ import { AppFooter } from "../../components/AppFooter/AppFooter";
 import { SignUpPage } from "../../pages/auth/SignUpPage";
 import { RequestPage } from "../../pages/request/RequestPage";
 import { AddRequestPage } from "../../pages/add-request/AddRequestPage";
+import { ChatPage } from "../../pages/chat/ChatPage";
 
-const DisplayedRoute = (element: ReactElement, hasWrappers: boolean = true) => {
-  return hasWrappers ?
-    (<>
-      <AppHeader />
-      <div className="app-content">
+const DisplayedRoute = (element: ReactElement, hasHeader: boolean = true, hasFooter: boolean = true) => {
+  return (
+    <>
+      {hasHeader && <AppHeader />}
+      <div className='app-content'>
         {element}
       </div>
-      <AppFooter />
-    </>) : (
-      <>
-        {element}
-      </>
-    )
+      {hasFooter && <AppFooter />}
+    </>
+  );
 };
 
 export const allRoutes: IRoute[] = [
@@ -32,30 +30,35 @@ export const allRoutes: IRoute[] = [
   {
     path: '/login',
     component: <LoginPage />,
-    hasWrappers: false,
+    hasHeader: false,
+    hasFooter: false,
   },
   {
     path: '/sign-up',
     component: <SignUpPage />,
-    hasWrappers: false,
+    hasHeader: false,
+    hasFooter: false,
   },
   {
     path: '/request',
     component: <RequestPage />,
-    hasWrappers: true,
   },
   {
     path: '/add-request',
     component: <AddRequestPage />,
-    hasWrappers: true,
+  },
+  {
+    path: '/chat',
+    component: <ChatPage />,
+    hasFooter: false,
   }
 ];
 
 export const AllRoutes = () => {
   return (
     <Routes>
-      {allRoutes.map(({ path, component, hasWrappers }) => (
-        <Route key={path} path={path} element={DisplayedRoute(component, hasWrappers)} />
+      {allRoutes.map(({ path, component, hasHeader, hasFooter }) => (
+        <Route key={path} path={path} element={DisplayedRoute(component, hasHeader, hasFooter)} />
       ))}
     </Routes>
   );
