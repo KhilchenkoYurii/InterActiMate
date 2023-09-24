@@ -1,15 +1,28 @@
 const express = require('express');
-const CategoryController = require('../controllers/categoryController');
+const сategoryController = require('../controllers/categoryController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(CategoryController.getAllCategories)
-  .post(CategoryController.createCategory);
+  .get(сategoryController.getAllCategories)
+  .post(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    сategoryController.createCategory,
+  );
 router
   .route('/:Id')
-  .get(CategoryController.getCategory)
-  .put(CategoryController.updateCategory)
-  .delete(CategoryController.deleteCategory);
+  .get(authController.protect, сategoryController.getCategory)
+  .put(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    сategoryController.updateCategory,
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    сategoryController.deleteCategory,
+  );
 module.exports = router;

@@ -3,7 +3,7 @@
 
 const jwt = require('jsonwebtoken');
 //const crypto = require('crypto');
-//const { promisify } = require('util');
+const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -64,3 +64,47 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   createSendToken(user, 200, res);
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  //1 check if token came with request
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+  if (!token) {
+    return next(new AppError(`User does not authorizated!`, 401));
+  }
+  // 2 verification token
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  // 3 check if user still exist
+  const currentUser = await User.findById(decoded.id).select('+role');
+  if (!currentUser) {
+    return next(new AppError(`User does not exist!`, 401));
+  }
+  // 4 check if user did not change password
+
+  if (currentUser.changePasswordAfter(decoded.iat) === true) {
+    return next(
+      new AppError(
+        `User recently changed password! Please, log in again!`,
+        401,
+      ),
+    );
+  }
+  req.user = currentUser;
+  next();
+});
+
+exports.restrictTo = (...roles) =>
+  catchAsync(async (req, res, next) => {
+    // roles admin
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError(`User have no permissions to do this action!`, 403),
+      );
+    }
+    next();
+  });

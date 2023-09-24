@@ -1,13 +1,22 @@
 const express = require('express');
-const ChatController = require('../controllers/chatController');
+const chatController = require('../controllers/chatController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.route('/').get(ChatController.getAllChats);
+router
+  .route('/')
+  .get(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    chatController.getAllChats,
+  );
 router
   .route('/:chatId')
-  .get(ChatController.getChat)
-  .put(ChatController.updateChat)
-  .delete(ChatController.deleteChat);
-router.route('/:ownerId').post(ChatController.createChat);
+  .get(authController.protect, chatController.getChat)
+  .put(authController.protect, chatController.updateChat)
+  .delete(authController.protect, chatController.deleteChat);
+router
+  .route('/:ownerId')
+  .post(authController.protect, chatController.createChat);
 module.exports = router;

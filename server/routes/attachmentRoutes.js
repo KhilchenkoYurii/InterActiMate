@@ -1,15 +1,20 @@
 const express = require('express');
-const AttachmentController = require('../controllers/attachmentController');
+const attachmentController = require('../controllers/attachmentController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(AttachmentController.getAllAttachments)
-  .post(AttachmentController.createAttachment);
+  .get(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    attachmentController.getAllAttachments,
+  )
+  .post(authController.protect, attachmentController.createAttachment);
 router
   .route('/:Id')
-  .get(AttachmentController.getAttachment)
-  .put(AttachmentController.updateAttachment)
-  .delete(AttachmentController.deleteAttachment);
+  .get(authController.protect, attachmentController.getAttachment)
+  .put(authController.protect, attachmentController.updateAttachment)
+  .delete(authController.protect, attachmentController.deleteAttachment);
 module.exports = router;
