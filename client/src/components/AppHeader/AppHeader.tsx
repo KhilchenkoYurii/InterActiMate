@@ -20,13 +20,15 @@ export const AppHeader = () => {
 
   return (
     <div className="App-header">
-      <AppLogo />
-      <SearchBar />
-      <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => handleNavigateToPath('/chat')} />
-      <ButtonWithIcon icon={PlusFilledIcon} text="Додати оголошення" onClick={() => handleNavigateToPath('/add-request')} />
-      <ButtonWithIcon icon={HeartIcon} text='' onClick={() => { }} buttonType="outline" />
-      <div className="profile-btn">
-        <img src={UserIcon} width={30} height={30} />
+      <div className="header-container">
+        <AppLogo />
+        <SearchBar />
+        <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => handleNavigateToPath('/chat')} />
+        <ButtonWithIcon icon={PlusFilledIcon} text="Додати оголошення" onClick={() => handleNavigateToPath('/add-request')} />
+        <ButtonWithIcon icon={HeartIcon} text='' onClick={() => { }} buttonType="outline" />
+        <div className="profile-btn">
+          <img src={UserIcon} width={30} height={30} />
+        </div>
       </div>
     </div>
   );

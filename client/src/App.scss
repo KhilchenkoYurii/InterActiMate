@@ -1,9 +1,17 @@
+@use "./config/globalstyles/mixins";
+
 .App {
   text-align: center;
+  background-color: pink;
+  height: 100vh;
+  @include mixins.display-flex($direction: column);
 }
 
 .app-content {
-  min-height: calc(100vh - 134px);
+  display: flex;
+  flex: 1;
+  @include mixins.display-flex($direction: column);
+  width: 100%;
 }
 
 .App-logo {
