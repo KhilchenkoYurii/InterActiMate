@@ -36,13 +36,15 @@ const userSchema = new Schema({
   phone: {
     type: String,
     required: false,
-    unique: true,
+    unique: false,
   },
   role: {
     type: String,
+    enum: ['Admin', 'User'],
     required: true,
     unique: false,
     default: 'User',
+    select: false,
   },
   bio: {
     type: String,
@@ -79,6 +81,7 @@ const userSchema = new Schema({
     required: true,
     unique: false,
     default: 'Active',
+    select: false,
   },
   showOnlyNickname: {
     type: Boolean,
@@ -98,6 +101,13 @@ const userSchema = new Schema({
     unique: false,
     default: [],
   },
+  passwordChangedAt: {
+    type: Date,
+    required: false,
+    default: Date.now(),
+  },
+  passwordResetToken: String,
+  passwordResetExpired: Date,
 });
 
 userSchema.pre('save', async function (next) {
@@ -108,4 +118,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword,
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 module.exports = moongoose.model('User', userSchema);
