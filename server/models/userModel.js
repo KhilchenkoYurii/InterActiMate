@@ -119,6 +119,11 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
+userSchema.pre(/^find/, async function (next) {
+  this.find({ status: { $ne: 'Deactivated' } });
+  next();
+});
+
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
