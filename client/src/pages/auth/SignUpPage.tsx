@@ -3,7 +3,7 @@ import AtIcon from "../../assets/icons/at.svg";
 import MailIcon from "../../assets/icons/mail.svg";
 import KeyIcon from "../../assets/icons/key.svg";
 import GoogleIcon from "../../assets/icons/google.svg";
-import "./auth.scss";
+// import "./auth.scss";
 import { Link } from "react-router-dom";
 
 export const SignUpPage = () => {
