@@ -14,41 +14,38 @@ export const LoginPage = () => {
           <img src={GoogleIcon} />
         </button>
         <div className="or-section">
-          <hr />Чи<hr />
+          <hr />
+          Чи
+          <hr />
         </div>
         <div className="buttons-row">
-          <Link to={'/login'} className="link">
-            <button className="active">
-              Увійти
-            </button>
+          <Link to={"/login"} className="link">
+            <button className="active">Увійти</button>
           </Link>
-          <Link to={'/sign-up'} className="link">
-            <button>
-              Зареєструватися
-            </button>
+          <Link to={"/sign-up"} className="link">
+            <button>Зареєструватися</button>
           </Link>
         </div>
         <div className="animated">
           <div className="input-row">
-            <span className="input-title">
-              Електронна пошта
-            </span>
+            <span className="input-title">Електронна пошта</span>
             <InputWithIcon icon={MailIcon} />
           </div>
           <div className="input-row">
-            <span className="input-title">
-              Пароль
-            </span>
-            <InputWithIcon icon={KeyIcon} />
+            <span className="input-title">Пароль</span>
+            <InputWithIcon icon={KeyIcon} isPass={true} />
           </div>
-          <Link to={'/resetpassword'} className="link-forget">
+          <Link to={"/resetpassword"} className="link-forget">
             Забули пароль?
           </Link>
           <button className="button button-submit">Увійти</button>
           <span className="terms-text">
             Під час входу ви погоджуєтеся з нашими
           </span>
-          <Link to={'/terms-and-conditions'} className="terms-text terms-text-bold">
+          <Link
+            to={"/terms-and-conditions"}
+            className="terms-text terms-text-bold"
+          >
             Умовами користування.
           </Link>
         </div>

@@ -3,6 +3,16 @@ const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) {
+      newObj[el] = obj[el];
+    }
+  });
+  return newObj;
+};
+
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const features = new APIFeatures(User.find(), req.query)
     .filter()
@@ -95,6 +105,44 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     data: {
       user,
     },
+  });
+});
+
+exports.updateMe = catchAsync(async (req, res, next) => {
+  //1 error is user POST password data
+  if (req.body.password) {
+    return next(new AppError(`This route is not for password change!`, 400));
+  }
+  // 2 filter body
+  const filteredBody = filterObj(
+    req.body,
+    'name',
+    'email',
+    'avatar',
+    'showOnlyNickname',
+    'bio',
+    'phone',
+    'surname',
+    'nickname',
+  );
+  // 3 update user
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { status: 'Deactivated' });
+  //1 error is user POST password data
+  res.status(204).json({
+    status: 'success',
   });
 });
 

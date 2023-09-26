@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -27,9 +28,19 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.32.2",
     "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.0.1",
+    "googleapis": "^105.0.0",
+    "helmet": "^7.0.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.3.4",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.9.5",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "prettier": "^3.0.0",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "xss-clean": "^0.1.4"
   }
 }

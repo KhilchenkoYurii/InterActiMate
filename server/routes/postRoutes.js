@@ -1,16 +1,25 @@
 const express = require('express');
-const PostController = require('../controllers/postController');
+const postController = require('../controllers/postController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.route('/').get(PostController.getAllPosts);
-router.route('/answerPost').post(PostController.answerPost);
-router.route('/leavePost').post(PostController.leavePost);
+router.route('/').get(postController.getAllPosts);
+router.route('/answerPost').post(postController.answerPost);
+router
+  .route('/leavePost')
+  .post(authController.protect, postController.leavePost);
 router
   .route('/:id')
-  .get(PostController.getPost)
-  .post(PostController.createPost)
-  .put(PostController.updatePost)
-  .delete(PostController.deletePost);
-router.route('/:id/:status').put(PostController.changePostStatus);
+  .get(postController.getPost)
+  .post(authController.protect, postController.createPost)
+  .put(authController.protect, postController.updatePost)
+  .delete(
+    authController.protect,
+    authController.restrictTo('Admin'),
+    postController.deletePost,
+  );
+router
+  .route('/:id/:status')
+  .put(authController.protect, postController.changePostStatus);
 module.exports = router;
