@@ -8,6 +8,7 @@ interface IInputWithIcon {
   isPass?: boolean;
   value?: string;
   onChange?: (event: any) => void;
+  onBlur?: any;
   error?: string;
 }
 
@@ -16,6 +17,7 @@ export const InputWithIcon = ({
   isPass,
   value,
   onChange,
+  onBlur,
   error,
 }: IInputWithIcon) => {
   const [showPass, setShowPass] = useState(false);
@@ -34,6 +36,7 @@ export const InputWithIcon = ({
           className="search"
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
         />
 
         {isPass && (

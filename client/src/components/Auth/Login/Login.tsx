@@ -5,6 +5,7 @@ import KeyIcon from "../../../assets/icons/key.svg";
 import GoogleIcon from "../../../assets/icons/google.svg";
 import "../auth.scss";
 import { Link } from "react-router-dom";
+import errorHandler from "../errorHandler";
 
 interface ILogin {
   onSubmit: (email: string, password: string) => void;
@@ -23,13 +24,8 @@ const Login = ({ onSubmit }: ILogin) => {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
-      setErrors({ email: "Email is not valid, try again!" });
-    } else if (password.split("").length < 8) {
-      setErrors({
-        password: "Password should have more than 8 symbols, try again!",
-      });
-    } else {
+
+    if (Object.keys(errors).length === 0) {
       onSubmit(email, password);
       setEmail("");
       setPassword("");
@@ -46,12 +42,12 @@ const Login = ({ onSubmit }: ILogin) => {
   }
 
   useEffect(() => {
-    if (password !== "" && email !== "") {
+    if (password !== "" && email !== "" && !Object.keys(errors).length) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [email, password]);
+  }, [email, password, errors]);
 
   return (
     <form action="login" onSubmit={handleSubmit}>
@@ -81,6 +77,7 @@ const Login = ({ onSubmit }: ILogin) => {
                 icon={MailIcon}
                 value={email}
                 onChange={handleChangeEmail}
+                onBlur={() => setErrors(errorHandler({ email, password }))}
                 error={errors["email"]}
               />
             </div>
@@ -91,6 +88,7 @@ const Login = ({ onSubmit }: ILogin) => {
                 isPass={true}
                 value={password}
                 onChange={handleChangePassword}
+                onBlur={() => setErrors(errorHandler({ email, password }))}
                 error={errors["password"]}
               />
             </div>

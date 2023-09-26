@@ -6,6 +6,7 @@ import GoogleIcon from "../../../assets/icons/google.svg";
 import "../auth.scss";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import errorHandler from "../errorHandler";
 
 interface ISignUp {
   onSubmit: (nickname: string, email: string, password: string) => void;
@@ -26,13 +27,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
-      setErrors({ email: "Email is not valid, try again!" });
-    } else if (password.split("").length < 8) {
-      setErrors({
-        password: "Password should have more than 8 symbols, try again!",
-      });
-    } else {
+    if (Object.keys(errors).length === 0) {
       onSubmit(nickname, email, password);
       setEmail("");
       setPassword("");
@@ -54,12 +49,17 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
   }
 
   useEffect(() => {
-    if (password !== "" && email !== "" && nickname !== "") {
+    if (
+      password !== "" &&
+      email !== "" &&
+      nickname !== "" &&
+      !Object.keys(errors).length
+    ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [email, password, nickname]);
+  }, [email, password, nickname, errors]);
 
   return (
     <form action="signUp" onSubmit={handleSubmit}>
@@ -97,6 +97,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
                 icon={MailIcon}
                 value={email}
                 onChange={handleChangeEmail}
+                onBlur={() => setErrors(errorHandler({ email, password }))}
                 error={errors["email"]}
               />
             </div>
@@ -106,6 +107,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
                 icon={KeyIcon}
                 value={password}
                 onChange={handleChangePassword}
+                onBlur={() => setErrors(errorHandler({ email, password }))}
                 error={errors["password"]}
                 isPass={true}
               />
