@@ -15,7 +15,11 @@ export const LoginPage = () => {
       nav("/");
     } catch (error: any) {
       console.log("Error: ", error);
-      notify({ type: "danger", title: error.message, duration: 1000 });
+      notify({
+        type: "danger",
+        title: error.response.data.message,
+        duration: 1000,
+      });
     }
   };
 

@@ -8,6 +8,7 @@ interface IInputWithIcon {
   isPass?: boolean;
   value?: string;
   onChange?: (event: any) => void;
+  error?: string;
 }
 
 export const InputWithIcon = ({
@@ -15,23 +16,36 @@ export const InputWithIcon = ({
   isPass,
   value,
   onChange,
+  error,
 }: IInputWithIcon) => {
   const [showPass, setShowPass] = useState(false);
   return (
-    <div className="container">
-      <img src={icon} />
-      <input
-        type={isPass && !showPass ? "password" : "text"}
-        className="search"
-        value={value}
-        onChange={onChange}
-      />
-      {isPass && (
-        <img
-          src={showPass ? ShowPassIcon : PassIcon}
-          onClick={() => setShowPass((prev) => !prev)}
-          className="cursor-pointer opacity-50"
+    <div>
+      <div
+        className={
+          error
+            ? "container container-validation-error"
+            : "container container-border"
+        }
+      >
+        <img src={icon} />
+        <input
+          type={isPass && !showPass ? "password" : "text"}
+          className="search"
+          value={value}
+          onChange={onChange}
         />
+
+        {isPass && (
+          <img
+            src={showPass ? ShowPassIcon : PassIcon}
+            onClick={() => setShowPass((prev) => !prev)}
+            className="cursor-pointer opacity-50"
+          />
+        )}
+      </div>
+      {error && (
+        <span className="text-red-600 font-light text-sm">{error}</span>
       )}
     </div>
   );

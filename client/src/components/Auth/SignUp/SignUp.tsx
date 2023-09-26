@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
 import { InputWithIcon } from "../../../components/InputWithIcon/InputWithIcon";
+import AtIcon from "../../../assets/icons/at.svg";
 import MailIcon from "../../../assets/icons/mail.svg";
 import KeyIcon from "../../../assets/icons/key.svg";
 import GoogleIcon from "../../../assets/icons/google.svg";
 import "../auth.scss";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-interface ILogin {
-  onSubmit: (email: string, password: string) => void;
+interface ISignUp {
+  onSubmit: (nickname: string, email: string, password: string) => void;
 }
 
 interface IErrors {
   email?: string;
   password?: string;
+  nickname?: string;
 }
 
-const Login = ({ onSubmit }: ILogin) => {
+export const SignUp = ({ onSubmit }: ISignUp) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
   const [errors, setErrors] = useState({} as IErrors);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -30,9 +33,10 @@ const Login = ({ onSubmit }: ILogin) => {
         password: "Password should have more than 8 symbols, try again!",
       });
     } else {
-      onSubmit(email, password);
+      onSubmit(nickname, email, password);
       setEmail("");
       setPassword("");
+      setNickname("");
       setIsDisabled(true);
     }
   }
@@ -45,16 +49,20 @@ const Login = ({ onSubmit }: ILogin) => {
     setPassword(event.target.value);
   }
 
+  function handleChangeNickname(event: any) {
+    setNickname(event.target.value);
+  }
+
   useEffect(() => {
-    if (password !== "" && email !== "") {
+    if (password !== "" && email !== "" && nickname !== "") {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [email, password]);
+  }, [email, password, nickname]);
 
   return (
-    <form action="login" onSubmit={handleSubmit}>
+    <form action="signUp" onSubmit={handleSubmit}>
       <div className="background-container">
         <div className="auth-container">
           <button className="button button-google">
@@ -66,15 +74,23 @@ const Login = ({ onSubmit }: ILogin) => {
             Чи
             <hr />
           </div>
-          <div className="buttons-row">
+          <div className="buttons-row buttons-row-signup">
             <Link to={"/login"} className="link">
-              <button className="active">Увійти</button>
+              <button>Увійти</button>
             </Link>
             <Link to={"/sign-up"} className="link">
-              <button>Зареєструватися</button>
+              <button className="active">Зареєструватися</button>
             </Link>
           </div>
           <div className="animated">
+            <div className="input-row">
+              <span className="input-title">Нікнейм</span>
+              <InputWithIcon
+                icon={AtIcon}
+                value={nickname}
+                onChange={handleChangeNickname}
+              />
+            </div>
             <div className="input-row">
               <span className="input-title">Електронна пошта</span>
               <InputWithIcon
@@ -88,38 +104,33 @@ const Login = ({ onSubmit }: ILogin) => {
               <span className="input-title">Пароль</span>
               <InputWithIcon
                 icon={KeyIcon}
-                isPass={true}
                 value={password}
                 onChange={handleChangePassword}
                 error={errors["password"]}
+                isPass={true}
               />
             </div>
-            <Link to={"/resetpassword"} className="link-forget">
-              Забули пароль?
+            <span className="terms-text terms-text-left">
+              Створюючи профіль на InterActiMate, ви погоджуєтеся з
+            </span>
+            <Link
+              to={"/terms-and-conditions"}
+              className="terms-text terms-text-bold terms-text-left hover:underline"
+            >
+              Умовами користування.
             </Link>
             <button
               className={
                 isDisabled
-                  ? "button opacity-50 pointer-events-none bg-gray-400 text-white mb-4"
-                  : "button button-submit mb-4"
+                  ? "button opacity-50 pointer-events-none bg-gray-400 text-white mt-2"
+                  : "button button-signup mt-2"
               }
             >
-              Увійти
+              Зареєструватися
             </button>
-            <span className="terms-text">
-              Під час входу ви погоджуєтеся з нашими
-            </span>
-            <Link
-              to={"/terms-and-conditions"}
-              className="terms-text terms-text-bold hover:underline"
-            >
-              Умовами користування.
-            </Link>
           </div>
         </div>
       </div>
     </form>
   );
 };
-
-export default Login;
