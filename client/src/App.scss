@@ -1,8 +1,11 @@
 @use "./config/globalstyles/mixins";
 
+* {
+  box-sizing: border-box
+}
+
 .App {
   text-align: center;
-  background-color: pink;
   height: 100vh;
   @include mixins.display-flex($direction: column);
 }
@@ -12,6 +15,7 @@
   flex: 1;
   @include mixins.display-flex($direction: column);
   width: 100%;
+  overflow: scroll;
 }
 
 .App-logo {
