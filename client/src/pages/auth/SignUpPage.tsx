@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { SignUp } from "../../components/Auth/SignUp/SignUp";
 import apiService from "../../services/api.service";
 import { notify } from "../../services/notification.service";
+import setCookieHandler from "./setCookieHandler";
 
 export const SignUpPage = () => {
   const nav = useNavigate();
@@ -12,11 +13,12 @@ export const SignUpPage = () => {
     password: string,
   ) => {
     try {
-      await apiService.post("users/signup", {
+      const { data } = await apiService.post("users/signup", {
         nickname,
         email,
         password,
       });
+      setCookieHandler(data.token);
       nav("/");
     } catch (error: any) {
       console.log("Error: ", error);

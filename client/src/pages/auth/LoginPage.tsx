@@ -2,16 +2,18 @@ import { useNavigate } from "react-router-dom";
 import Login from "../../components/Auth/Login/Login";
 import apiService from "../../services/api.service";
 import { notify } from "../../services/notification.service";
+import setCookieHandler from "./setCookieHandler";
 
 export const LoginPage = () => {
   const nav = useNavigate();
 
   const onSubmitLogin = async (email: string, password: string) => {
     try {
-      await apiService.post("users/login", {
+      const { data } = await apiService.post("users/login", {
         email,
         password,
       });
+      setCookieHandler(data.token);
       nav("/");
     } catch (error: any) {
       console.log("Error: ", error);
