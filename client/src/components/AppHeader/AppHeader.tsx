@@ -31,7 +31,6 @@ export const AppHeader = () => {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(user);
-          console.log("user :", user);
         } catch (error) {
           console.log("Error: ", error);
         }
