@@ -19,6 +19,7 @@ export const SignUpPage = () => {
         password,
       });
       setCookieHandler(data.token);
+      localStorage.setItem("userId", data.data.user.userId);
       nav("/");
     } catch (error: any) {
       console.log("Error: ", error);
