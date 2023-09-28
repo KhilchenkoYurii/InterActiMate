@@ -5,7 +5,6 @@
   background: variables.$primary100;
   height: 67px;
   padding: 0 20px;
-  color: white;
   @include mixins.display-flex();
 
   .header-container {
