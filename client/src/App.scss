@@ -1,21 +1,12 @@
-@use "./config/globalstyles/mixins";
 
-* {
-  box-sizing: border-box;
-}
 
 .App {
   text-align: center;
-  height: 100vh;
-  @include mixins.display-flex($direction: column);
 }
 
 .app-content {
-  display: flex;
-  flex: 1;
-  @include mixins.display-flex($direction: column);
-  width: 100%;
-  overflow: scroll;
+  min-height: calc(100vh - 134px);
+  overflow: hidden;
 }
 
 .App-logo {

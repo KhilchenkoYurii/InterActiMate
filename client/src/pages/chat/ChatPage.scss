@@ -3,9 +3,10 @@
 
 .chat-page {
   @include mixins.display-flex($direction: column, $justify-content: space-between);
-  height: 100%;
+  height: calc(100vh - 67px);
   width: 100%;
   background: #F6F6F6;
+  overflow: hidden;
 }
 
 .chat-container {
