@@ -1,0 +1,16 @@
+@use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
+
+.tab-button {
+  transition: 0.5s;
+}
+
+.tab-button:hover {
+  background-color: variables.$dark-blue;
+  color: white;
+}
+
+.tab-button-active {
+  background-color: variables.$dark-blue;
+  color: white;
+}
