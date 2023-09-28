@@ -1,7 +1,6 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { HomePage } from "../../pages/home/HomePage";
 import { IRoute } from "./routes.interface";
-import { LoginPage } from "../../pages/auth/LoginPage";
 import { ReactElement } from "react";
 import { AppHeader } from "../../components/AppHeader/AppHeader";
 import { AppFooter } from "../../components/AppFooter/AppFooter";
@@ -9,6 +8,7 @@ import { SignUpPage } from "../../pages/auth/SignUpPage";
 import { RequestPage } from "../../pages/request/RequestPage";
 import { AddRequestPage } from "../../pages/add-request/AddRequestPage";
 import { ChatPage } from "../../pages/chat/ChatPage";
+import { LoginPage } from "../../pages/auth/LoginPage";
 
 const DisplayedRoute = (element: ReactElement, hasHeader: boolean = true, hasFooter: boolean = true) => {
   return (
@@ -24,27 +24,27 @@ const DisplayedRoute = (element: ReactElement, hasHeader: boolean = true, hasFoo
 
 export const allRoutes: IRoute[] = [
   {
-    path: '/',
+    path: "/",
     component: <HomePage />,
   },
   {
-    path: '/login',
+    path: "/login",
     component: <LoginPage />,
     hasHeader: false,
     hasFooter: false,
   },
   {
-    path: '/sign-up',
+    path: "/sign-up",
     component: <SignUpPage />,
     hasHeader: false,
     hasFooter: false,
   },
   {
-    path: '/request',
+    path: "/request",
     component: <RequestPage />,
   },
   {
-    path: '/add-request',
+    path: "/add-request",
     component: <AddRequestPage />,
   },
   {

@@ -23,3 +23,17 @@
   border-radius: 100%;
   background: variables.$white100;
 }
+
+.login:hover {
+  animation: 1s movelftrght infinite ease;
+}
+
+@keyframes movelftrght {
+  from {
+    margin-right: 5px;
+  }
+
+  to {
+    margin: 0;
+  }
+}
