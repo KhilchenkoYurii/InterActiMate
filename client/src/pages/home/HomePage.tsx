@@ -34,6 +34,7 @@ export const HomePage = () => {
               data: { user },
             },
           } = await ApiService.get(`users/${userId}`, {
+            //TODO: Add interceptor
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(user);
@@ -45,6 +46,20 @@ export const HomePage = () => {
     })();
   }, []);
 
+  const getRequestsView = () => {
+    if (isLoading) {
+      return requests.map(() => <RequestCardPlaceHolder />);
+    } else if (tabName === tabs[0].name) {
+      return requests.map((request) => (
+        <RequestCard key={request?._id} {...request} />
+      ));
+    } else {
+      return requests
+        .filter((req) => req.participators.includes(user.userId))
+        .map((request) => <RequestCard key={request?._id} {...request} />);
+    }
+  };
+
   return (
     <div>
       <Tabs
@@ -52,19 +67,7 @@ export const HomePage = () => {
         activeTabName={tabName}
         setTabName={(tabName: string) => setTabName(tabName)}
       />
-      <div className="cards-container">
-        {isLoading
-          ? requests.map(() => <RequestCardPlaceHolder />)
-          : tabName === tabs[0].name
-          ? requests.map((request) => (
-              <RequestCard key={request?._id} {...request} />
-            ))
-          : requests
-              .filter((req) => req.participators.includes(user.userId))
-              .map((request) => (
-                <RequestCard key={request?._id} {...request} />
-              ))}
-      </div>
+      <div className="cards-container">{getRequestsView()}</div>
     </div>
   );
 };
