@@ -14,10 +14,7 @@ export const HomePage = () => {
   const [user, setUser] = useState<any>(undefined);
   const [tabName, setTabName] = useState<string>("Оголошення");
 
-  const tabs = [
-    { name: "Оголошення", path: "/" },
-    { name: "Подані заявки", path: "/" },
-  ];
+  const tabs = [{ name: "Оголошення" }, { name: "Подані заявки" }];
 
   const token = document.cookie.split("jwt=").pop();
   const userId = localStorage.getItem("userId");

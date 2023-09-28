@@ -3,7 +3,7 @@ import "./Tabs.scss";
 
 interface ITabs {
   name: string;
-  path: string;
+  path?: string;
 }
 
 interface ITabsProps {
@@ -25,7 +25,7 @@ export const Tabs = ({ tabs, setTabName, activeTabName }: ITabsProps) => {
           }`}
           onClick={() => {
             setTabName(tab.name);
-            navigate(tab.path);
+            tab.path && navigate(tab.path);
           }}
         >
           {tab.name}
