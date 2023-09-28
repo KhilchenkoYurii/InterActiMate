@@ -1,20 +1,34 @@
 import { useNavigate } from "react-router-dom";
+import "./Tabs.scss";
+
 interface ITabs {
   name: string;
   path: string;
 }
 
-export const Tabs = ({ tabs }: any) => {
+interface ITabsProps {
+  tabs: ITabs[];
+  setTabName?: any;
+  activeTabName: string;
+}
+
+export const Tabs = ({ tabs, setTabName, activeTabName }: ITabsProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row text-center gap-16 justify-center my-3 ">
-      {tabs.map((el: ITabs) => (
+    <div className="flex flex-row text-center justify-center ">
+      {tabs.map((tab: ITabs) => (
         <div
-          className="hover:underline cursor-pointer p-2"
-          onClick={() => navigate(tabs.path)}
+          key={tab.name}
+          className={`tab-button cursor-pointer py-3 w-full h-full ${
+            activeTabName === tab.name && "tab-button-active"
+          }`}
+          onClick={() => {
+            setTabName(tab.name);
+            navigate(tab.path);
+          }}
         >
-          {el.name}
+          {tab.name}
         </div>
       ))}
     </div>
