@@ -1,19 +1,18 @@
 import { AppLogo } from "../AppLogo/AppLogo";
 import { ButtonWithIcon } from "../ButtonWithIcon/ButtonWithIcon";
 import { SearchBar } from "../SearchBar/SearchBar";
-import UserIcon from "../../assets/icons/user_filled.svg";
 import LoginIcon from "../../assets/icons/LoginIcon.svg";
 import ChatIcon from "../../assets/icons/chat.svg";
 import PlusFilledIcon from "../../assets/icons/plus-filled.svg";
 import HeartIcon from "../../assets/icons/heart.svg";
 import "./AppHeader.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiService from "../../services/api.service";
 import { useEffect, useState } from "react";
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
 
 export const AppHeader = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [user, setUser] = useState(undefined) as any;
 
   const token = document.cookie.split("jwt=").pop();
@@ -43,26 +42,27 @@ export const AppHeader = () => {
       <div className="header-container">
         <AppLogo />
         <SearchBar />
-        <Link to={'/chat'}>
+        <Link to={"/chat"}>
           <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
         </Link>
-        <Link to={'/chat'}>
-          <ButtonWithIcon icon={PlusFilledIcon} text="Додати оголошення" onClick={() => {}} />
+        <Link to={"/chat"}>
+          <ButtonWithIcon
+            icon={PlusFilledIcon}
+            text="Додати оголошення"
+            onClick={() => {}}
+          />
         </Link>
         <ButtonWithIcon
           icon={HeartIcon}
           text=""
-          onClick={() => { }}
+          onClick={() => {}}
           buttonType="outline"
         />
         <div className="profile-btn">
           {token ? (
-            <img
-              className="rounded-full"
-              src={user?.avatar ? user?.avatar : UserIcon}
-              width={30}
-              height={30}
-            />
+            <div>
+              <DropdownMenu user={user} />
+            </div>
           ) : (
             <img
               className="cursor-pointer login"
@@ -72,7 +72,7 @@ export const AppHeader = () => {
             />
           )}
         </div>
-        </div>
       </div>
-      );
+    </div>
+  );
 };
