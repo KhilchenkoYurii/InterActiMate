@@ -5,7 +5,6 @@
   @include mixins.display-flex($direction: column, $justify-content: flex-start, $align-items: flex-start);
   width: variables.$card-width;
   max-width: variables.$card-width;
-  max-height: variables.$card-height;
   background: variables.$white100;
   border-radius: variables.$border-radius;
   height: 100%;
