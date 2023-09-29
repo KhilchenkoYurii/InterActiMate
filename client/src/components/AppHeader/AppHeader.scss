@@ -1,14 +1,17 @@
 @use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
 
 .App-header {
   background: variables.$primary100;
   height: 67px;
   padding: 0 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  color: white;
-  gap: 15px;
+  @include mixins.display-flex();
+
+  .header-container {
+    width: calc(100vw - 40px);
+    @include mixins.display-flex();
+    gap: 15px;
+  }
 }
 
 .profile-btn {

@@ -1,0 +1,34 @@
+@use "../../config/GlobalStyles/mixins";
+@use "../../config/GlobalStyles/variables";
+
+.chat-page {
+  @include mixins.display-flex($direction: column, $justify-content: space-between);
+  height: calc(100vh - 67px);
+  width: 100%;
+  background: #F6F6F6;
+  overflow: hidden;
+}
+
+.chat-container {
+  @include mixins.display-flex($justify-content: space-between);
+  height: 100%;
+  width: 100%;
+  background-color: variables.$white100;
+  border-radius: variables.$border-radius;
+  margin-top: 15px;
+  overflow: hidden;
+
+  .users-container {
+    height: 100%;
+
+    &-header {
+      @include mixins.display-flex($justify-content: space-between);
+
+      padding: 10px 10px 10px 5px;
+    }
+  }
+  .messages-container {
+    height: 100%;
+    border-left: 1px solid #F6F6F6;
+  }
+}

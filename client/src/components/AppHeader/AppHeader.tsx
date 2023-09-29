@@ -7,7 +7,7 @@ import ChatIcon from "../../assets/icons/chat.svg";
 import PlusFilledIcon from "../../assets/icons/plus-filled.svg";
 import HeartIcon from "../../assets/icons/heart.svg";
 import "./AppHeader.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import apiService from "../../services/api.service";
 import { useEffect, useState } from "react";
 
@@ -38,45 +38,41 @@ export const AppHeader = () => {
     })();
   }, []);
 
-  const handleNavigateToPath = (path: string) => {
-    if (!location.pathname.includes(path)) {
-      navigate(path);
-    }
-  };
-
   return (
     <div className="App-header">
-      <AppLogo />
-      <SearchBar />
-      <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
-      <ButtonWithIcon
-        icon={PlusFilledIcon}
-        text="Додати оголошення"
-        onClick={() => handleNavigateToPath("/add-request")}
-      />
-      <ButtonWithIcon
-        icon={HeartIcon}
-        text=""
-        onClick={() => {}}
-        buttonType="outline"
-      />
-      <div className="profile-btn">
-        {token ? (
-          <img
-            className="rounded-full"
-            src={user?.avatar ? user?.avatar : UserIcon}
-            width={30}
-            height={30}
-          />
-        ) : (
-          <img
-            className="cursor-pointer login"
-            alt="Login/SignUp"
-            src={LoginIcon}
-            onClick={() => navigate("/login")}
-          />
-        )}
+      <div className="header-container">
+        <AppLogo />
+        <SearchBar />
+        <Link to={'/chat'}>
+          <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
+        </Link>
+        <Link to={'/chat'}>
+          <ButtonWithIcon icon={PlusFilledIcon} text="Додати оголошення" onClick={() => {}} />
+        </Link>
+        <ButtonWithIcon
+          icon={HeartIcon}
+          text=""
+          onClick={() => { }}
+          buttonType="outline"
+        />
+        <div className="profile-btn">
+          {token ? (
+            <img
+              className="rounded-full"
+              src={user?.avatar ? user?.avatar : UserIcon}
+              width={30}
+              height={30}
+            />
+          ) : (
+            <img
+              className="cursor-pointer login"
+              alt="Login/SignUp"
+              src={LoginIcon}
+              onClick={() => navigate("/login")}
+            />
+          )}
+        </div>
+        </div>
       </div>
-    </div>
-  );
+      );
 };

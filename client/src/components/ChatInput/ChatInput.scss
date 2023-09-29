@@ -1,0 +1,19 @@
+@use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
+
+.chat-input {
+  @include mixins.display-flex();
+  border-radius: 8px;
+  border: 1px solid variables.$black20;
+  padding: 2px;
+
+  textarea {
+    resize: none;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
