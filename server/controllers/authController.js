@@ -22,9 +22,9 @@ const createSendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
   };
-  if (process.env.NODE_ENV === 'production') {
-    cookieOptions.secure = true;
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   cookieOptions.secure = true;
+  // }
   res.cookie('jwt', token, cookieOptions);
   user.password = undefined;
   res.status(statusCode).json({
@@ -86,11 +86,10 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new AppError(`User does not exist!`, 401));
   }
   // 4 check if user did not change password
-
-  if (currentUser.changePasswordAfter(decoded.iat) === true) {
+  if (await currentUser.changePasswordAfter(decoded.iat)) {
     return next(
       new AppError(
-        `User recently changed password! Please, log in again!`,
+        `User recently changed password or logged out! Please, log in again!`,
         401,
       ),
     );
@@ -168,6 +167,21 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 4 log user in, sent JWT
   createSendToken(user, 200, res);
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  const currentUser = await User.findById(req.user.id);
+  if (!currentUser) {
+    return next(new AppError(`User does not exist!`, 401));
+  }
+  currentUser.passwordChangedAt = Date.now();
+  await User.findByIdAndUpdate(currentUser.id, {
+    passwordChangedAt: currentUser.passwordChangedAt,
+  });
+  res.status(200).json({
+    status: 'success',
+    message: 'User logged out',
+  });
 });
 
 // exports.resetPassword = catchAsync(async (req, res, next) => {
