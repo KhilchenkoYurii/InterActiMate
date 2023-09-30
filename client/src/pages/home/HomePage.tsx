@@ -33,10 +33,7 @@ export const HomePage = () => {
             data: {
               data: { user },
             },
-          } = await ApiService.get(`users/${userId}`, {
-            //TODO: Add interceptor
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          } = await ApiService.get(`users/${userId}`);
           setUser(user);
         } catch (error) {
           console.log("Error: ", error);

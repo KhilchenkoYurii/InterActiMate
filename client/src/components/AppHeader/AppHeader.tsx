@@ -27,9 +27,7 @@ export const AppHeader = () => {
             data: {
               data: { user },
             },
-          } = await apiService.get(`users/${userId}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          } = await apiService.get(`users/${userId}`);
           setUser(user);
         } catch (error) {
           console.log("Error: ", error);
