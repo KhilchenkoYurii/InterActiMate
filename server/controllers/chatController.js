@@ -45,10 +45,36 @@ exports.getChat = catchAsync(async (req, res, next) => {
       );
     }
     const chats = await Chat.find({ chatId: { $in: user.chats } });
-    res.status(200).json({
+    const newChats = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const chatOne of chats) {
+      const updatedChat = {
+        chatId: '',
+        ownerId: '',
+        participatorsName: '',
+        participatorsAvatar: '',
+        firstMessage: '',
+      };
+      updatedChat.chatId = chatOne.chatId;
+      updatedChat.ownerId = chatOne.ownerId;
+      const participator = await User.findOne({ userId: chatOne.chatUsers[0] });
+      updatedChat.participatorsName = participator.nickname;
+      updatedChat.participatorsAvatar = participator.avatar;
+      const firstMessage = await Message.findOne({
+        chatId: chatOne.chatId,
+      })
+        .limit(1)
+        .sort({ _id: -1 });
+      updatedChat.firstMessage = firstMessage.body;
+      newChats.push(updatedChat);
+      console.log(updatedChat);
+    }
+
+    // participation name, participation avatar, first message
+    await res.status(200).json({
       status: 'success',
       data: {
-        chats,
+        newChats,
       },
     });
   }
@@ -130,3 +156,36 @@ exports.deleteChat = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+// let updatedChat = {
+//   chatId: '',
+//   ownerId: '',
+//   participatorsName: '',
+//   participatorsAvatar: '',
+//   firstMessage: '',
+// };
+// updatedChat.chatId = chatOne.chatId;
+// updatedChat.ownerId = chatOne.ownerId;
+// const participator = User.findOne({ userId: chatOne.chatUsers[0] });
+// updatedChat.participatorsName = participator.nickname;
+// updatedChat.participatorsAvatar = participator.avatar;
+// const firstMessage = Message.findOne({
+//   chatId: chatOne.chatId,
+// })
+//   .limit(1)
+//   .sort({ _id: -1 });
+// updatedChat.firstMessage = firstMessage.body;
+// newChats.push(updatedChat);
+// console.log(updatedChat);
+
+// const participator = User.findOne({ userId: chatOne.chatUsers[0] });
+// chatOne.$set({ participatorsName: participator.nickname });
+// chatOne.participatorsAvatar = participator.avatar;
+// const firstMessage = Message.findOne({
+//   chatId: chatOne.chatId,
+// })
+//   .limit(1)
+//   .sort({ _id: -1 });
+// chatOne.firstMessage = firstMessage.body;
+// console.log(chatOne);
+// newChats.push(chatOne);
