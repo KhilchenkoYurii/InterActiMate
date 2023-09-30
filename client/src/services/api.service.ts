@@ -11,7 +11,9 @@ axiosService.interceptors.request.use((config) => {
     ...config
   };
 
-  configWithToken.headers.Authorization = `Bearer ${userToken}`;
+  if (userToken) {
+    configWithToken.headers.Authorization = `Bearer ${userToken}`;
+  }
 
   return configWithToken;
 });
