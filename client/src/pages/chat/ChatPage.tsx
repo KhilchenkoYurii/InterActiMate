@@ -10,9 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { chatSelector } from "../../store/chat/chat.selector";
 import { sendMessage } from "../../store/chat/chat.action";
 import { io } from 'socket.io-client';
-// import * as io from 'socket.io-client';
 
-// const socket = io.connect('http://localhost:3000');
+const userId = localStorage.getItem('userId');
 
 const socket = io('http://localhost:3000');
 
@@ -24,10 +23,13 @@ export const ChatPage = () => {
     console.log('CONNECTED!');
   });
 
+  socket.on('receive_message', (messages) => {
+    console.log('message received::', messages);
+  });
+
 
   const loadChats = async() => {
-    const usedId = localStorage.getItem('userId');
-    const chats = await ApiService.get(`chats/${usedId}`);
+    const chats = await ApiService.get(`chats/${userId}`);
     // TODO: remove log after displaying chats from API is implemented
     console.log('chats fetched::', chats);
   }
@@ -35,12 +37,16 @@ export const ChatPage = () => {
   useEffect(() => {
     loadChats();
     socket.connect();
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const handleSend = (message: string) => {
-    // dispatch(sendMessage(message));
     console.log('sending message');
-    socket.emit('join_chat', { username: 'keksik', chatId: 'CHT1' });
+    dispatch(sendMessage(message));
+    socket.emit('send_message', { message, userId, chatId: 'CHT1' });
   };
 
   return (
