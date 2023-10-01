@@ -9,10 +9,20 @@ import ApiService from "../../services/api.service";
 import { useDispatch, useSelector } from 'react-redux';
 import { chatSelector } from "../../store/chat/chat.selector";
 import { sendMessage } from "../../store/chat/chat.action";
+import { io } from 'socket.io-client';
+// import * as io from 'socket.io-client';
+
+// const socket = io.connect('http://localhost:3000');
+
+const socket = io('http://localhost:3000');
 
 export const ChatPage = () => {
   const dispatch = useDispatch();
   const { currentChat } = useSelector(chatSelector);
+
+  socket.on('connect', () => {
+    console.log('CONNECTED!');
+  });
 
 
   const loadChats = async() => {
@@ -24,10 +34,13 @@ export const ChatPage = () => {
 
   useEffect(() => {
     loadChats();
+    socket.connect();
   }, []);
 
   const handleSend = (message: string) => {
-    dispatch(sendMessage(message));
+    // dispatch(sendMessage(message));
+    console.log('sending message');
+    socket.emit('join_chat', { username: 'keksik', chatId: 'CHT1' });
   };
 
   return (
