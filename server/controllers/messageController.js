@@ -57,6 +57,14 @@ exports.getMessage = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getMessagesForChat = catchAsync(async (chatId) => {
+  const messages = await Message.find({ chatId: chatId });
+  if (messages.length === 0) {
+    return new AppError(`No messages found for chat with id ${chatId}`, 404);
+  }
+  return messages;
+});
+
 exports.createMessage = catchAsync(async (req, res) => {
   const data = req.body;
   const lastMessage = await Message.find().limit(1).sort({ _id: -1 });
@@ -72,6 +80,22 @@ exports.createMessage = catchAsync(async (req, res) => {
     },
   });
 });
+
+exports.createMessageFromChat = catchAsync(
+  async (sender, chatId, body, createdTime) => {
+    const data = {};
+    const lastMessage = await Message.find().limit(1).sort({ _id: -1 });
+    let lastNumber = lastMessage[0].messageId.slice(3);
+    lastNumber = lastNumber.substr(0, lastNumber.indexOf('_'));
+    const date = createdTime.toISOString();
+    data.messageId = `MSG${Number(lastNumber) + 1}_${date}`;
+    data.sender = sender;
+    data.chatId = chatId;
+    data.body = body;
+    const newMessage = await Message.create(data);
+    return newMessage;
+  },
+);
 
 exports.updateMessage = catchAsync(async (req, res, next) => {
   const message = await Message.findOneAndUpdate(

@@ -48,6 +48,7 @@
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
     "redux-saga": "^1.2.3",
+    "socket.io": "^4.7.2",
     "validator": "^13.11.0",
     "xss-clean": "^0.1.4"
   }

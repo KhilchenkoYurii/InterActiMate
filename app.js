@@ -10,7 +10,8 @@ const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { default: mongoose } = require('mongoose');
-require('dotenv').config();
+const { Server } = require('socket.io');
+const http = require('http');
 
 const userRouter = require('./server/routes/userRoutes');
 const postRouter = require('./server/routes/postRoutes');
@@ -20,6 +21,8 @@ const categoryRouter = require('./server/routes/categoryRoutes');
 const attachmentRouter = require('./server/routes/attachmentRoutes');
 //const AppError = require('./server/utils/appError');
 const globalErrorHandler = require('./server/controllers/errorController');
+const messageController = require('./server/controllers/messageController');
+const leaveChat = require('./server/utils/leaveChat');
 require('./server/configs/passport')(passport);
 
 const app = express();
@@ -83,5 +86,85 @@ app.all('*', (req, res, next) => {
 //
 // });
 app.use(globalErrorHandler);
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+});
+const CHAT_BOT = 'ChatBot';
+let chatRoom = ''; // E.g. javascript, node,...
+let allUsers = []; // All users in current chat room
+let chatRoomUsers;
+io.on('connection', (socket) => {
+  console.log(`User connected ${socket.id}`);
 
+  // We can write our socket event listeners in here...
+  socket.on('join_chat', (data) => {
+    const { username, chatId } = data; // Data sent from client when join_room event emitted
+    socket.join(chatId); // Join the user to a socket room
+
+    // Add this
+    const createdTime = Date.now(); // Current timestamp
+    // Send message to all users currently in the room, apart from the user that just joined
+    socket.to(chatId).emit('receive_message', {
+      message: `${username} has joined the chat room`,
+      username: CHAT_BOT,
+      createdTime,
+    });
+    // Send welcome msg to user that just joined chat only
+    socket.emit('receive_message', {
+      message: `Welcome ${username}`,
+      username: CHAT_BOT,
+      createdTime,
+    });
+    // Add this
+    // Save the new user to the room
+    chatRoom = chatId;
+    allUsers.push({ id: socket.id, username, chatId });
+    chatRoomUsers = allUsers.filter((user) => user.chatId === chatId);
+    socket.to(chatId).emit('chatroom_users', chatRoomUsers);
+    socket.emit('chatroom_users', chatRoomUsers);
+    const previousMessages = messageController.getMessagesForChat(chatId);
+    socket.emit('previous_messages', previousMessages);
+  });
+  socket.on('send_message', (data) => {
+    const { message, username, chatId, createdTime } = data;
+    io.in(chatId).emit('receive_message', data); // Send to all users in room, including sender
+    messageController.createMessageFromChat(
+      message,
+      username,
+      chatId,
+      createdTime,
+    );
+  });
+  socket.on('leave_chat', (data) => {
+    const { username, chatId } = data;
+    socket.leave(chatId);
+    const createdTime = Date.now();
+    // Remove user from memory
+    allUsers = leaveChat(socket.id, allUsers);
+    socket.to(chatId).emit('chatroom_users', allUsers);
+    socket.to(chatId).emit('receive_message', {
+      username: CHAT_BOT,
+      message: `${username} has left the chat`,
+      createdTime,
+    });
+    console.log(`${username} has left the chat`);
+  });
+  socket.on('disconnect', () => {
+    console.log('User disconnected from the chat');
+    const user = allUsers.find((userOne) => userOne.id === socket.id);
+    if (user.username) {
+      allUsers = leaveChat(socket.id, allUsers);
+      socket.to(chatRoom).emit('chatroom_users', allUsers);
+      socket.to(chatRoom).emit('receive_message', {
+        message: `${user.username} has disconnected from the chat.`,
+      });
+    }
+  });
+});
+
+server.listen(4000, () => 'Server is running on port 3000');
 module.exports = app;
