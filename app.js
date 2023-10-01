@@ -93,7 +93,6 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
-const CHAT_BOT = 'ChatBot';
 let chatRoom = ''; // E.g. javascript, node,...
 let allUsers = []; // All users in current chat room
 let chatRoomUsers;
@@ -104,22 +103,6 @@ io.on('connection', (socket) => {
   socket.on('join_chat', (data) => {
     const { username, chatId } = data; // Data sent from client when join_room event emitted
     socket.join(chatId); // Join the user to a socket room
-
-    // Add this
-    const createdTime = Date.now(); // Current timestamp
-    // Send message to all users currently in the room, apart from the user that just joined
-    socket.to(chatId).emit('receive_message', {
-      message: `${username} has joined the chat room`,
-      username: CHAT_BOT,
-      createdTime,
-    });
-    // Send welcome msg to user that just joined chat only
-    socket.emit('receive_message', {
-      message: `Welcome ${username}`,
-      username: CHAT_BOT,
-      createdTime,
-    });
-    // Add this
     // Save the new user to the room
     chatRoom = chatId;
     allUsers.push({ id: socket.id, username, chatId });
@@ -140,18 +123,11 @@ io.on('connection', (socket) => {
     );
   });
   socket.on('leave_chat', (data) => {
-    const { username, chatId } = data;
+    const { chatId } = data;
     socket.leave(chatId);
-    const createdTime = Date.now();
     // Remove user from memory
     allUsers = leaveChat(socket.id, allUsers);
     socket.to(chatId).emit('chatroom_users', allUsers);
-    socket.to(chatId).emit('receive_message', {
-      username: CHAT_BOT,
-      message: `${username} has left the chat`,
-      createdTime,
-    });
-    console.log(`${username} has left the chat`);
   });
   socket.on('disconnect', () => {
     console.log('User disconnected from the chat');
@@ -159,9 +135,6 @@ io.on('connection', (socket) => {
     if (user.username) {
       allUsers = leaveChat(socket.id, allUsers);
       socket.to(chatRoom).emit('chatroom_users', allUsers);
-      socket.to(chatRoom).emit('receive_message', {
-        message: `${user.username} has disconnected from the chat.`,
-      });
     }
   });
 });
