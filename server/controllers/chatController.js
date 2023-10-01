@@ -67,7 +67,6 @@ exports.getChat = catchAsync(async (req, res, next) => {
         .sort({ _id: -1 });
       updatedChat.firstMessage = firstMessage.body;
       newChats.push(updatedChat);
-      console.log(updatedChat);
     }
 
     // participation name, participation avatar, first message

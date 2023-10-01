@@ -30,6 +30,7 @@ io.on('connection', (socket) => {
   // We can write our socket event listeners in here...
   socket.on('join_chat', (data) => {
     const { username, chatId } = data; // Data sent from client when join_room event emitted
+    console.log(username);
     socket.join(chatId); // Join the user to a socket room
     // Save the new user to the room
     chatRoom = chatId;
@@ -41,14 +42,9 @@ io.on('connection', (socket) => {
     socket.emit('previous_messages', previousMessages);
   });
   socket.on('send_message', (data) => {
-    const { message, username, chatId, createdTime } = data;
+    const { message, userId, chatId } = data;
     io.in(chatId).emit('receive_message', data); // Send to all users in room, including sender
-    messageController.createMessageFromChat(
-      message,
-      username,
-      chatId,
-      createdTime,
-    );
+    messageController.createMessageFromChat(userId, chatId, message);
   });
   socket.on('leave_chat', (data) => {
     const { chatId } = data;
@@ -60,7 +56,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('User disconnected from the chat');
     const user = allUsers.find((userOne) => userOne.id === socket.id);
-    if (user.username) {
+    if (user && user.username) {
       allUsers = leaveChat(socket.id, allUsers);
       socket.to(chatRoom).emit('chatroom_users', allUsers);
     }
