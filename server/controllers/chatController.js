@@ -67,7 +67,6 @@ exports.getChat = catchAsync(async (req, res, next) => {
         .sort({ _id: -1 });
       updatedChat.firstMessage = firstMessage.body;
       newChats.push(updatedChat);
-      console.log(updatedChat);
     }
 
     // participation name, participation avatar, first message
@@ -156,36 +155,3 @@ exports.deleteChat = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
-
-// let updatedChat = {
-//   chatId: '',
-//   ownerId: '',
-//   participatorsName: '',
-//   participatorsAvatar: '',
-//   firstMessage: '',
-// };
-// updatedChat.chatId = chatOne.chatId;
-// updatedChat.ownerId = chatOne.ownerId;
-// const participator = User.findOne({ userId: chatOne.chatUsers[0] });
-// updatedChat.participatorsName = participator.nickname;
-// updatedChat.participatorsAvatar = participator.avatar;
-// const firstMessage = Message.findOne({
-//   chatId: chatOne.chatId,
-// })
-//   .limit(1)
-//   .sort({ _id: -1 });
-// updatedChat.firstMessage = firstMessage.body;
-// newChats.push(updatedChat);
-// console.log(updatedChat);
-
-// const participator = User.findOne({ userId: chatOne.chatUsers[0] });
-// chatOne.$set({ participatorsName: participator.nickname });
-// chatOne.participatorsAvatar = participator.avatar;
-// const firstMessage = Message.findOne({
-//   chatId: chatOne.chatId,
-// })
-//   .limit(1)
-//   .sort({ _id: -1 });
-// chatOne.firstMessage = firstMessage.body;
-// console.log(chatOne);
-// newChats.push(chatOne);
