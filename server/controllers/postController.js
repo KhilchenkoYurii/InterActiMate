@@ -28,10 +28,35 @@ exports.getPost = catchAsync(async (req, res, next) => {
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }
+  const postOwner = await User.findOne({ userId: post.owner });
+  if (!postOwner) {
+    return next(
+      new AppError(`No user found with id ${req.params.userId}`, 404),
+    );
+  }
+  let ownerData;
+  if (postOwner.showOnlyNickname) {
+    ownerData = {
+      userId: postOwner.userId,
+      nickname: postOwner.nickname,
+      bio: postOwner.bio,
+      createdPosts: postOwner.createdPosts,
+    };
+  } else {
+    ownerData = {
+      userId: postOwner.userId,
+      nickname: postOwner.nickname,
+      name: postOwner.name,
+      surname: postOwner.surname,
+      bio: postOwner.bio,
+      createdPosts: postOwner.createdPosts,
+    };
+  }
   res.status(200).json({
     status: 'success',
     data: {
-      post,
+      post: post,
+      owner: ownerData,
     },
   });
 });

@@ -45,10 +45,35 @@ exports.getChat = catchAsync(async (req, res, next) => {
       );
     }
     const chats = await Chat.find({ chatId: { $in: user.chats } });
-    res.status(200).json({
+    const newChats = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for await (const chatOne of chats) {
+      const updatedChat = {
+        chatId: '',
+        ownerId: '',
+        participatorsName: '',
+        participatorsAvatar: '',
+        firstMessage: '',
+      };
+      updatedChat.chatId = chatOne.chatId;
+      updatedChat.ownerId = chatOne.ownerId;
+      const participator = await User.findOne({ userId: chatOne.chatUsers[0] });
+      updatedChat.participatorsName = participator.nickname;
+      updatedChat.participatorsAvatar = participator.avatar;
+      const firstMessage = await Message.findOne({
+        chatId: chatOne.chatId,
+      })
+        .limit(1)
+        .sort({ _id: -1 });
+      updatedChat.firstMessage = firstMessage.body;
+      newChats.push(updatedChat);
+    }
+
+    // participation name, participation avatar, first message
+    await res.status(200).json({
       status: 'success',
       data: {
-        chats,
+        newChats,
       },
     });
   }
