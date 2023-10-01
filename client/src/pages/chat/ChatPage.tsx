@@ -13,7 +13,9 @@ import { io } from 'socket.io-client';
 
 const userId = localStorage.getItem('userId');
 
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:3000', {
+  autoConnect: false
+});
 
 export const ChatPage = () => {
   const dispatch = useDispatch();
@@ -27,16 +29,24 @@ export const ChatPage = () => {
     console.log('message received::', messages);
   });
 
+  socket.on('previous_messages', (messages) => {
+    console.log('previous messages::', messages);
+  });
+
 
   const loadChats = async() => {
+    socket.connect();
     const chats = await ApiService.get(`chats/${userId}`);
     // TODO: remove log after displaying chats from API is implemented
     console.log('chats fetched::', chats);
+
+    socket.emit('join_chat', { username: 'keksik', chatId: 'CHT1' });
   }
 
   useEffect(() => {
+    // TODO: remove log after chat is debugged
+    console.log('LOAD');
     loadChats();
-    socket.connect();
 
     return () => {
       socket.disconnect();
