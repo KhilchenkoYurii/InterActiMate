@@ -28,7 +28,14 @@ router
   .route('/updateMyPassword')
   .put(authController.protect, authController.updatePassword);
 
-router.route('/updateMe').put(authController.protect, userController.updateMe);
+router
+  .route('/updateMe')
+  .put(
+    authController.protect,
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateMe,
+  );
 
 router
   .route('/deleteMe')
