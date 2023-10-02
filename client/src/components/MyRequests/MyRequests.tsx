@@ -1,22 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { IRequestCard } from "../RequestCard/RequestCard";
-import "./MyRequests.scss";
+import { useNavigate } from 'react-router-dom';
+import { IRequestCard } from '../RequestCard/RequestCard';
+import './MyRequests.scss';
 
 interface IMyRequests {
   requests: IRequestCard[];
 }
 
 function MyRequests({ requests }: IMyRequests) {
-  console.log("requests :", requests);
+  console.log('requests :', requests);
   const navigate = useNavigate();
   const navigateToRequest = (_id: string) => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
     navigate(`/request?${queryParams}`);
   };
 
-  const imageNotFound = "https://zeppelin-marine.com.ua/img/noimage.jpg";
+  const imageNotFound = 'https://zeppelin-marine.com.ua/img/noimage.jpg';
   const getDate = (date: string): string | undefined => {
-    return new Date(date).toLocaleString("ru-RU").split(",").shift();
+    return new Date(date).toLocaleString('ru-RU').split(',').shift();
   };
 
   return (
@@ -33,12 +33,12 @@ function MyRequests({ requests }: IMyRequests) {
           </div>
           <div>
             <img
-              className="object-contain w-26 h-32 rounded-md"
+              className="max-w-[8rem] h-28 object-cover rounded-md"
               src={
                 req.attachments[0] ? req.attachments[0].address : imageNotFound
               }
               alt={
-                req.attachments[0] ? req.attachments[0].alt : "Image not found"
+                req.attachments[0] ? req.attachments[0].alt : 'Image not found'
               }
             />
           </div>
