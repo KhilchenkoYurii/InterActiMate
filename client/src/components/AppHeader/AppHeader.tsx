@@ -31,6 +31,7 @@ export const AppHeader = () => {
       onClick: () => {
         apiService.get(`users/logout`);
         localStorage.removeItem("userId");
+        navigate("/");
         window.location.reload();
         clearCookieHandler();
       },
