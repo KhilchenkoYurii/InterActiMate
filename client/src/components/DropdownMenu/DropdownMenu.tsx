@@ -4,13 +4,25 @@ import MenuItem from "@mui/material/MenuItem";
 import UserIcon from "../../assets/icons/user_filled.svg";
 import { Fade } from "@mui/material";
 
-export default function DropdownMenu({ user }: any) {
+interface IMenuItem {
+  title: string;
+  onClick: () => void;
+}
+
+interface IDropdownMenu {
+  user: any;
+  menuItems: IMenuItem[];
+}
+
+export default function DropdownMenu({ user, menuItems }: IDropdownMenu) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose = (onClick?: () => void) => {
+    if (onClick) onClick();
     setAnchorEl(null);
   };
 
@@ -37,12 +49,15 @@ export default function DropdownMenu({ user }: any) {
         TransitionComponent={Fade}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose()}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>Мої оголошення</MenuItem>
-        <MenuItem onClick={handleClose}>Вийти</MenuItem>
+        {menuItems.map((item: IMenuItem) => (
+          <MenuItem key={item.title} onClick={() => handleClose(item.onClick)}>
+            {item.title}
+          </MenuItem>
+        ))}
       </Menu>
     </div>
   );

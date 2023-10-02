@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import apiService from "../../services/api.service";
 import { useEffect, useState } from "react";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { clearCookieHandler } from "../../pages/auth/setCookieHandler";
 
 export const AppHeader = () => {
   const navigate = useNavigate();
@@ -17,6 +18,24 @@ export const AppHeader = () => {
 
   const token = document.cookie.split("jwt=").pop();
   const userId = localStorage.getItem("userId");
+
+  const menuItems = [
+    {
+      title: "Мої оголошення",
+      onClick: () => {
+        navigate("/");
+      },
+    },
+    {
+      title: "Вийти",
+      onClick: () => {
+        apiService.get(`users/logout`);
+        localStorage.removeItem("userId");
+        window.location.reload();
+        clearCookieHandler();
+      },
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -57,10 +76,8 @@ export const AppHeader = () => {
           buttonType="outline"
         />
         <div className="profile-btn">
-          {token ? (
-            <div>
-              <DropdownMenu user={user} />
-            </div>
+          {userId ? (
+            <DropdownMenu user={user} menuItems={menuItems} />
           ) : (
             <img
               className="cursor-pointer login"
