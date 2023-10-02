@@ -23,7 +23,7 @@ export const AppHeader = () => {
     {
       title: "Мої оголошення",
       onClick: () => {
-        navigate("/");
+        navigate("/my-requests");
       },
     },
     {

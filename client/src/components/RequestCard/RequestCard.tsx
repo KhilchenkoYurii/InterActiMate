@@ -1,7 +1,12 @@
-import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
-import './RequestCard.scss';
-import { ReactComponent as HeartIcon } from '../../assets/icons/FavIconFilled.svg';
-import { useNavigate } from 'react-router-dom';
+import { ButtonWithIcon } from "../ButtonWithIcon/ButtonWithIcon";
+import "./RequestCard.scss";
+import { ReactComponent as HeartIcon } from "../../assets/icons/FavIconFilled.svg";
+import { useNavigate } from "react-router-dom";
+
+interface IAttachments {
+  address: string;
+  alt: string;
+}
 
 //TODO: Add type for participators
 export interface IRequestCard {
@@ -12,22 +17,32 @@ export interface IRequestCard {
   postId: string;
   dateOfCreation: string;
   owner: string;
-  participators: any;
+  participators: string[];
+  attachments: IAttachments[];
 }
 
-export const RequestCard = ({ title, body, categories, _id }: IRequestCard) => {
+export const RequestCard = ({
+  title,
+  body,
+  categories,
+  _id,
+  attachments,
+}: IRequestCard) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
     navigate(`request?${queryParams}`);
   };
 
+  const imageNotFound = "https://zeppelin-marine.com.ua/img/noimage.jpg";
+
   return (
     <div className="card" onClick={navigateToRequest}>
       <div className="card-img-container">
         <img
           className="card-img"
-          src="https://i1.sndcdn.com/artworks-000635780677-yhmbpw-t500x500.jpg"
+          src={attachments[0] ? attachments[0].address : imageNotFound}
+          alt={attachments[0] ? attachments[0].alt : "Image not found"}
         />
       </div>
       <div className="info">
@@ -36,24 +51,21 @@ export const RequestCard = ({ title, body, categories, _id }: IRequestCard) => {
         </div>
 
         <span className="text-body">{body}</span>
-
-        <div className="card-footer">
-          <div className="categories-list">
-            {categories.map((cat, index) => (
-              <span key={index} className="text-body text-body_category">
-                {`${cat} ${index !== categories?.length - 1 ? '|' : ''} `}
-              </span>
-            ))}
+      </div>
+      <div className="flex justify-between items-center w-full">
+        <div>
+          <div className="flex-row card-categories">
+            <div>{categories[0]}</div>
           </div>
-
-          <ButtonWithIcon
-            icon={<HeartIcon />}
-            isSvg={true}
-            text=""
-            onClick={() => {}}
-            buttonType="primary"
-          />
         </div>
+
+        <ButtonWithIcon
+          icon={<HeartIcon />}
+          isSvg={true}
+          text=""
+          onClick={() => {}}
+          buttonType="primary"
+        />
       </div>
     </div>
   );
