@@ -1,5 +1,5 @@
-@use '../../config/GlobalStyles/variables';
-@use '../../config/GlobalStyles/mixins';
+@use "../../config/GlobalStyles/variables";
+@use "../../config/GlobalStyles/mixins";
 
 .card-body {
   @include mixins.display-flex(
@@ -89,7 +89,6 @@
   );
   flex-wrap: wrap;
   gap: 5px;
-  opacity: 0.5;
   transition: variables.$transition-time;
   font-size: 13px;
 }
@@ -101,7 +100,6 @@
     $align-items: center
   );
   color: variables.$dark-blue;
-  opacity: 0.5;
   flex-wrap: wrap;
   gap: 15px;
   font-size: 13px;
@@ -111,10 +109,6 @@
   cursor: pointer;
 }
 
-.card-other-container:hover {
-  opacity: 1;
-}
-
 .card-other-user {
   @include mixins.display-flex(
     $direction: row,
@@ -122,10 +116,6 @@
     $align-items: center
   );
   gap: 10px;
-}
-
-.card-hr {
-  opacity: 0.3;
 }
 
 .prevent-select {
@@ -145,7 +135,6 @@
 .card-apply-btn-not-allowed div {
   pointer-events: none;
   background: grey;
-  opacity: 0.5;
   border: none;
   margin-top: 20px;
   box-shadow:
@@ -166,7 +155,7 @@
   --organic-arrow-thickness: 3px !important;
   --organic-arrow-border-radius: 0px !important;
   --organic-arrow-height: 23px !important;
-  --organic-arrow-color: rgba(23, 107, 135, 0.84) !important;
+  --organic-arrow-color: #176b87d6 !important;
   --loader-bar-color: rgba(23, 107, 135, 0.2) !important;
   --loader-bar-height: 1px !important;
 }
@@ -174,4 +163,9 @@
 .card-placeholder {
   width: 100%;
   height: calc(100vh - 134px);
+}
+
+.card-hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
