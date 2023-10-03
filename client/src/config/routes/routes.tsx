@@ -9,14 +9,17 @@ import { RequestPage } from "../../pages/request/RequestPage";
 import { AddRequestPage } from "../../pages/add-request/AddRequestPage";
 import { ChatPage } from "../../pages/chat/ChatPage";
 import { LoginPage } from "../../pages/auth/LoginPage";
+import MyRequests from "../../pages/my-requests/MyRequestsPage";
 
-const DisplayedRoute = (element: ReactElement, hasHeader: boolean = true, hasFooter: boolean = true) => {
+const DisplayedRoute = (
+  element: ReactElement,
+  hasHeader: boolean = true,
+  hasFooter: boolean = true,
+) => {
   return (
     <>
       {hasHeader && <AppHeader />}
-      <div className='app-content'>
-        {element}
-      </div>
+      <div className="app-content">{element}</div>
       {hasFooter && <AppFooter />}
     </>
   );
@@ -48,17 +51,25 @@ export const allRoutes: IRoute[] = [
     component: <AddRequestPage />,
   },
   {
-    path: '/chat',
+    path: "/my-requests",
+    component: <MyRequests />,
+  },
+  {
+    path: "/chat",
     component: <ChatPage />,
     hasFooter: false,
-  }
+  },
 ];
 
 export const AllRoutes = () => {
   return (
     <Routes>
       {allRoutes.map(({ path, component, hasHeader, hasFooter }) => (
-        <Route key={path} path={path} element={DisplayedRoute(component, hasHeader, hasFooter)} />
+        <Route
+          key={path}
+          path={path}
+          element={DisplayedRoute(component, hasHeader, hasFooter)}
+        />
       ))}
     </Routes>
   );

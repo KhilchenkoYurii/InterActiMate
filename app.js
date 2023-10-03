@@ -68,7 +68,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/users', userRouter);
-app.use('/posts', postRouter);
+app.use('/posts', hpp({ whitelist: ['postId'] }), postRouter);
 app.use('/chats', chatRouter);
 app.use('/messages', messageRouter);
 app.use('/categories', categoryRouter);

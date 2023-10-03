@@ -1,9 +1,53 @@
+const multer = require('multer');
+const sharp = require('sharp');
+
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const PostStatuses = require('../configs/postStatuses');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError(`Not an image! Please, upload only image!`, 400), false);
+  }
+};
+
+const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
+
+exports.uploadPostImages = upload.fields([
+  {
+    name: 'images',
+    maxCount: 5,
+  },
+]);
+
+exports.resizePostPhotos = catchAsync(async (req, res, next) => {
+  if (!req.files) return next();
+  req.body.attachments = [];
+  await Promise.all(
+    req.files.images.map(async (image, i) => {
+      const filename = `server/public/img/posts/post-${
+        req.params.id
+      }-${Date.now()}-${i + 1}.jpeg`;
+      await sharp(image.buffer)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`${filename}`);
+      req.body.attachments.push({
+        alt: `image for post ${req.params.id}`,
+        address: filename,
+      });
+    }),
+  );
+
+  next();
+});
 
 exports.getAllPosts = catchAsync(async (req, res) => {
   const features = new APIFeatures(Post.find(), req.query)
@@ -28,10 +72,39 @@ exports.getPost = catchAsync(async (req, res, next) => {
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }
+  const postOwner = await User.findOne({ userId: post.owner });
+  if (!postOwner) {
+    return next(
+      new AppError(`No user found with id ${req.params.userId}`, 404),
+    );
+  }
+  let ownerData;
+  if (postOwner.showOnlyNickname) {
+    ownerData = {
+      userId: postOwner.userId,
+      nickname: postOwner.nickname,
+      bio: postOwner.bio,
+      createdPosts: postOwner.createdPosts,
+      phone: postOwner.phone,
+      email: postOwner.email,
+    };
+  } else {
+    ownerData = {
+      userId: postOwner.userId,
+      nickname: postOwner.nickname,
+      name: postOwner.name,
+      surname: postOwner.surname,
+      bio: postOwner.bio,
+      createdPosts: postOwner.createdPosts,
+      phone: postOwner.phone,
+      email: postOwner.email,
+    };
+  }
   res.status(200).json({
     status: 'success',
     data: {
-      post,
+      post: post,
+      owner: ownerData,
     },
   });
 });

@@ -1,0 +1,31 @@
+@use "../../config/GlobalStyles/variables" as var;
+@use "../../config/GlobalStyles/mixins";
+
+.reqs-container {
+  @include mixins.display-flex(
+    $direction: row,
+    $justify-content: space-between,
+    $align-items: center
+  );
+  width: 100%;
+  max-width: 90%;
+  background-color: var.$gray;
+  border-radius: var.$border-radius;
+  padding: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.reqs-date {
+  font-size: small;
+}
+
+.text-title {
+  font-size: 25px;
+}
+
+.text-body {
+  font-size: 15px;
+  font-weight: 600;
+  color: var.$primary100;
+}

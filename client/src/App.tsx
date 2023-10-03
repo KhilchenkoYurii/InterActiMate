@@ -1,18 +1,27 @@
-import './App.scss';
-import { AllRoutes } from './config/routes/routes';
-import { ReactNotifications } from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
-import { Provider } from 'react-redux';
-import { store } from './store';
+import { ThemeProvider, createTheme } from "@mui/material";
+import "./App.scss";
+import { AllRoutes } from "./config/routes/routes";
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+import { Provider } from "react-redux";
+import { store } from "./store";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Jura, sans-serif",
+  },
+});
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
-        <ReactNotifications />
-        <AllRoutes />
+        <div className="App">
+          <ReactNotifications />
+          <AllRoutes />
+        </div>
       </Provider>
-    </div>
+    </ThemeProvider>
   );
 }
 

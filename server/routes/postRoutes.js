@@ -12,8 +12,18 @@ router
 router
   .route('/:id')
   .get(postController.getPost)
-  .post(authController.protect, postController.createPost)
-  .put(authController.protect, postController.updatePost)
+  .post(
+    authController.protect,
+    postController.uploadPostImages,
+    postController.resizePostPhotos,
+    postController.createPost,
+  )
+  .put(
+    authController.protect,
+    postController.uploadPostImages,
+    postController.resizePostPhotos,
+    postController.updatePost,
+  )
   .delete(
     authController.protect,
     authController.restrictTo('Admin'),

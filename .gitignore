@@ -130,3 +130,7 @@ dist
 .pnp.*
 # Build fiels
 build/
+
+*.env
+config.env
+*.jpeg

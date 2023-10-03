@@ -59,11 +59,13 @@ export const HomePage = () => {
 
   return (
     <div>
-      <Tabs
-        tabs={tabs}
-        activeTabName={tabName}
-        setTabName={(tabName: string) => setTabName(tabName)}
-      />
+      {userId && (
+        <Tabs
+          tabs={tabs}
+          activeTabName={tabName}
+          setTabName={(tabName: string) => setTabName(tabName)}
+        />
+      )}
       <div className="cards-container">{getRequestsView()}</div>
     </div>
   );

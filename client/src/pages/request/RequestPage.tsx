@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import ApiService from '../../services/api.service';
-import { IRequestCard } from '../../components/RequestCard/RequestCard';
-import { Card } from '../../components/Card/Card';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import ApiService from "../../services/api.service";
+import { IRequestCard } from "../../components/RequestCard/RequestCard";
+import { Card } from "../../components/Card/Card";
+import { useSearchParams } from "react-router-dom";
 
 export const RequestPage = () => {
   const [searchParams] = useSearchParams();
@@ -12,7 +12,7 @@ export const RequestPage = () => {
   );
 
   useEffect(() => {
-    const _id = searchParams.get('id');
+    const _id = searchParams.get("id");
 
     //getRequestById
     (async () => {
