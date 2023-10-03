@@ -30,8 +30,13 @@ const put = async(url: string, params?: any) => {
   return await axiosService.put(`${baseURL}/${url}`, params);
 };
 
+const del = async(url: string, params?: any) => {
+  return await axiosService.delete(`${baseURL}/${url}`, params);
+};
+
 export default {
   get,
   post,
-  put
+  put,
+  del
 };

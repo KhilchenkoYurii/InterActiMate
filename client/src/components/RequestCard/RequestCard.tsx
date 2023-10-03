@@ -9,7 +9,8 @@ interface IAttachments {
   alt: string;
 }
 
-//TODO: Add type for participators
+export type TStatus = 'Active' | 'Done' | 'Canceled' | 'Banned';
+
 export interface IRequestCard {
   title: string;
   body: string;
@@ -20,6 +21,7 @@ export interface IRequestCard {
   owner: string;
   participators: string[];
   attachments: IAttachments[];
+  status: TStatus;
 }
 
 export const RequestCard = ({

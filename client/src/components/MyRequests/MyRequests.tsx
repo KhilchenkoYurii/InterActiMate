@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import constants from '../../services/constants';
 import './MyRequests.scss';
+import apiService from '../../services/api.service';
 
 interface IMyRequests {
   requests: IRequestCard[];
@@ -33,28 +34,58 @@ function MyRequests({ requests }: IMyRequests) {
             <span className="reqs-date">{getDate(req.dateOfCreation)}</span>
             <hr className="max-w-[8rem] mt-2 mb-3" />
             <Stack spacing={2} direction="row">
-              <Button
-                style={{
-                  backgroundColor: '#176b87',
-                }}
-                variant="contained"
-              >
+              <Button disabled variant="contained">
                 Редагувати
               </Button>
-              <Button
-                variant="contained"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  let answer = window.confirm(
-                    `Ви впевнені що хочете видалити "${req.title}"?`,
-                  );
+              {req.status === constants.postStatus.active ? (
+                <Button
+                  variant="contained"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    let answer = window.confirm(
+                      `Ви впевнені що хочете деактивувати "${req.title}"?`,
+                    );
 
-                  console.log('answer :', answer);
-                }}
-                color="error"
-              >
-                Видалити
-              </Button>
+                    if (answer) {
+                      try {
+                        await apiService.put(`posts/${req.postId}`, {
+                          status: constants.postStatus.canceled,
+                        });
+                        window.location.reload();
+                      } catch (error) {
+                        console.log('Error: ', error);
+                      }
+                    }
+                  }}
+                  color="error"
+                >
+                  Деактивувати
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    let answer = window.confirm(
+                      `Ви впевнені що хочете активувати "${req.title}"?`,
+                    );
+
+                    if (answer) {
+                      try {
+                        await apiService.put(`posts/${req.postId}`, {
+                          status: constants.postStatus.active,
+                        });
+                        window.location.reload();
+                      } catch (error) {
+                        console.log('Error: ', error);
+                      }
+                    }
+                  }}
+                  color="success"
+                >
+                  Активувати
+                </Button>
+              )}
             </Stack>
           </div>
           <div className="h-full">
