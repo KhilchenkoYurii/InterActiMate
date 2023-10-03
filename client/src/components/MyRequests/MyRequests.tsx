@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { IRequestCard } from '../RequestCard/RequestCard';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import constants from '../../services/constants';
 import './MyRequests.scss';
 
@@ -8,7 +10,6 @@ interface IMyRequests {
 }
 
 function MyRequests({ requests }: IMyRequests) {
-  console.log('requests :', requests);
   const navigate = useNavigate();
   const navigateToRequest = (_id: string) => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
@@ -26,14 +27,39 @@ function MyRequests({ requests }: IMyRequests) {
           className="reqs-container my-3"
           onClick={() => navigateToRequest(req._id)}
         >
-          <div>
+          <div className="w-full">
             <div className="text-title">{req.title}</div>
             <div className="text-body">{req.body}</div>
             <span className="reqs-date">{getDate(req.dateOfCreation)}</span>
+            <hr className="max-w-[8rem] mt-2 mb-3" />
+            <Stack spacing={2} direction="row">
+              <Button
+                style={{
+                  backgroundColor: '#176b87',
+                }}
+                variant="contained"
+              >
+                Редагувати
+              </Button>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  let answer = window.confirm(
+                    `Ви впевнені що хочете видалити "${req.title}"?`,
+                  );
+
+                  console.log('answer :', answer);
+                }}
+                color="error"
+              >
+                Видалити
+              </Button>
+            </Stack>
           </div>
-          <div>
+          <div className="h-full">
             <img
-              className="max-w-[8rem] h-28 object-cover rounded-md"
+              className="max-w-[11rem] object-cover rounded-md"
               src={
                 req.attachments[0]
                   ? req.attachments[0].address
