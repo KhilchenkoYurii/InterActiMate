@@ -1,23 +1,42 @@
 import { AppLogo } from "../AppLogo/AppLogo";
 import { ButtonWithIcon } from "../ButtonWithIcon/ButtonWithIcon";
 import { SearchBar } from "../SearchBar/SearchBar";
-import UserIcon from "../../assets/icons/user_filled.svg";
 import LoginIcon from "../../assets/icons/LoginIcon.svg";
 import ChatIcon from "../../assets/icons/chat.svg";
 import PlusFilledIcon from "../../assets/icons/plus-filled.svg";
 import HeartIcon from "../../assets/icons/heart.svg";
 import "./AppHeader.scss";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiService from "../../services/api.service";
 import { useEffect, useState } from "react";
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import { clearCookieHandler } from "../../pages/auth/setCookieHandler";
 
 export const AppHeader = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const [user, setUser] = useState(undefined) as any;
 
   const token = document.cookie.split("jwt=").pop();
   const userId = localStorage.getItem("userId");
+
+  const menuItems = [
+    {
+      title: "Мої оголошення",
+      onClick: () => {
+        navigate("/my-requests");
+      },
+    },
+    {
+      title: "Вийти",
+      onClick: () => {
+        apiService.get(`users/logout`);
+        localStorage.removeItem("userId");
+        navigate("/");
+        window.location.reload();
+        clearCookieHandler();
+      },
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -41,26 +60,25 @@ export const AppHeader = () => {
       <div className="header-container">
         <AppLogo />
         <SearchBar />
-        <Link to={'/chat'}>
+        <Link to={"/chat"}>
           <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
         </Link>
-        <Link to={'/chat'}>
-          <ButtonWithIcon icon={PlusFilledIcon} text="Додати оголошення" onClick={() => {}} />
+        <Link to={"/chat"}>
+          <ButtonWithIcon
+            icon={PlusFilledIcon}
+            text="Додати оголошення"
+            onClick={() => {}}
+          />
         </Link>
         <ButtonWithIcon
           icon={HeartIcon}
           text=""
-          onClick={() => { }}
+          onClick={() => {}}
           buttonType="outline"
         />
         <div className="profile-btn">
-          {token ? (
-            <img
-              className="rounded-full"
-              src={user?.avatar ? user?.avatar : UserIcon}
-              width={30}
-              height={30}
-            />
+          {userId ? (
+            <DropdownMenu user={user} menuItems={menuItems} />
           ) : (
             <img
               className="cursor-pointer login"
@@ -70,7 +88,7 @@ export const AppHeader = () => {
             />
           )}
         </div>
-        </div>
       </div>
-      );
+    </div>
+  );
 };

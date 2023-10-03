@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Login from "../../components/Auth/Login/Login";
 import apiService from "../../services/api.service";
 import { notify } from "../../services/notification.service";
-import setCookieHandler from "./setCookieHandler";
+import { setCookieHandler } from "./setCookieHandler";
 
 export const LoginPage = () => {
   const nav = useNavigate();

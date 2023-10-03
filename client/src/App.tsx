@@ -1,14 +1,23 @@
-import './App.scss';
-import { AllRoutes } from './config/routes/routes';
-import { ReactNotifications } from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
+import { ThemeProvider, createTheme } from "@mui/material";
+import "./App.scss";
+import { AllRoutes } from "./config/routes/routes";
+import { ReactNotifications } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Jura, sans-serif",
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <ReactNotifications />
-      <AllRoutes />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <ReactNotifications />
+        <AllRoutes />
+      </div>
+    </ThemeProvider>
   );
 }
 
