@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { IRequestCard } from '../RequestCard/RequestCard';
+import constants from '../../services/constants';
 import './MyRequests.scss';
 
 interface IMyRequests {
@@ -14,7 +15,6 @@ function MyRequests({ requests }: IMyRequests) {
     navigate(`/request?${queryParams}`);
   };
 
-  const imageNotFound = 'https://zeppelin-marine.com.ua/img/noimage.jpg';
   const getDate = (date: string): string | undefined => {
     return new Date(date).toLocaleString('ru-RU').split(',').shift();
   };
@@ -35,7 +35,9 @@ function MyRequests({ requests }: IMyRequests) {
             <img
               className="max-w-[8rem] h-28 object-cover rounded-md"
               src={
-                req.attachments[0] ? req.attachments[0].address : imageNotFound
+                req.attachments[0]
+                  ? req.attachments[0].address
+                  : constants.imageNotFound
               }
               alt={
                 req.attachments[0] ? req.attachments[0].alt : 'Image not found'
