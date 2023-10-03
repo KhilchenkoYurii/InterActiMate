@@ -85,6 +85,8 @@ exports.getPost = catchAsync(async (req, res, next) => {
       nickname: postOwner.nickname,
       bio: postOwner.bio,
       createdPosts: postOwner.createdPosts,
+      phone: postOwner.phone,
+      email: postOwner.email,
     };
   } else {
     ownerData = {
@@ -94,6 +96,8 @@ exports.getPost = catchAsync(async (req, res, next) => {
       surname: postOwner.surname,
       bio: postOwner.bio,
       createdPosts: postOwner.createdPosts,
+      phone: postOwner.phone,
+      email: postOwner.email,
     };
   }
   res.status(200).json({
