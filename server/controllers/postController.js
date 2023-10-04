@@ -313,3 +313,45 @@ exports.changePostStatus = catchAsync(async (req, res, next) => {
     data: post,
   });
 });
+
+exports.shareContacts = catchAsync(async (req, res, next) => {
+  // eslint-disable-next-line no-prototype-builtins
+  //form: contact(email\phone), name,
+  // in request: data from form, Owner email, postId
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(
+      new AppError(`There is no user with this ${req.body.email}!`, 404),
+    );
+  }
+  const post = await Post.findOne({ postId: req.body.postId });
+  if (!post) {
+    return next(
+      new AppError(`There is no post with id ${req.body.postId}!`, 404),
+    );
+  }
+
+  const message = `Hi, ${user.nickname} Someone answered on your post ${post.title}.\n
+  Here is contacts:
+  Name: ${req.body.name}.
+  Contact!: ${req.body.contact}
+  Please, get in touch with them!)`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your new teammate',
+      message,
+    });
+    res.status(200).json({ success: true, message: 'Contacts shared' });
+  } catch (error) {
+    console.log(error);
+    return next(
+      new AppError(`There was error sending the email. Try again later`, 500),
+    );
+  }
+  res.status(200).json({
+    status: 'success',
+    message: 'Contacts sended',
+  });
+});
