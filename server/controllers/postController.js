@@ -7,6 +7,7 @@ const PostStatuses = require('../configs/postStatuses');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const sendEmail = require('../utils/email');
 
 const multerStorage = multer.memoryStorage();
 
@@ -66,9 +67,12 @@ exports.getAllPosts = catchAsync(async (req, res) => {
 });
 
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findOne({
-    $or: [{ postId: req.params.id }, { _id: req.params.id }],
-  });
+  let post;
+  if (req.params.id.includes('PST')) {
+    post = await Post.findOne({ postId: req.params.id });
+  } else {
+    post = await Post.findOne({ _id: req.params.id });
+  }
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }

@@ -11,9 +11,11 @@ module.exports = class APIFeatures {
     excludedFields.forEach((field) => delete queryObj[field]);
     //console.log(req.query, queryObj);
     // 2) Advanced filtering
-
     let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt|ne)\b/g,
+      (match) => `$${match}`,
+    );
     this.query.find(JSON.parse(queryStr));
     return this;
   }

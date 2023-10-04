@@ -54,9 +54,9 @@ const postSchema = new Schema({
   },
 });
 
-postSchema.pre('find', async function (next) {
-  this.find({ status: 'Active' });
-  next();
-});
+// postSchema.pre('find', async function (next) {
+//   this.find({ status: 'Active' });
+//   next();
+// });
 
 module.exports = moongoose.model('Post', postSchema);
