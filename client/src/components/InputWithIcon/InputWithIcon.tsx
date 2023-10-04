@@ -1,10 +1,10 @@
-import { useState } from "react";
-import "./InputWithIcon.scss";
-import PassIcon from "../../assets/icons/Pass.svg";
-import ShowPassIcon from "../../assets/icons/showPass.svg";
+import { useState } from 'react';
+import './InputWithIcon.scss';
+import PassIcon from '../../assets/icons/Pass.svg';
+import ShowPassIcon from '../../assets/icons/showPass.svg';
 
 interface IInputWithIcon {
-  icon: string;
+  icon?: string;
   isPass?: boolean;
   value?: string;
   onChange?: (event: any) => void;
@@ -26,13 +26,13 @@ export const InputWithIcon = ({
       <div
         className={
           error
-            ? "container container-validation-error"
-            : "container container-border"
+            ? 'container-input container-validation-error'
+            : 'container-input container-border'
         }
       >
-        <img src={icon} />
+        {icon && <img src={icon} />}
         <input
-          type={isPass && !showPass ? "password" : "text"}
+          type={isPass && !showPass ? 'password' : 'text'}
           className="search"
           value={value}
           onChange={onChange}

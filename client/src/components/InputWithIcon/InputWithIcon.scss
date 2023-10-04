@@ -1,7 +1,7 @@
-@use "../../config/GlobalStyles/variables";
-@use "../../config/GlobalStyles/mixins";
+@use '../../config/GlobalStyles/variables';
+@use '../../config/GlobalStyles/mixins';
 
-.container {
+.container-input {
   @include mixins.display-flex();
   border-radius: 4px;
   background: rgba(217, 217, 217, 0.22);

@@ -1,10 +1,11 @@
-import { TitleWithIcons } from "../../components/PageTitleWithIcons/TitleWithIcons";
-import PlusFilledIcon from "../../assets/icons/plus-filled.svg";
+import AddEditRequest from '../../components/AddEditRequest/AddEditRequest';
+import { TitleWithIcons } from '../../components/PageTitleWithIcons/TitleWithIcons';
 
 export const AddRequestPage = () => {
   return (
-    <div className="name">
-      <TitleWithIcons icon={PlusFilledIcon} title="Створити оголошення" />
+    <div>
+      <TitleWithIcons title="Створити оголошення" />
+      <AddEditRequest />
     </div>
   );
 };
