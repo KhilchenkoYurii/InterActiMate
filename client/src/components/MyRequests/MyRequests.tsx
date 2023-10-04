@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { IRequestCard } from '../RequestCard/RequestCard';
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import constants from '../../services/constants';
 import './MyRequests.scss';
 import apiService from '../../services/api.service';
@@ -33,7 +32,7 @@ function MyRequests({ requests }: IMyRequests) {
             <div className="text-body">{req.body}</div>
             <span className="reqs-date">{getDate(req.dateOfCreation)}</span>
             <hr className="max-w-[8rem] mt-2 mb-3" />
-            <Stack spacing={2} direction="row">
+            <div className="flex gap-2 flex-wrap">
               <Button disabled variant="contained">
                 Редагувати
               </Button>
@@ -86,7 +85,7 @@ function MyRequests({ requests }: IMyRequests) {
                   Активувати
                 </Button>
               )}
-            </Stack>
+            </div>
           </div>
           <div className="h-full">
             <img

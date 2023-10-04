@@ -12,6 +12,7 @@ function MyRequestsPage() {
 
   const userId = localStorage.getItem('userId');
   const [requests, setRequests] = useState<IRequestCard[]>([]);
+  const [archive, setArchive] = useState<IRequestCard[]>([]);
   const [tabName, setTabName] = useState<string>('Мої оголошення');
 
   let tabs = [
@@ -30,12 +31,25 @@ function MyRequestsPage() {
         data: {
           data: { posts },
         },
-      } = await apiService.get('posts');
-      setRequests(posts.filter((post: IRequestCard) => post.owner === userId));
+      } = await apiService.get('posts', {
+        params: { status: constants.postStatus.active, owner: userId },
+      });
+      setRequests(posts);
+    })();
+
+    (async () => {
+      const {
+        data: {
+          data: { posts },
+        },
+      } = await apiService.get('posts', {
+        params: { 'status[ne]': constants.postStatus.active, owner: userId },
+      });
+      setArchive(posts);
     })();
   }, []);
 
-  const getNoRequestsView = (canceledReq?: any) => {
+  const getNoRequestsView = (archive?: any) => {
     return (
       <div className="flex flex-col justify-center items-center mt-5">
         <div className="font-semibold">Активних оголошень не знайдено</div>
@@ -44,7 +58,7 @@ function MyRequestsPage() {
           <Link className="underline" to="/add-request">
             сюди
           </Link>
-          {canceledReq?.length > 0 && (
+          {archive?.length > 0 && (
             <span>
               , або відвідайте{' '}
               <span
@@ -61,35 +75,25 @@ function MyRequestsPage() {
   };
 
   const getMyRequestPageView = () => {
-    if (requests.length > 0) {
-      let activeReq = requests.filter(
-        (e) => e.status === constants.postStatus.active,
-      );
-      let canceledReq = requests.filter(
-        (e) => e.status === constants.postStatus.canceled,
-      );
-
-      if (activeReq.length > 0 && tabName === tabs[0].name) {
-        return <MyRequests requests={activeReq} />;
-      }
-      if (canceledReq.length > 0 && tabName === tabs[1].name) {
-        return <MyRequests requests={canceledReq} />;
-      }
-      if (!activeReq.length) return getNoRequestsView(canceledReq);
+    if (requests.length > 0 && tabName === tabs[0].name) {
+      return <MyRequests requests={requests} />;
     }
-    if (!requests.length)
+    if (archive.length > 0 && tabName === tabs[1].name) {
+      return <MyRequests requests={archive} />;
+    }
+    if (!requests.length && !archive.length)
       return (
         <div>
           <TitleWithIcons title="Мої оголошення" />
           {getNoRequestsView()}
         </div>
       );
+    if (!requests.length) return getNoRequestsView(archive);
   };
 
   return (
     <div>
-      {requests.filter((e) => e.status === constants.postStatus.canceled)
-        .length > 0 && (
+      {archive.length > 0 && (
         <Tabs
           tabs={tabs}
           activeTabName={tabName}
