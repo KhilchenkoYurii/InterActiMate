@@ -355,3 +355,44 @@ exports.shareContacts = catchAsync(async (req, res, next) => {
     message: 'Contacts sended',
   });
 });
+
+exports.searchBar = catchAsync(async (req, res, next) => {
+  //form: contact(email\phone), name,
+  // in request: searchQuery
+  console.log(req.query);
+  let searchQueryParsed = [];
+  if (req.query.search.includes(' ')) {
+    searchQueryParsed = req.query.search.split(' ');
+    console.log(searchQueryParsed);
+  } else {
+    searchQueryParsed.push(req.query.search);
+  }
+
+  const posts = await Post.find({ status: 'Active' });
+  if (!posts) {
+    return next(new AppError(`There is no posts!`, 404));
+  }
+  const searchedPosts = [];
+  await Promise.all(
+    posts.map(async (post) => {
+      await Promise.all(
+        searchQueryParsed.map(async (word) => {
+          //console.log(post, word);
+          if (
+            post.title.toLocaleLowerCase().includes(word) ||
+            post.body.toLocaleLowerCase().includes(word)
+          )
+            searchedPosts.push(post);
+        }),
+      );
+    }),
+  );
+
+  res.status(200).json({
+    status: 'success',
+    results: searchedPosts.length,
+    data: {
+      searchedPosts,
+    },
+  });
+});

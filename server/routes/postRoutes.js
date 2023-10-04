@@ -12,6 +12,8 @@ router.route('/shareContacts').post(postController.shareContacts);
 router
   .route('/leavePost')
   .post(authController.protect, postController.leavePost);
+
+router.route('/searchBar').get(postController.searchBar);
 router
   .route('/:id')
   .get(postController.getPost)
