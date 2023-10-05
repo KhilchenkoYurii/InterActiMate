@@ -1,15 +1,15 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { HomePage } from "../../pages/home/HomePage";
-import { IRoute } from "./routes.interface";
-import { ReactElement } from "react";
-import { AppHeader } from "../../components/AppHeader/AppHeader";
-import { AppFooter } from "../../components/AppFooter/AppFooter";
-import { SignUpPage } from "../../pages/auth/SignUpPage";
-import { RequestPage } from "../../pages/request/RequestPage";
-import { AddRequestPage } from "../../pages/add-request/AddRequestPage";
-import { ChatPage } from "../../pages/chat/ChatPage";
-import { LoginPage } from "../../pages/auth/LoginPage";
-import MyRequests from "../../pages/my-requests/MyRequestsPage";
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { HomePage } from '../../pages/home/HomePage';
+import { IRoute } from './routes.interface';
+import { ReactElement } from 'react';
+import { AppHeader } from '../../components/AppHeader/AppHeader';
+import { AppFooter } from '../../components/AppFooter/AppFooter';
+import { SignUpPage } from '../../pages/auth/SignUpPage';
+import { RequestPage } from '../../pages/request/RequestPage';
+import { AddRequestPage } from '../../pages/add-request/AddRequestPage';
+import { ChatPage } from '../../pages/chat/ChatPage';
+import { LoginPage } from '../../pages/auth/LoginPage';
+import MyRequests from '../../pages/my-requests/MyRequestsPage';
 
 const DisplayedRoute = (
   element: ReactElement,
@@ -27,35 +27,36 @@ const DisplayedRoute = (
 
 export const allRoutes: IRoute[] = [
   {
-    path: "/",
+    path: '/',
     component: <HomePage />,
   },
   {
-    path: "/login",
+    path: '/login',
     component: <LoginPage />,
     hasHeader: false,
     hasFooter: false,
   },
   {
-    path: "/sign-up",
+    path: '/sign-up',
     component: <SignUpPage />,
     hasHeader: false,
     hasFooter: false,
   },
   {
-    path: "/request",
+    path: '/request',
     component: <RequestPage />,
   },
   {
-    path: "/add-request",
+    path: '/add-request',
     component: <AddRequestPage />,
+    hasFooter: false,
   },
   {
-    path: "/my-requests",
+    path: '/my-requests',
     component: <MyRequests />,
   },
   {
-    path: "/chat",
+    path: '/chat',
     component: <ChatPage />,
     hasFooter: false,
   },
