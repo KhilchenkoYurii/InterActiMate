@@ -7,6 +7,7 @@ const PostStatuses = require('../configs/postStatuses');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const sendEmail = require('../utils/email');
 
 const multerStorage = multer.memoryStorage();
 
@@ -66,9 +67,12 @@ exports.getAllPosts = catchAsync(async (req, res) => {
 });
 
 exports.getPost = catchAsync(async (req, res, next) => {
-  const post = await Post.findOne({
-    $or: [{ postId: req.params.id }, { _id: req.params.id }],
-  });
+  let post;
+  if (req.params.id.includes('PST')) {
+    post = await Post.findOne({ postId: req.params.id });
+  } else {
+    post = await Post.findOne({ _id: req.params.id });
+  }
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }
@@ -307,5 +311,88 @@ exports.changePostStatus = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: post,
+  });
+});
+
+exports.shareContacts = catchAsync(async (req, res, next) => {
+  // eslint-disable-next-line no-prototype-builtins
+  //form: contact(email\phone), name,
+  // in request: data from form, Owner email, postId
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(
+      new AppError(`There is no user with this ${req.body.email}!`, 404),
+    );
+  }
+  const post = await Post.findOne({ postId: req.body.postId });
+  if (!post) {
+    return next(
+      new AppError(`There is no post with id ${req.body.postId}!`, 404),
+    );
+  }
+
+  const message = `Hi, ${user.nickname} Someone answered on your post ${post.title}.\n
+  Here is contacts:
+  Name: ${req.body.name}.
+  Contact!: ${req.body.contact}
+  Please, get in touch with them!)`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your new teammate',
+      message,
+    });
+    res.status(200).json({ success: true, message: 'Contacts shared' });
+  } catch (error) {
+    console.log(error);
+    return next(
+      new AppError(`There was error sending the email. Try again later`, 500),
+    );
+  }
+  res.status(200).json({
+    status: 'success',
+    message: 'Contacts sended',
+  });
+});
+
+exports.searchBar = catchAsync(async (req, res, next) => {
+  //form: contact(email\phone), name,
+  // in request: searchQuery
+  console.log(req.query);
+  let searchQueryParsed = [];
+  if (req.query.search.includes(' ')) {
+    searchQueryParsed = req.query.search.split(' ');
+    console.log(searchQueryParsed);
+  } else {
+    searchQueryParsed.push(req.query.search);
+  }
+
+  const posts = await Post.find({ status: 'Active' });
+  if (!posts) {
+    return next(new AppError(`There is no posts!`, 404));
+  }
+  const searchedPosts = [];
+  await Promise.all(
+    posts.map(async (post) => {
+      await Promise.all(
+        searchQueryParsed.map(async (word) => {
+          //console.log(post, word);
+          if (
+            post.title.toLocaleLowerCase().includes(word) ||
+            post.body.toLocaleLowerCase().includes(word)
+          )
+            searchedPosts.push(post);
+        }),
+      );
+    }),
+  );
+
+  res.status(200).json({
+    status: 'success',
+    results: searchedPosts.length,
+    data: {
+      searchedPosts,
+    },
   });
 });
