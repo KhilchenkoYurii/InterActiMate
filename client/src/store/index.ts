@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { chat } from './chat/chat.reducer';
 import createSagaMiddleware from 'redux-saga';
+import chatSaga from './chat/chat.saga';
 
 const rootReducer = combineReducers({
   chat
@@ -19,3 +20,5 @@ export const store = configureStore({
       serializableCheck: false,
     }).prepend(sagaMiddleware),
 });
+
+sagaMiddleware.run(chatSaga)
