@@ -133,4 +133,4 @@ build/
 
 *.env
 config.env
-#*.jpeg
+*.jpeg
