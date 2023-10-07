@@ -34,6 +34,12 @@ const AddEditRequest = ({ onSubmit }: any) => {
     onSubmit(title, body, attachments, categories);
   };
 
+  const handleKeyDown = (e: any) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   const isUrlImage = (url: string) => {
     const img = new Image();
     img.src = url;
@@ -70,7 +76,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
   };
 
   return (
-    <form action="addRequest" onSubmit={handleSubmit}>
+    <form action="addRequest" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
       <div className="card-container relative mx-3">
         <div className="pt-10 pb-1">
           {getBlockTitleView('Основна інформація')}
@@ -208,7 +214,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
       <div className="my-3 flex justify-end mx-3">
         <button
           type="submit"
-          onSubmit={() => {}}
+          onKeyDown={handleKeyDown}
           className="text-[white] bg-[#176b87] rounded-[4px] flex justify-center items-center h-10 max-w-[10rem]"
         >
           Опублікувати
