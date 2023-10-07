@@ -9,22 +9,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { chatSelector } from "../../store/chat/chat.selector";
 import { fetchChats, fetchChat, sendMessage } from "../../store/chat/chat.action";
 import { socket } from "../../socket";
+import { userSelector } from "../../store/user/user.selector";
 
 const userId = localStorage.getItem("userId");
 
 export const ChatPage = () => {
   const dispatch = useDispatch();
   const { chats, currentChat } = useSelector(chatSelector);
+  const user = useSelector(userSelector);
+
+  const currentChatMessages = [...currentChat.messages].reverse();
 
   const loadAllChats = async() => {
     socket.connect();
     if (!userId) return;
     dispatch(fetchChats(userId));
-    // socket.emit('join_chat', { username: 'keksik', chatId: 'CHT1' });
   }
 
   const loadChatById = (chatId: string) => {
+    if (!chatId) return;
     dispatch(fetchChat(chatId));
+    if (user?.name) {
+      socket.emit('join_chat', { username: user.name, chatId });
+    }
   };
 
   useEffect(() => {
@@ -39,7 +46,7 @@ export const ChatPage = () => {
 
   const handleSend = (message: string) => {
     console.log('sending message');
-    dispatch(sendMessage(message));
+    dispatch(sendMessage({ body: message }));
     socket.emit('send_message', { message, userId, chatId: 'CHT1' });
   };
 
@@ -59,7 +66,7 @@ export const ChatPage = () => {
           <div className="fixed bottom-0 right-0 message-input w-3/4 bg-white">
             <ChatInput icon={SendIcon} onIconClick={handleSend} />
           </div>
-          {currentChat.messages.map((message: { body: string }) => 
+          {currentChatMessages.map((message: { body: string }) => 
             <ChatMessage body={message.body} />
           )}
         </div>
