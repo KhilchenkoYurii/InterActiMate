@@ -7,8 +7,11 @@ import {
   RequestCard,
 } from '../../components/RequestCard/RequestCard';
 import { Tabs } from '../../components/Tabs/Tabs';
+import { useDispatch } from 'react-redux';
+import { fetchUser } from '../../store/user/user.actions';
 
 export const HomePage = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [requests, setRequests] = useState<IRequestCard[]>([]);
   const [user, setUser] = useState<any>(undefined);
@@ -28,16 +31,7 @@ export const HomePage = () => {
 
     (async () => {
       if (userId && token) {
-        try {
-          const {
-            data: {
-              data: { user },
-            },
-          } = await ApiService.get(`users/${userId}`);
-          setUser(user);
-        } catch (error) {
-          console.log('Error: ', error);
-        }
+        dispatch(fetchUser(userId));
       }
       setIsLoading(false);
     })();

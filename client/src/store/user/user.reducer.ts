@@ -29,3 +29,5 @@ export const user = (state = USER_INITIAL_STATE, action: any) => {
     default: return state;
   }
 };
+
+export default user;
