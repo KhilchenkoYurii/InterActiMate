@@ -4,4 +4,8 @@
   max-width: 60%;
   background-color: variables.$primary100;
   color: variables.$white100;
+
+  &-income {
+    background-color: variables.$dark-gray;
+  }
 }
