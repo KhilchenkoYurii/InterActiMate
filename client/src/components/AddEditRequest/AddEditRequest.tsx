@@ -1,18 +1,38 @@
 import { useEffect, useState } from 'react';
 import AddIcon from '../../assets/icons/plus-filled.svg';
 import RemoveIcon from '../../assets/icons/Remove_fill.svg';
+import PublishIcon from '../../assets/icons/Publish.svg';
 
 interface INoteView {
   text: string;
   className: string;
 }
 
-const AddEditRequest = () => {
-  const [href, setHref] = useState('');
-  const [file, setFile] = useState(undefined);
-  const [attachments, setAttachments] = useState([]);
-  const [currCategorie, setCurrCategorie] = useState('');
-  const [categories, setCategories] = useState([]);
+export interface IAttachments {
+  address: string;
+  alt: string;
+  file?: any;
+}
+
+interface IFile {
+  file: any;
+  address: string;
+}
+
+const AddEditRequest = ({ onSubmit }: any) => {
+  const [title, setTitle] = useState<string>('');
+  const [body, setBody] = useState<string>('');
+  const [href, setHref] = useState<string>('');
+  const [file, setFile] = useState<IFile>();
+  const [attachments, setAttachments] = useState<IAttachments[]>([]);
+  const [currCategorie, setCurrCategorie] = useState<string>('');
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    onSubmit(title, body, attachments, categories);
+  };
 
   const isUrlImage = (url: string) => {
     const img = new Image();
@@ -24,13 +44,17 @@ const AddEditRequest = () => {
   };
 
   const removeItem = (index: number, isAttachments: boolean) => {
-    let temp = [...(isAttachments ? attachments : categories)];
+    let temp = [...(isAttachments ? attachments : categories)] as any;
     temp.splice(index, 1);
     isAttachments ? setAttachments(temp) : setCategories(temp);
   };
 
   useEffect(() => {
-    if (file) setAttachments((prev: any): any => [...prev, file]);
+    if (file)
+      setAttachments((prev: any): any => [
+        ...prev,
+        { ...file, alt: `Photo ${file.address}` },
+      ]);
   }, [file]);
 
   const getBlockTitleView = (title: string) => {
@@ -46,13 +70,15 @@ const AddEditRequest = () => {
   };
 
   return (
-    <div>
+    <form action="addRequest" onSubmit={handleSubmit}>
       <div className="card-container relative mx-3">
         <div className="pt-10 pb-1">
           {getBlockTitleView('Основна інформація')}
           <div className="flex flex-col gap-3">
             <input
               type="text"
+              value={title}
+              onChange={(e: any) => setTitle(e.target.value)}
               className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
               placeholder="Назва"
             />
@@ -61,6 +87,8 @@ const AddEditRequest = () => {
               className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
               name="Body"
               id="Body"
+              value={body}
+              onChange={(e: any) => setBody(e.target.value)}
               placeholder="Опис"
               rows={10}
             ></textarea>
@@ -122,7 +150,10 @@ const AddEditRequest = () => {
               onClick={async () => {
                 let isUrlValid = await isUrlImage(href);
                 if (href !== '' && isUrlValid) {
-                  setAttachments((prev: any): any => [...prev, href]);
+                  setAttachments((prev: any): any => [
+                    ...prev,
+                    { address: href, alt: `Photo ${href}` },
+                  ]);
                 }
               }}
               className="cursor-pointer select-none"
@@ -139,7 +170,10 @@ const AddEditRequest = () => {
                   if (e.target.files && e.target.files[0]) {
                     let fileType = e.target.files[0].type.split('/').pop();
                     if (fileType === 'jpeg' || fileType === 'png')
-                      setFile(URL.createObjectURL(e.target.files[0]) as any);
+                      setFile({
+                        file: e.target.files[0],
+                        address: URL.createObjectURL(e.target.files[0]),
+                      } as IFile);
                   }
                 }}
                 placeholder="Посилання"
@@ -161,8 +195,8 @@ const AddEditRequest = () => {
                     <img src={RemoveIcon} alt="RemoveIcon" />
                   </div>
                   <img
-                    src={img}
-                    alt={img}
+                    src={img.address}
+                    alt={img.alt}
                     className="h-full rounded-md object-cover select-none"
                   />
                 </div>
@@ -171,7 +205,17 @@ const AddEditRequest = () => {
           )}
         </div>
       </div>
-    </div>
+      <div className="my-3 flex justify-end mx-3">
+        <button
+          type="submit"
+          onSubmit={() => {}}
+          className="text-[white] bg-[#176b87] rounded-[4px] flex justify-center items-center h-10 max-w-[10rem]"
+        >
+          Опублікувати
+          <img className="p-1 max-h-9" src={PublishIcon} alt="Publish" />
+        </button>
+      </div>
+    </form>
   );
 };
 
