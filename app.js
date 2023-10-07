@@ -25,7 +25,11 @@ require('./server/configs/passport')(passport);
 const app = express();
 // serve up production assets
 //set security http headers
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+);
 //request limitation
 const limiter = rateLimit({
   max: 100,
