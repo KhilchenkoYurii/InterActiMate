@@ -68,6 +68,8 @@ app.use(
 // );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(`${__dirname}/server/public/img/posts`));
+app.use(express.static(`${__dirname}/server/public/img/users`));
 app.use('/users', userRouter);
 app.use('/posts', hpp({ whitelist: ['postId'] }), postRouter);
 app.use('/chats', chatRouter);
