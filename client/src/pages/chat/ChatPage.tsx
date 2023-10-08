@@ -50,6 +50,13 @@ export const ChatPage = () => {
     socket.emit('send_message', { message, userId, chatId: 'CHT1' });
   };
 
+  if (!chats?.length) {
+    return <div className="mt-10">
+      <h1 className="text-2xl font-bold">Чати поки пустують</h1>
+      <h2 className="text-xl font-medium">Вони оживуть, як тільки ти відгукнешся на чийсь запит, або хтось на твій :)</h2>
+    </div>;
+  }
+
   return (
     <div className="chat-page">
       <div className="chat-container">
