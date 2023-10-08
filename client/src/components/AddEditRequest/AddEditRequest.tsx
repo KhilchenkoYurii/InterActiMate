@@ -76,7 +76,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
   };
 
   return (
-    <form action="addRequest" onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+    <form action="addRequest" onSubmit={handleSubmit}>
       <div className="card-container relative mx-3">
         <div className="pt-10 pb-1">
           {getBlockTitleView('Основна інформація')}
@@ -138,6 +138,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
               }
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && currCategorie !== '') {
+                  e.preventDefault();
                   setCategories((prev: any): any => [...prev, currCategorie]);
                   setCurrCategorie('');
                 }
