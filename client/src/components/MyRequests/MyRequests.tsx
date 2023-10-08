@@ -24,12 +24,15 @@ function MyRequests({ requests }: IMyRequests) {
     <div className="flex flex-wrap justify-center items-center flex-col my-3">
       {requests.map((req: IRequestCard) => (
         <div
-          className="reqs-container my-3"
+          key={req._id}
+          className="reqs-container gap-3 my-3"
           onClick={() => navigateToRequest(req._id)}
         >
-          <div className="w-full">
+          <div>
             <div className="text-title">{req.title}</div>
-            <div className="text-body">{req.body}</div>
+            <div className="break-words w-[25rem] text-[0.9rem]">
+              {req.body}
+            </div>
             <span className="reqs-date">{getDate(req.dateOfCreation)}</span>
             <hr className="max-w-[8rem] mt-2 mb-3" />
             <div className="flex gap-2 flex-wrap">
@@ -87,9 +90,9 @@ function MyRequests({ requests }: IMyRequests) {
               )}
             </div>
           </div>
-          <div className="h-full">
+          <div>
             <img
-              className="max-w-[11rem] object-cover rounded-md"
+              className="w-[10rem] h-[10rem] object-cover rounded-md"
               src={
                 req.attachments[0]
                   ? req.attachments[0].address
