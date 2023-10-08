@@ -115,6 +115,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
               <textarea
                 className={`w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none`}
                 name="Body"
+                required
                 id="Body"
                 value={body}
                 onChange={(e: any) => setBody(e.target.value)}
