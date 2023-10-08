@@ -27,11 +27,11 @@ const AddEditRequest = ({ onSubmit }: any) => {
   const [attachments, setAttachments] = useState<IAttachments[]>([]);
   const [currCategorie, setCurrCategorie] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
+  const [error, setErrors] = useState({ title: true });
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
-    onSubmit(title, body, attachments, categories);
+    if (error && title && body) onSubmit(title, body, attachments, categories);
   };
 
   const handleKeyDown = (e: any) => {
@@ -81,23 +81,46 @@ const AddEditRequest = ({ onSubmit }: any) => {
         <div className="pt-10 pb-1">
           {getBlockTitleView('Основна інформація')}
           <div className="flex flex-col gap-3">
-            <input
-              type="text"
-              value={title}
-              onChange={(e: any) => setTitle(e.target.value)}
-              className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
-              placeholder="Назва"
-            />
-
-            <textarea
-              className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
-              name="Body"
-              id="Body"
-              value={body}
-              onChange={(e: any) => setBody(e.target.value)}
-              placeholder="Опис"
-              rows={10}
-            ></textarea>
+            <div>
+              <input
+                type="text"
+                value={title}
+                onChange={(e: any) => {
+                  if (e.target.value.split('').length < 37) {
+                    setErrors((prev: any) => ({
+                      ...prev,
+                      title: true,
+                    }));
+                    setTitle(e.target.value);
+                  } else {
+                    setErrors((prev: any) => ({
+                      ...prev,
+                      title: false,
+                    }));
+                  }
+                }}
+                className={`w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none ${
+                  !error.title && 'border-[red]'
+                }`}
+                placeholder="Назва"
+              />
+              {!error.title && (
+                <span className="text-red-600 font-light text-sm justify-start flex">
+                  Довжина не більше 37 символів
+                </span>
+              )}
+            </div>
+            <div>
+              <textarea
+                className={`w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none`}
+                name="Body"
+                id="Body"
+                value={body}
+                onChange={(e: any) => setBody(e.target.value)}
+                placeholder="Опис"
+                rows={10}
+              ></textarea>
+            </div>
           </div>
         </div>
       </div>
@@ -109,15 +132,13 @@ const AddEditRequest = ({ onSubmit }: any) => {
             <input
               type="text"
               value={currCategorie}
-              onChange={(e) => setCurrCategorie(e.target.value)}
+              onChange={(e) =>
+                !/\s/g.test(currCategorie) &&
+                setCurrCategorie(e.target.value.replace(/\s/g, ''))
+              }
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && currCategorie !== '') {
-                  let temp = currCategorie.split(' ');
-                  if (temp.length > 0) {
-                    setCategories((prev: any): any => [...prev, ...temp]);
-                  } else {
-                    setCategories((prev: any): any => [...prev, currCategorie]);
-                  }
+                  setCategories((prev: any): any => [...prev, currCategorie]);
                   setCurrCategorie('');
                 }
               }}
@@ -125,7 +146,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
               placeholder="Категорії"
             />
             {getNoteView({
-              text: '(Щоб додати категорії натисніть Enter)',
+              text: '(Щоб додати категорію натисніть Enter, пробіл заборонений)',
               className: 'text-[#176b87] font-extralight text-sm',
             })}
             <div className="card-categories">
@@ -160,6 +181,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
                     ...prev,
                     { address: href, alt: `Photo ${href}` },
                   ]);
+                  setHref('');
                 }
               }}
               className="cursor-pointer select-none"
@@ -193,7 +215,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
           {attachments?.length > 0 && (
             <div className="flex flex-wrap gap-3 mt-3">
               {attachments.map((img, index) => (
-                <div className="max-w-[11rem] h-[10rem] relative">
+                <div key={img.alt} className="max-w-[11rem] h-[10rem] relative">
                   <div
                     className="select-none text-white flex justify-center align-middle text-center items-center font-extrabold absolute rounded-md top-0 left-0 bg-[black] w-full duration-500 cursor-pointer h-full opacity-0 hover:opacity-50"
                     onClick={() => removeItem(index, true)}

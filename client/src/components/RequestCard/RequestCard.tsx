@@ -24,13 +24,7 @@ export interface IRequestCard {
   status: TStatus;
 }
 
-export const RequestCard = ({
-  title,
-  body,
-  categories,
-  _id,
-  attachments,
-}: IRequestCard) => {
+export const RequestCard = ({ title, _id, attachments }: IRequestCard) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
@@ -49,26 +43,16 @@ export const RequestCard = ({
         />
       </div>
       <div className="info">
-        <div className="row">
-          <span className="text-title">{title}</span>
+        <div className="row mt-2">
+          <div className="text-title break-all ">{title}</div>
+          <ButtonWithIcon
+            icon={<HeartIcon />}
+            isSvg={true}
+            text=""
+            onClick={() => {}}
+            buttonType="primary"
+          />
         </div>
-
-        <span className="text-body">{body}</span>
-      </div>
-      <div className="flex justify-between items-center w-full">
-        <div>
-          <div className="flex-row card-categories">
-            <div>{categories[0]}</div>
-          </div>
-        </div>
-
-        <ButtonWithIcon
-          icon={<HeartIcon />}
-          isSvg={true}
-          text=""
-          onClick={() => {}}
-          buttonType="primary"
-        />
       </div>
     </div>
   );

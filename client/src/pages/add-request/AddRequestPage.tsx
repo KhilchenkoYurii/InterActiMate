@@ -17,19 +17,19 @@ export const AddRequestPage = () => {
     categories: string[],
   ) => {
     try {
-      const images = attachments.map((att: IAttachments) =>
-        att.file ? att.file : att,
-      );
+      const images = attachments.filter((att: IAttachments) => att.file);
       const attachmentsWithoutFiles = attachments.map((att: IAttachments) => ({
         address: att.address,
         alt: att.alt,
       }));
+
       const formData = new FormData();
       if (images.length) {
         images.forEach((img) => {
-          formData.append('images', img, img.name);
+          formData.append('images', img.file);
         });
       }
+
       let bodyToSend = {
         title,
         body,
@@ -37,12 +37,13 @@ export const AddRequestPage = () => {
           attachmentsWithoutFiles.length > 0 ? attachmentsWithoutFiles : [],
         categories,
       };
+
       let {
         data: {
           data: { post },
         },
       } = await apiService.post(`posts/${userId}`, bodyToSend);
-      if (formData.keys.length)
+      if (Array.from(formData.keys()).length)
         await apiService.put(`posts/${post.postId}`, formData);
       nav('/');
     } catch (error: any) {

@@ -51,7 +51,6 @@ export const HomePage = () => {
   }, []);
 
   const getRequestsView = () => {
-    console.log('requests :', requests);
     if (isLoading) {
       return requests.map(() => <RequestCardPlaceHolder />);
     } else if (tabName === tabs[0].name) {
