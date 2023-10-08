@@ -18,7 +18,7 @@ export const HomePage = () => {
   const tabs = [{ name: 'Оголошення' }, { name: 'Подані заявки' }];
 
   const token = document.cookie.split('jwt=').pop();
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId') as string;
 
   useEffect(() => {
     setIsLoading(true);
@@ -64,15 +64,22 @@ export const HomePage = () => {
     }
   };
 
-  return (
-    <div>
-      {userId && (
+  const getTabsView = () => {
+    let userReq = requests.filter((req) => req.participators.includes(userId));
+    if (userId && userReq.length > 0) {
+      return (
         <Tabs
           tabs={tabs}
           activeTabName={tabName}
           setTabName={(tabName: string) => setTabName(tabName)}
         />
-      )}
+      );
+    }
+  };
+
+  return (
+    <div>
+      {getTabsView()}
       <div className="cards-container">{getRequestsView()}</div>
     </div>
   );

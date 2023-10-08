@@ -28,6 +28,7 @@ export const Card = ({
   email,
   nickname,
   postId,
+  owner,
   attachments,
 }: any) => {
   const userId = localStorage.getItem('userId');
@@ -49,6 +50,21 @@ export const Card = ({
     notify({ duration: 1200, title: 'Заявку подано!' });
   };
 
+  const getCategoriesView = () => {
+    if (categories.length) {
+      return (
+        <div>
+          <hr className="card-hr" />
+          <div className="card-categories">
+            {categories.map((e: string, i: number) => (
+              <div key={i}>{e}</div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       {_id ? (
@@ -57,58 +73,59 @@ export const Card = ({
             <div>
               <div className="card-container">
                 <div className="card-title">{title}</div>
-                <div className="card-description">{body}</div>
-                <hr className="card-hr" />
-                <div className="card-categories">
-                  {categories.map((e: string, i: number) => (
-                    <div key={i}>{e}</div>
-                  ))}
-                </div>
+                <div className="card-description break-all">{body}</div>
+                {getCategoriesView()}
               </div>
               <div className="card-container">
                 <div className="card-other-header">
-                  <div
-                    className="card-other-container prevent-select"
-                    role="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(phone);
-                      notify({
-                        duration: 500,
-                        message: `Phone ${phone} copied!`,
-                      });
-                    }}
-                  >
-                    <PhoneIcon />
-                    <div>{phone}</div>
-                  </div>
-                  <div
-                    className="card-other-container prevent-select"
-                    role="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(email);
-                      notify({
-                        duration: 500,
-                        message: `Email ${email} copied!`,
-                      });
-                    }}
-                  >
-                    <EmailIcon />
-                    <div>{email}</div>
-                  </div>
-                  <div
-                    className="card-other-container prevent-select"
-                    role="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(nickname);
-                      notify({
-                        duration: 500,
-                        message: `Nickname ${nickname} copied!`,
-                      });
-                    }}
-                  >
-                    <NickNameIcon />
-                    <div>{nickname}</div>
-                  </div>
+                  {phone && (
+                    <div
+                      className="card-other-container prevent-select"
+                      role="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(phone);
+                        notify({
+                          duration: 500,
+                          message: `Phone ${phone} copied!`,
+                        });
+                      }}
+                    >
+                      <PhoneIcon />
+                      <div>{phone}</div>
+                    </div>
+                  )}
+                  {email && (
+                    <div
+                      className="card-other-container prevent-select"
+                      role="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(email);
+                        notify({
+                          duration: 500,
+                          message: `Email ${email} copied!`,
+                        });
+                      }}
+                    >
+                      <EmailIcon />
+                      <div>{email}</div>
+                    </div>
+                  )}
+                  {nickname && (
+                    <div
+                      className="card-other-container prevent-select"
+                      role="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(nickname);
+                        notify({
+                          duration: 500,
+                          message: `Nickname ${nickname} copied!`,
+                        });
+                      }}
+                    >
+                      <NickNameIcon />
+                      <div>{nickname}</div>
+                    </div>
+                  )}
                 </div>
                 <hr className="card-hr" />
                 <div className="card-other">
@@ -130,27 +147,29 @@ export const Card = ({
                   </div>
                 </div>
               </div>
-              <div
-                className={
-                  isApplied
-                    ? 'card-apply-btn-not-allowed prevent-select'
-                    : 'card-apply-btn'
-                }
-              >
-                <ButtonWithIcon
-                  buttonType="outline"
-                  text={isApplied ? 'Заявку подано' : 'Подати заявку'}
-                  icon={isApplied ? null : ApplyIcon}
-                  onClick={() => applyPost()}
-                />
-              </div>
+              {owner !== userId && (
+                <div
+                  className={
+                    isApplied
+                      ? 'card-apply-btn-not-allowed prevent-select'
+                      : 'card-apply-btn'
+                  }
+                >
+                  <ButtonWithIcon
+                    buttonType="outline"
+                    text={isApplied ? 'Заявку подано' : 'Подати заявку'}
+                    icon={isApplied ? null : ApplyIcon}
+                    onClick={() => applyPost()}
+                  />
+                </div>
+              )}
             </div>
             {attachments.length > 0 && (
               <div className="card-container card-imgs">
                 <AwesomeSlider
                   bullets={false}
-                  infinite={!!attachments.length}
-                  organicArrows={!!attachments.length}
+                  infinite={false}
+                  organicArrows={attachments.length > 1}
                   className="aws-btn"
                 >
                   {attachments.map((e: any) => (
