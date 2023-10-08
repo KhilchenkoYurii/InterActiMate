@@ -33,16 +33,16 @@ exports.resizePostPhotos = catchAsync(async (req, res, next) => {
   req.body.attachments = [];
   await Promise.all(
     req.files.images.map(async (image, i) => {
-      const filename = `server/public/img/posts/post-${
-        req.params.id
-      }-${Date.now()}-${i + 1}.jpeg`;
+      const name = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      const link = `http://localhost:3000/${name}`;
+      const filename = `server/public/img/posts/${name}`;
       await sharp(image.buffer)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
         .toFile(`${filename}`);
       req.body.attachments.push({
         alt: `image for post ${req.params.id}`,
-        address: filename,
+        address: link,
       });
     }),
   );

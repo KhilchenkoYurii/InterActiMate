@@ -24,7 +24,11 @@ require('./server/configs/passport')(passport);
 const app = express();
 // serve up production assets
 //set security http headers
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+);
 //request limitation
 const limiter = rateLimit({
   max: 100,
@@ -67,6 +71,8 @@ app.use(
 // );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(`${__dirname}/server/public/img/posts`));
+app.use(express.static(`${__dirname}/server/public/img/users`));
 app.use('/users', userRouter);
 app.use('/posts', hpp({ whitelist: ['postId'] }), postRouter);
 app.use('/chats', chatRouter);

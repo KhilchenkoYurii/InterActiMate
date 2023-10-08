@@ -153,7 +153,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'nickname',
   );
   if (req.file) {
-    filteredBody.avatar = req.file.filename;
+    filteredBody.avatar = `http://localhost:3000/${req.file.filename}`;
   }
   // 3 update user
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

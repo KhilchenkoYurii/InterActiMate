@@ -1,5 +1,5 @@
-@use "../../config/GlobalStyles/variables" as var;
-@use "../../config/GlobalStyles/mixins";
+@use '../../config/GlobalStyles/variables' as var;
+@use '../../config/GlobalStyles/mixins';
 
 .reqs-container {
   @include mixins.display-flex(
@@ -7,6 +7,7 @@
     $justify-content: space-between,
     $align-items: center
   );
+  flex-wrap: wrap;
   width: 100%;
   max-width: 90%;
   background-color: var.$gray;

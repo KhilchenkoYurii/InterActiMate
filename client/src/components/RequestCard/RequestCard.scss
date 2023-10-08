@@ -1,41 +1,48 @@
-@use "../../config/GlobalStyles/variables";
-@use "../../config/GlobalStyles/mixins";
+@use '../../config/GlobalStyles/variables';
+@use '../../config/GlobalStyles/mixins';
 
 .card {
-  @include mixins.display-flex($direction: column, $justify-content: flex-start, $align-items: flex-start);
+  @include mixins.display-flex(
+    $direction: column,
+    $justify-content: flex-start,
+    $align-items: flex-start
+  );
   width: variables.$card-width;
   max-width: variables.$card-width;
-  max-height: variables.$card-height;
   background: variables.$white100;
   border-radius: variables.$border-radius;
   height: 100%;
-  padding: 7px;
+  padding: 10px;
   cursor: pointer;
 
-  .card-img-container{
+  .card-img-container {
     height: 200px;
     width: 100%;
-    
+
     .card-img {
       height: 100%;
       width: 100%;
       border-radius: variables.$border-radius;
-      object-fit:cover;
+      object-fit: cover;
     }
   }
 
-  .card-footer{
-    @include mixins.display-flex($direction: row, $justify-content: space-between, $align-items: flex-start);
+  .card-footer {
+    @include mixins.display-flex(
+      $direction: row,
+      $justify-content: space-between,
+      $align-items: flex-start
+    );
     margin-top: 10px;
     width: 100%;
 
-    .categories-list{
+    .categories-list {
       cursor: pointer;
       color: variables.$primary100;
       opacity: 0.6;
       transition: 0.2s;
     }
-    .categories-list:hover{
+    .categories-list:hover {
       opacity: 1;
     }
   }
@@ -52,10 +59,12 @@
   }
 
   .info {
-    @include mixins.display-flex($direction: column, $justify-content: space-between, $align-items: flex-start);
+    @include mixins.display-flex(
+      $direction: column,
+      $justify-content: space-between,
+      $align-items: flex-start
+    );
     flex: 1;
-    margin-top: 5px;
-    padding: 10px 0;
     width: 100%;
   }
 
