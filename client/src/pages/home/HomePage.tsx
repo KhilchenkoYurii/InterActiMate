@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { RequestCardPlaceHolder } from '../../components/Placeholders/RequestCardPlaceHolder/RequestCardPlaceHolder';
-import ApiService from '../../services/api.service';
+import apiService from '../../services/api.service';
 import './HomePage.scss';
 import {
   IRequestCard,
   RequestCard,
 } from '../../components/RequestCard/RequestCard';
 import { Tabs } from '../../components/Tabs/Tabs';
+import constants from '../../services/constants';
 
 export const HomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,8 +23,14 @@ export const HomePage = () => {
   useEffect(() => {
     setIsLoading(true);
     (async () => {
-      const { data } = await ApiService.get('posts');
-      setRequests(data?.data?.posts);
+      const {
+        data: {
+          data: { posts },
+        },
+      } = await apiService.get('posts', {
+        params: { status: constants.postStatus.active },
+      });
+      setRequests(posts);
     })();
 
     (async () => {
@@ -33,7 +40,7 @@ export const HomePage = () => {
             data: {
               data: { user },
             },
-          } = await ApiService.get(`users/${userId}`);
+          } = await apiService.get(`users/${userId}`);
           setUser(user);
         } catch (error) {
           console.log('Error: ', error);
@@ -44,6 +51,7 @@ export const HomePage = () => {
   }, []);
 
   const getRequestsView = () => {
+    console.log('requests :', requests);
     if (isLoading) {
       return requests.map(() => <RequestCardPlaceHolder />);
     } else if (tabName === tabs[0].name) {

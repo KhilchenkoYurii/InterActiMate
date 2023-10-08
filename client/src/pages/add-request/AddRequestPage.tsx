@@ -30,9 +30,6 @@ export const AddRequestPage = () => {
           formData.append('images', img, img.name);
         });
       }
-      // for (var key of formData.entries() as any) {
-      //   console.log('DUPA', key[0] + ', ' + key[1]);
-      // }
       let bodyToSend = {
         title,
         body,
@@ -40,14 +37,13 @@ export const AddRequestPage = () => {
           attachmentsWithoutFiles.length > 0 ? attachmentsWithoutFiles : [],
         categories,
       };
-      console.log('bodyToSend :', bodyToSend);
       let {
         data: {
           data: { post },
         },
       } = await apiService.post(`posts/${userId}`, bodyToSend);
-      console.log('data :', post);
-      await apiService.put(`posts/${post.postId}`, formData);
+      if (formData.keys.length)
+        await apiService.put(`posts/${post.postId}`, formData);
       nav('/');
     } catch (error: any) {
       console.log('Error: ', error);
