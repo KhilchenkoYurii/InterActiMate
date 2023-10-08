@@ -70,12 +70,9 @@ export const AppHeader = () => {
             onClick={() => {}}
           />
         </Link>
-        <ButtonWithIcon
-          icon={HeartIcon}
-          text=""
-          onClick={() => {}}
-          buttonType="outline"
-        />
+        <Link to={'/my-favorites'}>
+          <ButtonWithIcon icon={HeartIcon} text="" buttonType="outline" />
+        </Link>
         <div className="profile-btn">
           {userId ? (
             <DropdownMenu user={user} menuItems={menuItems} />

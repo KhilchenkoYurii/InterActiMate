@@ -3,6 +3,8 @@ import './RequestCard.scss';
 import { ReactComponent as HeartIcon } from '../../assets/icons/FavIconFilled.svg';
 import { useNavigate } from 'react-router-dom';
 import constants from '../../services/constants';
+import apiService from '../../services/api.service';
+import { useState } from 'react';
 
 interface IAttachments {
   address: string;
@@ -24,11 +26,22 @@ export interface IRequestCard {
   status: TStatus;
 }
 
-export const RequestCard = ({ title, _id, attachments }: IRequestCard) => {
+export const RequestCard = ({
+  title,
+  _id,
+  attachments,
+  postId,
+  favoritePosts,
+}: any) => {
   const navigate = useNavigate();
+
   const navigateToRequest = () => {
     const queryParams = new URLSearchParams({ id: _id.toString() });
     navigate(`request?${queryParams}`);
+  };
+
+  const setFavorite = async (postId: string) => {
+    await apiService.put(`users/updateMe`, { favoritePosts: [postId] });
   };
 
   return (
@@ -45,11 +58,17 @@ export const RequestCard = ({ title, _id, attachments }: IRequestCard) => {
       <div className="info">
         <div className="row mt-2">
           <div className="text-title break-all ">{title}</div>
+
           <ButtonWithIcon
             icon={<HeartIcon />}
             isSvg={true}
+            isSvgFilled={favoritePosts.includes(postId)}
             text=""
-            onClick={() => {}}
+            onClick={async (e) => {
+              e.stopPropagation();
+              console.log('Addaed');
+              setFavorite(postId);
+            }}
             buttonType="primary"
           />
         </div>

@@ -54,9 +54,10 @@ export const HomePage = () => {
     if (isLoading) {
       return requests.map(() => <RequestCardPlaceHolder />);
     } else if (tabName === tabs[0].name) {
-      return requests.map((request) => (
-        <RequestCard key={request?._id} {...request} />
-      ));
+      return requests.map((request) => {
+        let temp = { ...request, ...user };
+        return <RequestCard key={request?._id} {...temp} />;
+      });
     } else {
       return requests
         .filter((req) => req.participators.includes(user.userId))

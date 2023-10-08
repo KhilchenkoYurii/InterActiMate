@@ -1,8 +1,8 @@
-@use "../../config/GlobalStyles/variables";
-@use "../../config/GlobalStyles/mixins";
+@use '../../config/GlobalStyles/variables';
+@use '../../config/GlobalStyles/mixins';
 
 .button-container {
-  @include  mixins.display-flex();
+  @include mixins.display-flex();
   background: variables.$white100;
   border-radius: 4px;
   padding: 0 10px;
@@ -28,12 +28,28 @@
     opacity: 0.2;
     transition: 0.5s;
   }
-  
-  svg:hover{
+
+  svg:hover {
     opacity: 1;
   }
-  
-  svg path:hover{
-    fill:#176B87;
+
+  svg path:hover {
+    fill: #176b87;
+  }
+}
+
+.svg-container-filled {
+  svg {
+    cursor: pointer;
+    opacity: 0.2;
+    transition: 0.5s;
+  }
+
+  svg:hover {
+    opacity: 1;
+  }
+
+  svg path {
+    fill: #176b87;
   }
 }

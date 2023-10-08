@@ -9,9 +9,10 @@ const ButtonTypes = {
 interface IButtonWithIcon {
   icon: any;
   text: string;
-  onClick: (props?: any) => void;
+  onClick?: (props?: any) => void;
   buttonType?: string;
   isSvg?: boolean;
+  isSvgFilled?: boolean;
   containerStyles?: CSSProperties;
 }
 
@@ -20,13 +21,15 @@ export const ButtonWithIcon = ({
   text,
   onClick,
   isSvg,
+  isSvgFilled,
   buttonType = ButtonTypes.primary,
   containerStyles,
 }: IButtonWithIcon) => {
   return (
     <div
       onClick={onClick}
-      className={`${isSvg ? 'svg-container' : 'button-container'} 
+      className={`${isSvg ? 'svg-container' : 'button-container'}
+      ${isSvgFilled && 'svg-container-filled '}
       ${buttonType === ButtonTypes.outline ? 'button-container-outline' : ''}`}
       style={containerStyles}
     >

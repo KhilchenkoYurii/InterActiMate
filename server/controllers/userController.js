@@ -137,7 +137,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   //1 error is user POST password data
-  console.log(req.file);
+  // console.log(req.file);
   if (req.body.password) {
     return next(new AppError(`This route is not for password change!`, 400));
   }
@@ -151,11 +151,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'phone',
     'surname',
     'nickname',
+    "favoritePosts"
   );
   if (req.file) {
     filteredBody.avatar = `http://localhost:3000/${req.file.filename}`;
   }
   // 3 update user
+  console.log('req.user.id :', req.user.id, filteredBody);
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true,

@@ -10,6 +10,7 @@ import { AddRequestPage } from '../../pages/add-request/AddRequestPage';
 import { ChatPage } from '../../pages/chat/ChatPage';
 import { LoginPage } from '../../pages/auth/LoginPage';
 import MyRequests from '../../pages/my-requests/MyRequestsPage';
+import MyFavorites from '../../pages/my-favorites/MyFavorites';
 
 const DisplayedRoute = (
   element: ReactElement,
@@ -49,6 +50,11 @@ export const allRoutes: IRoute[] = [
   {
     path: '/add-request',
     component: <AddRequestPage />,
+    hasFooter: false,
+  },
+  {
+    path: '/my-favorites',
+    component: <MyFavorites />,
     hasFooter: false,
   },
   {
