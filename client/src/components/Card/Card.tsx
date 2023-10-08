@@ -6,7 +6,7 @@ import { ReactComponent as UserIcon } from '../../assets/icons/User_alt_fill.svg
 import { ReactComponent as EmailIcon } from '../../assets/icons/Email_Icon.svg';
 import { ReactComponent as PhoneIcon } from '../../assets/icons/PhoneIcon.svg';
 import { ReactComponent as NickNameIcon } from '../../assets/icons/NickName.svg';
-import { ButtonWithIcon } from '../ButtonWithIcon/ButtonWithIcon';
+import DenyIcon from '../../assets/icons/Remove_fill.svg';
 import ApplyIcon from '../../assets/icons/Apply.svg';
 import ApiService from '../../services/api.service';
 import AwesomeSlider from 'react-awesome-slider';
@@ -48,6 +48,12 @@ export const Card = ({
     ApiService.post(`posts/answerPost`, { userId, postId });
     setApplying(true);
     notify({ duration: 1200, title: 'Заявку подано!' });
+  };
+
+  const leavePost = () => {
+    ApiService.post(`posts/leavePost`, { userId, postId });
+    setApplying(false);
+    notify({ duration: 1200, title: 'Заявку відхилено!', type: 'warning' });
   };
 
   const getCategoriesView = () => {
@@ -148,19 +154,25 @@ export const Card = ({
                 </div>
               </div>
               {owner !== userId && (
-                <div
-                  className={
-                    isApplied
-                      ? 'card-apply-btn-not-allowed prevent-select'
-                      : 'card-apply-btn'
-                  }
-                >
-                  <ButtonWithIcon
-                    buttonType="outline"
-                    text={isApplied ? 'Заявку подано' : 'Подати заявку'}
+                <div className="mt-3">
+                  {/* <ButtonWithIcon
+                    text={isApplied ? 'Відмінити подачу' : 'Подати заявку'}
                     icon={isApplied ? null : ApplyIcon}
-                    onClick={() => applyPost()}
-                  />
+                    onClick={() => (isApplied ? leavePost() : applyPost())}
+                  /> */}
+                  <div
+                    className={`cursor-pointer flex justify-center ${
+                      isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
+                    } rounded-[4px] p-1 items-center text-[white] gap-1`}
+                    onClick={() => (isApplied ? leavePost() : applyPost())}
+                  >
+                    <div>
+                      {isApplied ? 'Відмінити подачу' : 'Подати заявку'}
+                    </div>
+                    {!isApplied && (
+                      <img src={ApplyIcon} alt={'Подати заявку'} />
+                    )}
+                  </div>
                 </div>
               )}
             </div>
