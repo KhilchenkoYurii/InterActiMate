@@ -32,7 +32,7 @@ export const RequestPage = () => {
       };
       setRequest(combinedRequest);
     })();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div>
