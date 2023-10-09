@@ -10,6 +10,7 @@ import { AddRequestPage } from '../../pages/add-request/AddRequestPage';
 import { ChatPage } from '../../pages/chat/ChatPage';
 import { LoginPage } from '../../pages/auth/LoginPage';
 import MyRequests from '../../pages/my-requests/MyRequestsPage';
+import { MyProfilePage } from '../../pages/my-profile/MyProfilePage';
 
 const DisplayedRoute = (
   element: ReactElement,
@@ -58,6 +59,11 @@ export const allRoutes: IRoute[] = [
   {
     path: '/chat',
     component: <ChatPage />,
+    hasFooter: false,
+  },
+  {
+    path: '/my-profile',
+    component: <MyProfilePage />,
     hasFooter: false,
   },
 ];

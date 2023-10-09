@@ -21,6 +21,12 @@ export const AppHeader = () => {
 
   const menuItems = [
     {
+      title: 'Мій профіль',
+      onClick: () => {
+        navigate('/my-profile');
+      },
+    },
+    {
       title: 'Мої оголошення',
       onClick: () => {
         navigate('/my-requests');
