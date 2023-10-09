@@ -8,6 +8,7 @@ const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
+const Chat = require('../models/chatModel');
 
 const multerStorage = multer.memoryStorage();
 
@@ -197,6 +198,26 @@ exports.answerPost = catchAsync(async (req, res, next) => {
     { postId: post.postId },
     { participators: post.participators },
   );
+  const chatData = {
+    ownerId: req.body.userId,
+    chatUsers: [post.owner],
+    chatId: '',
+  };
+  const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
+  const lastNumber = lastChat[0].chatId.slice(3);
+  chatData.chatId = `CHT${Number(lastNumber) + 1}`;
+  const owner = await User.findOne({ userId: chatData.ownerId });
+  const participator = await User.findOne({
+    userId: chatData.chatUsers[0],
+  });
+  const newChat = await Chat.create(chatData);
+  owner.chats.push(newChat.chatId);
+  participator.chats.push(newChat.chatId);
+  await User.findOneAndUpdate({ userId: owner.userId }, { chats: owner.chats });
+  await User.findOneAndUpdate(
+    { userId: participator.userId },
+    { chats: participator.chats },
+  );
   res.status(200).json({
     status: 'success',
     data: {
@@ -359,11 +380,9 @@ exports.shareContacts = catchAsync(async (req, res, next) => {
 exports.searchBar = catchAsync(async (req, res, next) => {
   //form: contact(email\phone), name,
   // in request: searchQuery
-  console.log(req.query);
   let searchQueryParsed = [];
   if (req.query.search.includes(' ')) {
     searchQueryParsed = req.query.search.split(' ');
-    console.log(searchQueryParsed);
   } else {
     searchQueryParsed.push(req.query.search);
   }
@@ -379,8 +398,8 @@ exports.searchBar = catchAsync(async (req, res, next) => {
         searchQueryParsed.map(async (word) => {
           //console.log(post, word);
           if (
-            post.title.toLocaleLowerCase().includes(word) ||
-            post.body.toLocaleLowerCase().includes(word)
+            post.title.toLocaleLowerCase().includes(word.toLocaleLowerCase()) ||
+            post.body.toLocaleLowerCase().includes(word.toLocaleLowerCase())
           )
             searchedPosts.push(post);
         }),

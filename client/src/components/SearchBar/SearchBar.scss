@@ -1,3 +1,5 @@
+@use '../../config//globalstyles/variables';
+
 .searchbar-container {
   display: flex;
   flex: 1;
@@ -5,6 +7,11 @@
   padding: 0 15px;
   border-radius: 45px;
   background: #FFF;
+
+  .search-results {
+    height: 100vh;
+    background-color: variables.$dark-blue;
+  }
 }
 
 .search {
