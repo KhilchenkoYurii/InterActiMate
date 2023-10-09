@@ -65,7 +65,11 @@ exports.getChat = catchAsync(async (req, res, next) => {
       })
         .limit(1)
         .sort({ _id: -1 });
-      updatedChat.firstMessage = firstMessage.body;
+      if (firstMessage) {
+        updatedChat.firstMessage = firstMessage.body;
+      } else {
+        updatedChat.firstMessage = 'Натисніть для початку розмови';
+      }
       newChats.push(updatedChat);
     }
 
