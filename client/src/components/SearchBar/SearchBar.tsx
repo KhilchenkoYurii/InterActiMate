@@ -35,6 +35,7 @@ export const SearchBar = () => {
 
   const handleCloseSearch = () => {
     setShowSearch(false);
+    setResults([]);
   };
 
   return (
