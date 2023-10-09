@@ -57,6 +57,7 @@ const MyProfile = (user: IUser) => {
     });
 
     setIsEdit(false);
+    window.location.reload();
   };
 
   const getFieldView = (fieldProp: IField, onChange: any, value: string) => {
