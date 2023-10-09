@@ -1,8 +1,8 @@
 const express = require('express');
-const passport = require('passport');
 
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const google = require('../configs/google');
 
 const router = express.Router();
 
@@ -12,16 +12,9 @@ router.route('/login').post(authController.login);
 router.route('/forgotPassword').post(authController.forgotPassword);
 //router.route('/resetPassword/:token').patch(authController.resetPassword);
 
-router
-  .route('/google')
-  .get(passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.route('/google').get();
 
-router.route('/oauth2/redirect/google').get(
-  passport.authenticate('google', {
-    failureRedirect: '/google',
-    successRedirect: '/',
-  }),
-);
+router.route('/google/callback').get(google.googleOauthHandler);
 
 router.route('/logout').get(authController.protect, authController.logout);
 router

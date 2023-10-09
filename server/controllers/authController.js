@@ -1,8 +1,4 @@
-// const passport = require('passport');
-// const LocalStrategy = require('passport-local');
-
 const jwt = require('jsonwebtoken');
-//const crypto = require('crypto');
 const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');

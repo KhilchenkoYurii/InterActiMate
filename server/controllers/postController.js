@@ -359,11 +359,9 @@ exports.shareContacts = catchAsync(async (req, res, next) => {
 exports.searchBar = catchAsync(async (req, res, next) => {
   //form: contact(email\phone), name,
   // in request: searchQuery
-  console.log(req.query);
   let searchQueryParsed = [];
   if (req.query.search.includes(' ')) {
     searchQueryParsed = req.query.search.split(' ');
-    console.log(searchQueryParsed);
   } else {
     searchQueryParsed.push(req.query.search);
   }

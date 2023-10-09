@@ -6,10 +6,6 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xssClean = require('xss-clean');
 const hpp = require('hpp');
-const passport = require('passport');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-const { default: mongoose } = require('mongoose');
 require('dotenv').config();
 
 const userRouter = require('./server/routes/userRoutes');
@@ -20,7 +16,6 @@ const categoryRouter = require('./server/routes/categoryRoutes');
 const attachmentRouter = require('./server/routes/attachmentRoutes');
 //const AppError = require('./server/utils/appError');
 const globalErrorHandler = require('./server/controllers/errorController');
-require('./server/configs/passport')(passport);
 
 const app = express();
 // serve up production assets
@@ -55,23 +50,6 @@ app.use(cors({ origin: `http://localhost:3001` }, { withCredentials: true }));
 // let the react app to handle any unknown routes${process.env.PORT || 3001}
 // serve up the index.html if express does'nt recognize the route
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET',
-  }),
-);
-// app.use(
-//   session({
-//     secret: process.env.JWT_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     store: new MongoStore({ moongooseConnection: mongoose.connect }),
-//   }),
-// );
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static(`${__dirname}/server/public/img/posts`));
 app.use(express.static(`${__dirname}/server/public/img/users`));
 app.use('/users', userRouter);
