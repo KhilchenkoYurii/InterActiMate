@@ -22,13 +22,15 @@ export interface IRequestCard {
   participators: string[];
   attachments: IAttachments[];
   status: TStatus;
+  handleClick?: () => void;
 }
 
-export const RequestCard = ({ title, _id, attachments }: IRequestCard) => {
+export const RequestCard = ({ title, _id, attachments, handleClick }: IRequestCard) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
+    (!!handleClick) && handleClick();
     const queryParams = new URLSearchParams({ id: _id.toString() });
-    navigate(`request?${queryParams}`);
+    navigate(`/request?${queryParams}`);
   };
 
   return (
