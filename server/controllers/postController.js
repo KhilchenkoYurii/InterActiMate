@@ -377,8 +377,8 @@ exports.searchBar = catchAsync(async (req, res, next) => {
         searchQueryParsed.map(async (word) => {
           //console.log(post, word);
           if (
-            post.title.toLocaleLowerCase().includes(word) ||
-            post.body.toLocaleLowerCase().includes(word)
+            post.title.toLocaleLowerCase().includes(word.toLocaleLowerCase()) ||
+            post.body.toLocaleLowerCase().includes(word.toLocaleLowerCase())
           )
             searchedPosts.push(post);
         }),
