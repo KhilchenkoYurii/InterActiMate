@@ -27,7 +27,7 @@ export const ChatInput = ({ icon, onIconClick }: IChatInput) => {
 
   return (
     <div className="chat-input">
-      <textarea className="search" placeholder='висри шось сюди' value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} /> 
+      <textarea className="search" placeholder='Тиць повідомлення сюди :)' value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} /> 
       {icon && <img src={icon} onClick={handleSubmit} />}
     </div>
   );

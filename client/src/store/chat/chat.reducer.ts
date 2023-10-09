@@ -1,4 +1,4 @@
-import { SET_CHATS, SET_CURRENT_CHAT, SEND_MESSAGE } from "./chat.types"
+import { SET_CHATS, SET_CURRENT_CHAT, SEND_MESSAGE, RESET_CHATS } from "./chat.types"
 
 const CHAT_INITIAL_STATE = {
   chats: [],
@@ -21,6 +21,15 @@ export const chat = (state = CHAT_INITIAL_STATE, action: any) => {
       return {
         ...state,
         currentChat: action.data,
+      }
+    }
+
+    case RESET_CHATS: {
+      return {
+        ...state,
+        currentChat: {
+          messages: [],
+        },
       }
     }
 
