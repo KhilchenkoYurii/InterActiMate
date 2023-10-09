@@ -25,19 +25,24 @@ export interface IRequestCard {
   handleClick?: () => void;
 }
 
-export const RequestCard = ({ title, _id, attachments, handleClick }: IRequestCard) => {
+export const RequestCard = ({
+  title,
+  _id,
+  attachments,
+  handleClick,
+}: IRequestCard) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
-    (!!handleClick) && handleClick();
+    !!handleClick && handleClick();
     const queryParams = new URLSearchParams({ id: _id.toString() });
     navigate(`/request?${queryParams}`);
   };
 
   return (
     <div className="card" onClick={navigateToRequest}>
-      <div className="card-img-container">
+      <div className="card-img-container mb-1">
         <img
-          className="card-img"
+          className="card-img min-h-[13rem]"
           src={
             attachments[0] ? attachments[0].address : constants.imageNotFound
           }

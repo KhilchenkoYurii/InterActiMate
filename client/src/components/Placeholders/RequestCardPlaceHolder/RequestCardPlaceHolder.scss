@@ -1,8 +1,8 @@
-@use "../../../config/GlobalStyles/variables";
+@use '../../../config/GlobalStyles/variables';
 
 .card {
   width: variables.$card-width;
-  height: 250px;
+  height: 260px;
   background: variables.$white100;
   border-radius: 4px;
 }
