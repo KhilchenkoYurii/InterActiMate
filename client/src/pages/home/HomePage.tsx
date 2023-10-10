@@ -7,12 +7,16 @@ import {
   RequestCard,
 } from '../../components/RequestCard/RequestCard';
 import { Tabs } from '../../components/Tabs/Tabs';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../store/user/user.actions';
 import constants from '../../services/constants';
+import { userSelector } from '../../store/user/user.selector';
 
 export const HomePage = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [requests, setRequests] = useState<IRequestCard[]>([]);
-  const [user, setUser] = useState<any>(undefined);
+  const user = useSelector(userSelector);
   const [tabName, setTabName] = useState<string>('Оголошення');
 
   const tabs = [{ name: 'Оголошення' }, { name: 'Подані заявки' }];
@@ -35,16 +39,7 @@ export const HomePage = () => {
 
     (async () => {
       if (userId && token) {
-        try {
-          const {
-            data: {
-              data: { user },
-            },
-          } = await apiService.get(`users/${userId}`);
-          setUser(user);
-        } catch (error) {
-          console.log('Error: ', error);
-        }
+        dispatch(fetchUser(userId));
       }
       setIsLoading(false);
     })();

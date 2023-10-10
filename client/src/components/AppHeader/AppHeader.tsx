@@ -11,10 +11,14 @@ import apiService from '../../services/api.service';
 import { useEffect, useState } from 'react';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import { clearCookieHandler } from '../../pages/auth/setCookieHandler';
+import { fetchUser } from "../../store/user/user.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from '../../store/user/user.selector';
 
 export const AppHeader = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(undefined) as any;
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
 
   const token = document.cookie.split('jwt=').pop();
   const userId = localStorage.getItem('userId');
@@ -45,21 +49,10 @@ export const AppHeader = () => {
   ];
 
   useEffect(() => {
-    (async () => {
-      if (userId && token) {
-        try {
-          const {
-            data: {
-              data: { user },
-            },
-          } = await apiService.get(`users/${userId}`);
-          setUser(user);
-        } catch (error) {
-          console.log('Error: ', error);
-        }
-      }
-    })();
-  }, []);
+    if (userId) {
+      dispatch(fetchUser(userId));
+    }
+  }, [userId]);
 
   return (
     <div className="App-header">

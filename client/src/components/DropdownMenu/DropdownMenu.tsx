@@ -35,7 +35,7 @@ export default function DropdownMenu({ user, menuItems }: IDropdownMenu) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         className="rounded-full cursor-pointer"
-        src={user?.avatar ? user?.avatar : UserIcon}
+        src={user?.avatar ? user.avatar : UserIcon}
         width={30}
         height={30}
       />
