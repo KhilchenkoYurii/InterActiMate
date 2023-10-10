@@ -26,7 +26,7 @@ export const SearchBar = () => {
 
     const { value } = event.target;
 
-    if (!value) return;
+    if (!value) return setResults([]);
 
     timeout = setTimeout(() => {
       sendSearchRequest(value);
