@@ -7,11 +7,9 @@ import { ChatInput } from "../../components/ChatInput/ChatInput";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { chatSelector } from "../../store/chat/chat.selector";
-import { fetchChats, fetchChat, sendMessage, resetChats } from "../../store/chat/chat.action";
+import { fetchChats, fetchChatById, sendMessage, resetChats } from "../../store/chat/chat.action";
 import { socket } from "../../socket";
 import { userSelector } from "../../store/user/user.selector";
-
-const userId = localStorage.getItem("userId");
 
 export const ChatPage = () => {
   const dispatch = useDispatch();
@@ -20,15 +18,9 @@ export const ChatPage = () => {
 
   const currentChatMessages = [...currentChat.messages].reverse();
 
-  const loadAllChats = async() => {
-    socket.connect();
-    if (!userId) return;
-    dispatch(fetchChats(userId));
-  }
-
   const loadChatById = (chatId: string) => {
     if (!chatId) return;
-    dispatch(fetchChat(chatId));
+    dispatch(fetchChatById(chatId));
     if (user?.name) {
       socket.emit('join_chat', { username: user.name, chatId });
     }
@@ -37,7 +29,7 @@ export const ChatPage = () => {
   useEffect(() => {
     // TODO: remove log after chat is debugged
     console.log('LOAD');
-    loadAllChats();
+    socket.connect();
 
     return () => {
       socket.disconnect();
@@ -45,10 +37,15 @@ export const ChatPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (user?.userId) {
+      dispatch(fetchChats(user?.userId));
+    };
+  }, [user]);
+
   const handleSend = (message: string) => {
-    console.log('sending message');
-    dispatch(sendMessage({ body: message, sender: userId || '0' }));
-    socket.emit('send_message', { message, userId, chatId: currentChat.chatId });
+    dispatch(sendMessage({ body: message, sender: user?.userId || '0' }));
+    socket.emit('send_message', { message, userId: user?.userId, chatId: currentChat.chatId });
   };
 
   if (!chats?.length) {
@@ -75,7 +72,7 @@ export const ChatPage = () => {
             <ChatInput icon={SendIcon} onIconClick={handleSend} />
           </div>}
           {currentChatMessages.map((message: { body: string, sender: string }) => 
-            <ChatMessage body={message.body} isIncome={message.sender !== userId} />
+            <ChatMessage body={message.body} isIncome={message.sender !== user?.userId} />
           )}
         </div>
       </div>
