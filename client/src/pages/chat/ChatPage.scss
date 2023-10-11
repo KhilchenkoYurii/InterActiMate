@@ -1,5 +1,5 @@
-@use "../../config/GlobalStyles/mixins";
-@use "../../config/GlobalStyles/variables";
+@use "../../config/globalstyles/mixins";
+@use "../../config/globalstyles/variables";
 
 .chat-page {
   @include mixins.display-flex($direction: column, $justify-content: space-between);

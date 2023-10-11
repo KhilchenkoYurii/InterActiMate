@@ -1,5 +1,5 @@
-@use "../../config/GlobalStyles/variables";
-@use "../../config/GlobalStyles/mixins";
+@use "../../config/globalstyles/variables";
+@use "../../config/globalstyles/mixins";
 
 .cards-container {
   @include  mixins.display-flex($justify-content:none, $align-items: flex-start);
