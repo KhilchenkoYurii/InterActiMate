@@ -1,5 +1,5 @@
-@use "../../config/GlobalStyles/variables";
-@use "../../config/GlobalStyles/mixins";
+@use "../../config/globalstyles/variables";
+@use "../../config/globalstyles/mixins";
 
 .background-container {
   @include mixins.display-flex();

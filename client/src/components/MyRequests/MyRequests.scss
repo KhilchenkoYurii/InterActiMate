@@ -1,5 +1,5 @@
-@use '../../config/GlobalStyles/variables' as var;
-@use '../../config/GlobalStyles/mixins';
+@use '../../config/globalstyles/variables' as var;
+@use '../../config/globalstyles/mixins';
 
 .reqs-container {
   @include mixins.display-flex(
