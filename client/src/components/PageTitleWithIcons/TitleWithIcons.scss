@@ -1,5 +1,5 @@
-@use "../../config/globalstyles/variables";
-@use "../../config/globalstyles/mixins";
+@use "../../config/globalstyles/variables.scss";
+@use "../../config/globalstyles/mixins.scss";
 
 .title-with-icon {
   @include mixins.display-flex();
