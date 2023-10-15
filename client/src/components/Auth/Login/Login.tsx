@@ -6,6 +6,7 @@ import GoogleIcon from "../../../assets/icons/google.svg";
 import "../auth.scss";
 import { Link } from "react-router-dom";
 import errorHandler from "../errorHandler";
+import getGoogleAuthURL from "../../../pages/auth/loginWithGoogle"
 
 interface ILogin {
   onSubmit: (email: string, password: string) => void;
@@ -54,7 +55,7 @@ const Login = ({ onSubmit }: ILogin) => {
       <div className="background-container">
         <div className="auth-container">
           <button className="button button-google">
-            Продовжити через Google
+            <a href={getGoogleAuthURL()}>Продовжити через Google</a>
             <img src={GoogleIcon} />
           </button>
           <div className="or-section">
