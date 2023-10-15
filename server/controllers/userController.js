@@ -153,7 +153,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'favoritePosts',
   );
   if (req.file) {
-    filteredBody.avatar = `http://localhost:3000/${req.file.filename}`;
+    filteredBody.avatar = `${process.env.MAIN_LINK}/${req.file.filename}`;
   }
   // 3 update user
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

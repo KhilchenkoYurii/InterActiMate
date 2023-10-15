@@ -35,7 +35,7 @@ exports.resizePostPhotos = catchAsync(async (req, res, next) => {
   await Promise.all(
     req.files.images.map(async (image, i) => {
       const name = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
-      const link = `http://localhost:3000/${name}`;
+      const link = `${process.env.MAIN_LINK}/${name}`;
       const filename = `server/public/img/posts/${name}`;
       await sharp(image.buffer)
         .toFormat('jpeg')

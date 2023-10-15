@@ -17,7 +17,7 @@ connectDb();
 let server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3001',
+    origin: process.env.MAIN_FRONT_LINK,
     methods: ['GET', 'POST'],
   },
 });

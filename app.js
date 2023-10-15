@@ -46,7 +46,9 @@ app.use(xssClean());
 app.use(hpp());
 
 app.use(express.static('client/build'));
-app.use(cors({ origin: `http://localhost:3001` }, { withCredentials: true }));
+app.use(
+  cors({ origin: process.env.MAIN_FRONT_LINK }, { withCredentials: true }),
+);
 // let the react app to handle any unknown routes${process.env.PORT || 3001}
 // serve up the index.html if express does'nt recognize the route
 app.use(express.urlencoded({ extended: true }));

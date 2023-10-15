@@ -90,7 +90,7 @@ exports.googleOauthHandler = catchAsync(async (req, res, next) => {
       };
       console.log(token);
       res.cookie('jwt', token, cookieOptions);
-      res.redirect('http://localhost:3001/');
+      res.redirect(`${process.env.MAIN_FRONT_LINK}/`);
     } else {
       const id = user._id;
       const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -105,7 +105,7 @@ exports.googleOauthHandler = catchAsync(async (req, res, next) => {
       res.cookie('jwt', token, cookieOptions);
       console.log(token);
       user.password = undefined;
-      res.redirect('http://localhost:3001/');
+      res.redirect(`${process.env.MAIN_FRONT_LINK}/`);
       // .status(200)
       // .json({
       //   status: 'success',
@@ -117,6 +117,6 @@ exports.googleOauthHandler = catchAsync(async (req, res, next) => {
     }
   } catch (error) {
     console.log(error, 'Failed to authorize Google user');
-    return res.redirect(`http://localhost:3001/`);
+    return res.redirect(`${process.env.MAIN_FRONT_LINK}/`);
   }
 });
