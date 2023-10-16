@@ -38,12 +38,13 @@ export const AppHeader = () => {
     },
     {
       title: 'Вийти',
-      onClick: async () => {
-        await apiService.get(`users/logout`);
+      onClick: () => {
+        apiService.get(`users/logout`);
         localStorage.removeItem('userId');
+        console.log('Im here');
         clearCookieHandler();
-        navigate('/');
-        window.location.reload();
+        navigate('/login');
+        navigate(0);
       },
     },
   ];

@@ -16,6 +16,7 @@ function setCookieHandler(token: string): void {
 }
 
 function clearCookieHandler() {
+  console.log('Domain', DOMAIN);
   document.cookie = `jwt=; path=/; domain=${
     DOMAIN || ''
   }; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
