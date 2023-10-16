@@ -11,8 +11,8 @@ import apiService from '../../services/api.service';
 import { useEffect, useState } from 'react';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import { clearCookieHandler } from '../../pages/auth/setCookieHandler';
-import { fetchUser } from "../../store/user/user.actions";
-import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from '../../store/user/user.actions';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../store/user/user.selector';
 
 export const AppHeader = () => {
@@ -38,12 +38,12 @@ export const AppHeader = () => {
     },
     {
       title: 'Вийти',
-      onClick: () => {
-        apiService.get(`users/logout`);
+      onClick: async () => {
+        await apiService.get(`users/logout`);
         localStorage.removeItem('userId');
+        clearCookieHandler();
         navigate('/');
         window.location.reload();
-        clearCookieHandler();
       },
     },
   ];

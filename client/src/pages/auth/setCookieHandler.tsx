@@ -1,3 +1,5 @@
+const DOMAIN = process.env.REACT_APP_DOMAIN;
+
 function setCookieHandler(token: string): void {
   let expires = new Date(
     Date.now() +
@@ -7,11 +9,16 @@ function setCookieHandler(token: string): void {
         60 *
         1000,
   );
-  document.cookie = `jwt=${token}; path=/; expires=${expires};`;
+
+  document.cookie = `jwt=${token}; path=/; domain=${
+    DOMAIN || ''
+  }; expires=${expires};`;
 }
 
 function clearCookieHandler() {
-  document.cookie = `jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+  document.cookie = `jwt=; path=/; domain=${
+    DOMAIN || ''
+  }; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
 }
 
 export { setCookieHandler, clearCookieHandler };
