@@ -6,6 +6,7 @@ export const axiosService = axios.create({ baseURL });
 
 axiosService.interceptors.request.use((config) => {
   const userToken = document.cookie.split("jwt=").pop();
+  console.log('UserToken', userToken);
 
   const configWithToken = {
     ...config
