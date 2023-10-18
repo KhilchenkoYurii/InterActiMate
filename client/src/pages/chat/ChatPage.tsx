@@ -44,7 +44,6 @@ export const ChatPage = () => {
   }, [user]);
 
   const handleSend = (message: string) => {
-    dispatch(sendMessage({ body: message, sender: user?.userId || '0' }));
     socket.emit('send_message', { message, userId: user?.userId, chatId: currentChat.chatId });
   };
 
