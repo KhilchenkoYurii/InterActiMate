@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const aws = require('../configs/aws');
 
 const multerStorage = multer.memoryStorage();
 
@@ -32,11 +33,27 @@ exports.uploadUserPhoto = upload.single('photo');
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-  await sharp(req.file.buffer)
+  const shapedImage = await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
     .jpeg({ quality: 90 })
-    .toFile(`server/public/img/users/${req.file.filename}`);
+    .toBuffer();
+  //console.log(shapedImage);
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: req.file.filename,
+    Body: shapedImage,
+    ContentType: req.file.mimetype,
+  };
+
+  try {
+    await aws.s3.upload(params).promise();
+    // return next(new AppError('File uploaded to S3 successfully!', 200));
+  } catch (error) {
+    console.error(error);
+    return next(new AppError('Error uploading file to S3!', 500));
+  }
+
   next();
 });
 
@@ -153,7 +170,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'favoritePosts',
   );
   if (req.file) {
-    filteredBody.avatar = `${process.env.MAIN_LINK}/${req.file.filename}`;
+    filteredBody.avatar = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${req.file.filename}`;
   }
   // 3 update user
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

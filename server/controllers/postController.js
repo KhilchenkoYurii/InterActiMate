@@ -9,6 +9,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
 const Chat = require('../models/chatModel');
+const aws = require('../configs/aws');
 
 const multerStorage = multer.memoryStorage();
 
@@ -35,16 +36,30 @@ exports.resizePostPhotos = catchAsync(async (req, res, next) => {
   await Promise.all(
     req.files.images.map(async (image, i) => {
       const name = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
-      const link = `${process.env.MAIN_LINK}/${name}`;
-      const filename = `server/public/img/posts/${name}`;
-      await sharp(image.buffer)
+      const link = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com/${name}`;
+      const shapedImage = await sharp(image.buffer)
         .toFormat('jpeg')
         .jpeg({ quality: 90 })
-        .toFile(`${filename}`);
-      req.body.attachments.push({
-        alt: `image for post ${req.params.id}`,
-        address: link,
-      });
+        .toBuffer();
+      //console.log(shapedImage);
+      const params = {
+        Bucket: process.env.S3_BUCKET,
+        Key: name,
+        Body: shapedImage,
+        ContentType: image.mimetype,
+      };
+
+      try {
+        await aws.s3.upload(params).promise();
+        req.body.attachments.push({
+          alt: `image for post ${req.params.id}`,
+          address: link,
+        });
+        // return next(new AppError('File uploaded to S3 successfully!', 200));
+      } catch (error) {
+        console.error(error);
+        return next(new AppError('Error uploading file to S3!', 500));
+      }
     }),
   );
 
