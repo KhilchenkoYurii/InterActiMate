@@ -48,6 +48,14 @@ export const ChatPage = () => {
     socket.emit('send_message', { message, userId: user?.userId, chatId: currentChat.chatId });
   };
 
+  socket.on('receive_message', (receivedMessage) => {
+    dispatch(sendMessage({ body: receivedMessage.message, sender: receivedMessage?.userId || '0' }));
+  });
+
+  socket.on('previous_messages', () => {
+    // TODO:
+  });
+
   if (!chats?.length) {
     return <div className="mt-10">
       <h1 className="text-2xl font-bold">Чати поки пустують</h1>
