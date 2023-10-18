@@ -22,7 +22,10 @@ const app = express();
 //set security http headers
 app.use(
   helmet({
-    crossOriginResourcePolicy: false,
+    useDefaults: true,
+    directives: {
+      'img-src': ["'self'", 'https: data:'],
+    },
   }),
 );
 //request limitation
