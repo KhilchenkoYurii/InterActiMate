@@ -3,9 +3,10 @@ import "./App.scss";
 import { AllRoutes } from "./config/routes/routes";
 import { ReactNotifications } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
 import { socket } from "./socket";
+import { sendMessage } from "./store/chat/chat.action";
 
 const theme = createTheme({
   typography: {
@@ -14,17 +15,14 @@ const theme = createTheme({
 });
 
 function App() {
-  // TODO:
-  socket.on('connect', () => {
-    console.log('CONNECTED!');
+  const dispatch = useDispatch();
+
+  socket.on('receive_message', (receivedMessage) => {
+    dispatch(sendMessage({ body: receivedMessage.message, sender: receivedMessage?.userId || '0' }));
   });
 
-  socket.on('receive_message', (messages) => {
-    console.log('message received::', messages);
-  });
-
-  socket.on('previous_messages', (messages) => {
-    console.log('previous messages::', messages);
+  socket.on('previous_messages', () => {
+    // TODO:
   });
 
   return (
