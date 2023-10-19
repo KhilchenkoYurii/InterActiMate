@@ -4,7 +4,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import LoginIcon from '../../assets/icons/LoginIcon.svg';
 import ChatIcon from '../../assets/icons/chat.svg';
 import PlusFilledIcon from '../../assets/icons/plus-filled.svg';
-import HeartIcon from '../../assets/icons/heart.svg';
+// import HeartIcon from '../../assets/icons/heart.svg';
 import './AppHeader.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import apiService from '../../services/api.service';
