@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import EditIcon from '../../assets/icons/Edit_fill.svg';
+// import EditIcon from '../../assets/icons/Edit_fill.svg';
 import apiService from '../../services/api.service';
+import NoImageUser from '../../assets/icons/user_filled.svg';
 
 export interface IUser {
   _id: string;
@@ -56,14 +57,14 @@ const MyProfile = (user: IUser) => {
       bio,
     });
 
-    setIsEdit(false);
     window.location.reload();
+    setIsEdit(false);
   };
 
   const getFieldView = (fieldProp: IField, onChange: any, value: string) => {
     if (fieldProp.field)
       return (
-        <div className="flex flex-wrap gap-10 break-all align-middle items-center">
+        <div className="flex flex-wrap gap-0 lg:gap-10 break-all align-middle items-center">
           <div className="font-bold text-[#176b87] min-w-[5rem]">
             {fieldProp.name}
           </div>
@@ -81,21 +82,21 @@ const MyProfile = (user: IUser) => {
   };
   return (
     <div className="card-container mx-3">
-      <div className="flex flex-row gap-2 whitespace-normal">
+      <div className="flex flex-wrap justify-center items-center md:flex-nowrap md:justify-normal flex-row gap-2 whitespace-normal mb-3">
         {/* Avatar */}
-        <div className="max-w-[20rem] relative">
+        <div className="max-w-[20rem] m-auto md:m-0 relative">
           <img
-            src={user.avatar}
+            src={user.avatar ? user.avatar : NoImageUser}
             alt="Profile Avatar"
-            className="min-w-[10rem]  rounded-[4px]"
+            className="min-w-[10rem] rounded-[4px]"
           />
-          {isEdit && (
+          {/* {isEdit && (
             <img
               className="absolute bottom-[-1rem] right-[-1rem] shadow-md rounded-full p-1 bg-[white] cursor-pointer"
               src={EditIcon}
               alt="Edit"
             />
-          )}
+          )} */}
         </div>
         {/* Rest Info */}
         <div className="flex flex-col w-full mx-10">
@@ -150,7 +151,7 @@ const MyProfile = (user: IUser) => {
           </div>
           <div className="mt-3">
             {!isEdit ? (
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => setIsEdit(true)}
@@ -158,12 +159,12 @@ const MyProfile = (user: IUser) => {
                 >
                   Редагувати
                 </button>
-                <button
+                {/* <button
                   type="button"
                   className="text-[white] bg-[#d32f2f] rounded-[4px] flex justify-center items-center h-10 max-w-[10rem]"
                 >
                   Деактивувати
-                </button>
+                </button> */}
               </div>
             ) : (
               <button

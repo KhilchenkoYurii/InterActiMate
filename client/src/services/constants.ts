@@ -1,4 +1,4 @@
-
+import NoImage from '../assets/img/noimage.jpg'
 interface IConst {
     imageNotFound:string;
     postStatus:IStatus;
@@ -12,7 +12,7 @@ interface IStatus {
 }
 
 export default {
-    imageNotFound: "https://zeppelin-marine.com.ua/img/noimage.jpg",
+    imageNotFound: NoImage,
     postStatus: {active:'Active', done: 'Done', canceled: 'Canceled', banned: 'Banned'}
 } as IConst
 

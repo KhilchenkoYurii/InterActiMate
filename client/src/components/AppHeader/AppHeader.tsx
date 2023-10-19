@@ -60,35 +60,41 @@ export const AppHeader = () => {
       <div className="App-header App-header-big fixed top-0 z-50">
         <div className="header-container">
           <AppLogo />
-          <Link to={'/chat'} className='flex md:hidden'>
-            <ButtonWithIcon icon={ChatIcon} text="" onClick={() => { }} />
-          </Link>
-          <SearchBar />
-          <Link to={'/chat'} className='hidden md:flex'>
-            <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => { }} />
-          </Link>
-          <Link to={'/add-request'} className='hidden md:flex'>
-            <ButtonWithIcon
-              icon={PlusFilledIcon}
-              text="Додати оголошення"
-              onClick={() => { }}
-            />
-          </Link>
-          <Link to={'/add-request'} className='sm:flex md:hidden'>
-            <ButtonWithIcon
-              icon={PlusFilledIcon}
-              text=""
-              onClick={() => { }}
-            />
-          </Link>
-          <div className="hidden md:flex">
-            <ButtonWithIcon
-              icon={HeartIcon}
-              text=""
-              onClick={() => { }}
-              buttonType="outline"
-            />
-          </div>
+          {userId ? (
+            <>
+              <Link to={'/chat'} className="flex md:hidden">
+                <ButtonWithIcon icon={ChatIcon} text="" onClick={() => {}} />
+              </Link>
+              <SearchBar />
+              <Link to={'/chat'} className="hidden md:flex">
+                <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
+              </Link>
+              <Link to={'/add-request'} className="hidden md:flex">
+                <ButtonWithIcon
+                  icon={PlusFilledIcon}
+                  text="Додати оголошення"
+                  onClick={() => {}}
+                />
+              </Link>
+              <Link to={'/add-request'} className="sm:flex md:hidden">
+                <ButtonWithIcon
+                  icon={PlusFilledIcon}
+                  text=""
+                  onClick={() => {}}
+                />
+              </Link>
+              {/* <div className="hidden md:flex">
+                <ButtonWithIcon
+                  icon={HeartIcon}
+                  text=""
+                  onClick={() => {}}
+                  buttonType="outline"
+                />
+              </div> */}
+            </>
+          ) : (
+            <SearchBar />
+          )}
           <div className="profile-btn">
             {userId ? (
               <DropdownMenu user={user} menuItems={menuItems} />
