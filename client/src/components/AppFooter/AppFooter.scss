@@ -1,7 +1,12 @@
 @use "../../config/globalstyles/variables";
 
 .app-footer {
-  height: 67px;
+  height: 40px;
   width: 100%;
   background: variables.$primary100;
+}
+
+.disclaimer-mobile {
+  font-size: 12px;
+  line-height: 9px;
 }

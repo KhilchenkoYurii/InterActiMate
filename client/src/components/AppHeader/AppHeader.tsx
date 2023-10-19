@@ -8,7 +8,7 @@ import HeartIcon from '../../assets/icons/heart.svg';
 import './AppHeader.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import apiService from '../../services/api.service';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import DropdownMenu from '../DropdownMenu/DropdownMenu';
 import { clearCookieHandler } from '../../pages/auth/setCookieHandler';
 import { fetchUser } from '../../store/user/user.actions';
