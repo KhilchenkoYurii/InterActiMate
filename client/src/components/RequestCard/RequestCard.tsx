@@ -51,7 +51,7 @@ export const RequestCard = ({
       </div>
       <div className="info">
         <div className="row mt-2">
-          <div className="text-title">{title}</div>
+          <div className="sm:text-sm	md:text-xl	mb-1 text-left">{title}</div>
           <ButtonWithIcon
             icon={<HeartIcon />}
             isSvg={true}
