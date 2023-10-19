@@ -21,11 +21,20 @@ const app = express();
 // serve up production assets
 //set security http headers
 app.use(
-  helmet({
-    useDefaults: true,
-    directives: {
-      'img-src': ["'self'", 'https: data:'],
-    },
+  helmet.csp({
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'"],
+    connectSrc: ["'self'"],
+    fontSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    mediaSrc: ["'self'"],
+    frameSrc: ["'none'"],
+    // reportUri: '/report-violation',
+    reportOnly: false, // set to true if you only want to report errors
+    setAllHeaders: false, // set to true if you want to set all headers
+    safari5: false, // set to true if you want to force buggy CSP in Safari 5
   }),
 );
 //request limitation
