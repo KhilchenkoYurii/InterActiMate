@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import LogoImage from '../../assets/IAM.png';
+import Images from '../../assets/img'
 import "./AppLogo.scss";
 
 export const AppLogo = () => {
@@ -12,7 +12,7 @@ export const AppLogo = () => {
         </div>
       </div>
       <div className="small-logo flex md:hidden" onClick={() => navigate('/')}>
-        <img className="scale-150" src={LogoImage} />
+        <img className="scale-150" src={Images.IAM} />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import NoImage from '../assets/img/noimage.jpg'
+import Images from '../assets/img'
 interface IConst {
     imageNotFound:string;
     postStatus:IStatus;
@@ -12,7 +12,7 @@ interface IStatus {
 }
 
 export default {
-    imageNotFound: NoImage,
+    imageNotFound: Images.noImage,
     postStatus: {active:'Active', done: 'Done', canceled: 'Canceled', banned: 'Banned'}
 } as IConst
 
