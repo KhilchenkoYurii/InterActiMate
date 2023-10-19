@@ -44,6 +44,7 @@ app.use(
           'youtu.be',
           '*.youtu.be',
           '*.youtube.com',
+          '"*.amazonaws.com"',
         ],
       },
     },
