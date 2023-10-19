@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { InputWithIcon } from "../../../components/InputWithIcon/InputWithIcon";
-import MailIcon from "../../../assets/icons/mail.svg";
-import KeyIcon from "../../../assets/icons/key.svg";
-import GoogleIcon from "../../../assets/icons/google.svg";
-import "../auth.scss";
-import { Link } from "react-router-dom";
-import errorHandler from "../errorHandler";
-import getGoogleAuthURL from "../../../pages/auth/loginWithGoogle"
+import { useEffect, useState } from 'react';
+import { InputWithIcon } from '../../../components/InputWithIcon/InputWithIcon';
+import MailIcon from '../../../assets/icons/mail.svg';
+import KeyIcon from '../../../assets/icons/key.svg';
+import GoogleIcon from '../../../assets/icons/google.svg';
+import '../auth.scss';
+import { Link } from 'react-router-dom';
+import errorHandler from '../errorHandler';
+import getGoogleAuthURL from '../../../pages/auth/loginWithGoogle';
 
 interface ILogin {
   onSubmit: (email: string, password: string) => void;
@@ -18,8 +18,8 @@ interface IErrors {
 }
 
 const Login = ({ onSubmit }: ILogin) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({} as IErrors);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -28,8 +28,8 @@ const Login = ({ onSubmit }: ILogin) => {
 
     if (Object.keys(errors).length === 0) {
       onSubmit(email, password);
-      setEmail("");
-      setPassword("");
+      setEmail('');
+      setPassword('');
       setIsDisabled(true);
     }
   }
@@ -43,7 +43,7 @@ const Login = ({ onSubmit }: ILogin) => {
   }
 
   useEffect(() => {
-    if (password !== "" && email !== "" && !Object.keys(errors).length) {
+    if (password !== '' && email !== '' && !Object.keys(errors).length) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -53,8 +53,8 @@ const Login = ({ onSubmit }: ILogin) => {
   return (
     <form action="login" onSubmit={handleSubmit}>
       <div className="background-container">
-        <div className="auth-container">
-          <button className="button button-google">
+        <div className="auth-container md">
+          {/* <button className="button button-google">
             <a href={getGoogleAuthURL()}>Продовжити через Google</a>
             <img src={GoogleIcon} />
           </button>
@@ -62,12 +62,12 @@ const Login = ({ onSubmit }: ILogin) => {
             <hr />
             Чи
             <hr />
-          </div>
+          </div> */}
           <div className="buttons-row">
-            <Link to={"/login"} className="link">
+            <Link to={'/login'} className="link">
               <button className="active">Увійти</button>
             </Link>
-            <Link to={"/sign-up"} className="link">
+            <Link to={'/sign-up'} className="link">
               <button>Зареєструватися</button>
             </Link>
           </div>
@@ -79,7 +79,7 @@ const Login = ({ onSubmit }: ILogin) => {
                 value={email}
                 onChange={handleChangeEmail}
                 onBlur={() => setErrors(errorHandler({ email, password }))}
-                error={errors["email"]}
+                error={errors['email']}
               />
             </div>
             <div className="input-row">
@@ -90,17 +90,17 @@ const Login = ({ onSubmit }: ILogin) => {
                 value={password}
                 onChange={handleChangePassword}
                 onBlur={() => setErrors(errorHandler({ email, password }))}
-                error={errors["password"]}
+                error={errors['password']}
               />
             </div>
-            <Link to={"/resetpassword"} className="link-forget">
+            <Link to={'/resetpassword'} className="link-forget">
               Забули пароль?
             </Link>
             <button
               className={
                 isDisabled
-                  ? "button opacity-50 pointer-events-none bg-gray-400 text-white mb-4"
-                  : "button button-submit mb-4"
+                  ? 'button opacity-50 pointer-events-none bg-gray-400 text-white mb-4'
+                  : 'button button-submit mb-4'
               }
             >
               Увійти
@@ -109,7 +109,7 @@ const Login = ({ onSubmit }: ILogin) => {
               Під час входу ви погоджуєтеся з нашими
             </span>
             <Link
-              to={"/terms-and-conditions"}
+              to={'/terms-and-conditions'}
               className="terms-text terms-text-bold hover:underline"
             >
               Умовами користування.

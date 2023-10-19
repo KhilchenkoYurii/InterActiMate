@@ -1,12 +1,12 @@
-import { InputWithIcon } from "../../../components/InputWithIcon/InputWithIcon";
-import AtIcon from "../../../assets/icons/at.svg";
-import MailIcon from "../../../assets/icons/mail.svg";
-import KeyIcon from "../../../assets/icons/key.svg";
-import GoogleIcon from "../../../assets/icons/google.svg";
-import "../auth.scss";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import errorHandler from "../errorHandler";
+import { InputWithIcon } from '../../../components/InputWithIcon/InputWithIcon';
+import AtIcon from '../../../assets/icons/at.svg';
+import MailIcon from '../../../assets/icons/mail.svg';
+import KeyIcon from '../../../assets/icons/key.svg';
+import GoogleIcon from '../../../assets/icons/google.svg';
+import '../auth.scss';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import errorHandler from '../errorHandler';
 
 interface ISignUp {
   onSubmit: (nickname: string, email: string, password: string) => void;
@@ -19,9 +19,9 @@ interface IErrors {
 }
 
 export const SignUp = ({ onSubmit }: ISignUp) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
   const [errors, setErrors] = useState({} as IErrors);
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -29,9 +29,9 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
     event.preventDefault();
     if (Object.keys(errors).length === 0) {
       onSubmit(nickname, email, password);
-      setEmail("");
-      setPassword("");
-      setNickname("");
+      setEmail('');
+      setPassword('');
+      setNickname('');
       setIsDisabled(true);
     }
   }
@@ -50,9 +50,9 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
 
   useEffect(() => {
     if (
-      password !== "" &&
-      email !== "" &&
-      nickname !== "" &&
+      password !== '' &&
+      email !== '' &&
+      nickname !== '' &&
       !Object.keys(errors).length
     ) {
       setIsDisabled(false);
@@ -65,7 +65,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
     <form action="signUp" onSubmit={handleSubmit}>
       <div className="background-container">
         <div className="auth-container">
-          <button className="button button-google">
+          {/* <button className="button button-google">
             Продовжити через Google
             <img src={GoogleIcon} />
           </button>
@@ -73,12 +73,12 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
             <hr />
             Чи
             <hr />
-          </div>
+          </div> */}
           <div className="buttons-row buttons-row-signup">
-            <Link to={"/login"} className="link">
+            <Link to={'/login'} className="link">
               <button>Увійти</button>
             </Link>
-            <Link to={"/sign-up"} className="link">
+            <Link to={'/sign-up'} className="link">
               <button className="active">Зареєструватися</button>
             </Link>
           </div>
@@ -98,7 +98,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
                 value={email}
                 onChange={handleChangeEmail}
                 onBlur={() => setErrors(errorHandler({ email, password }))}
-                error={errors["email"]}
+                error={errors['email']}
               />
             </div>
             <div className="input-row">
@@ -108,7 +108,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
                 value={password}
                 onChange={handleChangePassword}
                 onBlur={() => setErrors(errorHandler({ email, password }))}
-                error={errors["password"]}
+                error={errors['password']}
                 isPass={true}
               />
             </div>
@@ -116,7 +116,7 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
               Створюючи профіль на InterActiMate, ви погоджуєтеся з
             </span>
             <Link
-              to={"/terms-and-conditions"}
+              to={'/terms-and-conditions'}
               className="terms-text terms-text-bold terms-text-left hover:underline"
             >
               Умовами користування.
@@ -124,8 +124,8 @@ export const SignUp = ({ onSubmit }: ISignUp) => {
             <button
               className={
                 isDisabled
-                  ? "button opacity-50 pointer-events-none bg-gray-400 text-white mt-2"
-                  : "button button-signup mt-2"
+                  ? 'button opacity-50 pointer-events-none bg-gray-400 text-white mt-2'
+                  : 'button button-signup mt-2'
               }
             >
               Зареєструватися

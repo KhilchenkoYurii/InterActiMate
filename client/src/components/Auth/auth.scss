@@ -1,5 +1,5 @@
-@use "../../config/globalstyles/variables";
-@use "../../config/globalstyles/mixins";
+@use '../../config/globalstyles/variables';
+@use '../../config/globalstyles/mixins';
 
 .background-container {
   @include mixins.display-flex();
@@ -13,6 +13,47 @@
   background: variables.$white100;
   padding: 30px 24px 21px 24px;
   text-align: start;
+}
+
+@media (max-width: 640px) {
+  .auth-container {
+    @include mixins.display-flex($direction: column);
+    background: variables.$white100;
+    padding: 30px 24px 21px 24px;
+    text-align: start;
+    width: 100%;
+    height: 100%;
+  }
+
+  .buttons-row {
+    @include mixins.display-flex($justify-content: normal);
+    gap: 10px;
+    width: 100%;
+    border-bottom: 1px solid variables.$light-blue;
+    margin-bottom: 22px;
+
+    &-signup {
+      margin-bottom: 7px;
+    }
+  }
+
+  button {
+    height: 34px;
+    width: 100%;
+    flex-shrink: 0;
+    color: variables.$primary100;
+    background: variables.$white100;
+    border: none;
+    border-radius: 4px 4px 0px 0px;
+    cursor: pointer;
+    word-break: break-all;
+  }
+
+  .link {
+    text-decoration: none;
+    width: 100%;
+    color: inherit;
+  }
 }
 
 .animated {
@@ -46,30 +87,32 @@
   }
 }
 
-.buttons-row {
-  @include mixins.display-flex($justify-content: space-between);
-  gap: 58px;
-  border-bottom: 1px solid variables.$light-blue;
-  margin-bottom: 22px;
+@media (min-width: 640px) {
+  .buttons-row {
+    @include mixins.display-flex($justify-content: space-between);
+    gap: 58px;
+    border-bottom: 1px solid variables.$light-blue;
+    margin-bottom: 22px;
 
-  &-signup {
-    margin-bottom: 7px;
+    &-signup {
+      margin-bottom: 7px;
+    }
   }
-}
 
-button {
-  width: 168px;
-  height: 34px;
-  flex-shrink: 0;
-  color: variables.$primary100;
-  background: variables.$white100;
-  border: none;
-  border-radius: 4px 4px 0px 0px;
-  cursor: pointer;
+  button {
+    width: 168px;
+    height: 34px;
+    flex-shrink: 0;
+    color: variables.$primary100;
+    background: variables.$white100;
+    border: none;
+    border-radius: 4px 4px 0px 0px;
+    cursor: pointer;
 
-  .link {
-    text-decoration: none;
-    color: inherit;
+    .link {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 }
 
