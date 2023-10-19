@@ -66,13 +66,15 @@ export const ChatPage = () => {
             <ChatPreview name={chat?.participatorsName} lastMessage={chat?.firstMessage} onChatClick={() => loadChatById(chat.chatId)} />
           ))}
         </div>
-        <div className="messages-container w-3/4 flex flex-col-reverse items-start pt-4 pr-2 pb-14 overflow-scroll">
-          {!!currentChat.chatId && <div className="fixed bottom-0 right-0 message-input w-3/4 bg-white">
+        <div className="flex flex-col w-full h-full">
+          <div className="messages-container flex flex-col-reverse sm:items-end md:items-start pt-4 pr-2 overflow-scroll">
+            {currentChatMessages.map((message: { body: string, sender: string }) => 
+              <ChatMessage body={message.body} isIncome={message.sender !== user?.userId} />
+            )}
+          </div>
+          {!!currentChat.chatId && <div className="message-input bg-white">
             <ChatInput icon={SendIcon} onIconClick={handleSend} />
           </div>}
-          {currentChatMessages.map((message: { body: string, sender: string }) => 
-            <ChatMessage body={message.body} isIncome={message.sender !== user?.userId} />
-          )}
         </div>
       </div>
     </div>

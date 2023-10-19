@@ -20,8 +20,10 @@ const DisplayedRoute = (
   return (
     <>
       {hasHeader && <AppHeader />}
-      <div className={`app-content ${hasHeader && 'mt-16'}`}>{element}</div>
-      {/* {hasFooter && <AppFooter />} */}
+      <div className={`app-content ${hasHeader && 'mt-16 mb-10'}`}>
+        {element}
+      </div>
+      <AppFooter />
     </>
   );
 };
