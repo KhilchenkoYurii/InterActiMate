@@ -9,7 +9,7 @@ const defaultImageUrl = 'https://online.hitpaw.com/images/topics/face-animator/w
 
 export const ChatPreview = ({ img = defaultImageUrl, name, lastMessage, onChatClick }: IChatPreview) => {
   return (
-    <div className="flex chat-preview w-100 h-20 p-2 flex-1 align-center gap-1 flex-nowrap cursor-pointer" onClick={onChatClick}>
+    <div className="flex chat-preview w-100 h-20 p-2 flex-1 sm:flex-col md:flex-row align-center gap-1 flex-nowrap cursor-pointer" onClick={onChatClick}>
       <img src={img} className='h-16 w-16 rounded-full' />
       <div className="flex flex-col gap-1 justify-center text-left truncate">
         <div className='text-lg	font-semibold leading-none'>{name}</div>

@@ -42,14 +42,14 @@ export const SearchBar = () => {
     <div className="searchbar-container">
       {!showSearch && (
         <>
-          <input type="text" placeholder="Search..." className="search" onChange={handleInput} onClick={() => setShowSearch(value => !value)} />
+          <input type="text" placeholder="Пошук..." className="search" onChange={handleInput} onClick={() => setShowSearch(value => !value)} />
           <img src={SearchIcon} />
         </>
       )}
       {!!showSearch && (
         <div className="fixed cards-container search-results top-0 left-0 w-full flex overflow-scroll z-50">
           <div className="flex w-full">
-            <input type="text" placeholder="Search..." className="search mr-2 p-2 rounded-3xl" onChange={handleInput} />
+            <input type="text" placeholder="Пошук..." className="search mr-2 p-2 rounded-3xl" onChange={handleInput} />
             <img src={CloseIcon} className="cursor-pointer" onClick={handleCloseSearch}  />
           </div>
           {results.map((request) => (
