@@ -7,7 +7,7 @@ export const AppFooter = () => (
     <div className="text-xl	text-yellow-500 leading-4	font-black mx-2 hidden md:flex width-210">ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ</div>
       <img src={Images.IAM} className="w-10 h-10" />
       <img src={Images.UpSHift} className="w-10 h-10" />
-    <div className="text-white disclaimer-mobile text-sm leading-3 md:mx-4">
+    <div className="text-white disclaimer-mobile text-sm leading-3 md:mx-4 md:w-1/2">
       Проект створений в межах програми UPSHIFT за підтримки ЮНІСЕФ та уряду Німеччини через німецький державний банк розвитку KfW
     </div>
     <div className="text-xl	text-yellow-500	leading-4	font-black mx-2 hidden md:flex width-210">ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ</div>
