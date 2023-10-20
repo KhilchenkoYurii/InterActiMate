@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { HomePage } from '../../pages/home/HomePage';
 import { IRoute } from './routes.interface';
 import { ReactElement } from 'react';
@@ -11,17 +11,31 @@ import { ChatPage } from '../../pages/chat/ChatPage';
 import { LoginPage } from '../../pages/auth/LoginPage';
 import MyRequests from '../../pages/my-requests/MyRequestsPage';
 import { MyProfilePage } from '../../pages/my-profile/MyProfilePage';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../store/user/user.selector';
 
-const DisplayedRoute = (
-  element: ReactElement,
-  hasHeader: boolean = true,
-  hasFooter: boolean = true,
-) => {
+interface IDisplayedRoute {
+  component: ReactElement,
+  hasHeader: boolean,
+  isGuarded: boolean,
+  userId?: string,
+};
+
+const DisplayedRoute = ({
+  component,
+  hasHeader = true,
+  isGuarded = false,
+  userId,
+}: IDisplayedRoute) => {
+  if (isGuarded && !userId) {
+    return <Navigate to='/login'/>
+  }
+
   return (
     <>
       {hasHeader && <AppHeader />}
       <div className={`app-content ${hasHeader && 'mt-16 mb-10'}`}>
-        {element}
+        {component}
       </div>
       <AppFooter />
     </>
@@ -32,52 +46,63 @@ export const allRoutes: IRoute[] = [
   {
     path: '/',
     component: <HomePage />,
+    hasHeader: true,
+    isGuarded: false,
   },
   {
     path: '/login',
     component: <LoginPage />,
     hasHeader: false,
-    hasFooter: false,
+    isGuarded: false,
   },
   {
     path: '/sign-up',
     component: <SignUpPage />,
     hasHeader: false,
-    hasFooter: false,
+    isGuarded: false,
   },
   {
     path: '/request',
     component: <RequestPage />,
+    hasHeader: true,
+    isGuarded: true,
   },
   {
     path: '/add-request',
     component: <AddRequestPage />,
-    hasFooter: false,
+    hasHeader: true,
+    isGuarded: true,
   },
   {
     path: '/my-requests',
     component: <MyRequests />,
+    hasHeader: true,
+    isGuarded: true,
   },
   {
     path: '/chat',
     component: <ChatPage />,
-    hasFooter: false,
+    hasHeader: true,
+    isGuarded: true,
   },
   {
     path: '/my-profile',
     component: <MyProfilePage />,
-    hasFooter: false,
+    hasHeader: true,
+    isGuarded: true,
   },
 ];
 
 export const AllRoutes = () => {
+  const user = useSelector(userSelector);
+
   return (
     <Routes>
-      {allRoutes.map(({ path, component, hasHeader, hasFooter }) => (
+      {allRoutes.map(({ path, component, hasHeader, isGuarded }) => (
         <Route
           key={path}
           path={path}
-          element={DisplayedRoute(component, hasHeader, hasFooter)}
+          element={<DisplayedRoute component={component} hasHeader={!!hasHeader} isGuarded={!!isGuarded} userId={user?.userId} />}
         />
       ))}
     </Routes>
