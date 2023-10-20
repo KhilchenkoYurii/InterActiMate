@@ -95,6 +95,7 @@ export const allRoutes: IRoute[] = [
 
 export const AllRoutes = () => {
   const user = useSelector(userSelector);
+  const localUserid = localStorage.getItem('userId')
 
   return (
     <Routes>
@@ -102,7 +103,7 @@ export const AllRoutes = () => {
         <Route
           key={path}
           path={path}
-          element={<DisplayedRoute component={component} hasHeader={!!hasHeader} isGuarded={!!isGuarded} userId={user?.userId} />}
+          element={<DisplayedRoute component={component} hasHeader={!!hasHeader} isGuarded={!!isGuarded} userId={user?.userId || localUserid} />}
         />
       ))}
     </Routes>
