@@ -10,6 +10,11 @@
   flex-wrap: wrap;
   gap: 10px;
   text-align: start;
+
+  max-width: 60%;
+  @media (max-width: 640px) {
+    max-width: 80%;
+  }
 }
 
 .card-title {
@@ -147,7 +152,6 @@
 }
 
 .card-imgs {
-  height: 100%;
   width: 425px;
 }
 

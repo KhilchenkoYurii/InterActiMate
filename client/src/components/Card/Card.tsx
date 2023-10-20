@@ -72,130 +72,127 @@ export const Card = ({
   };
 
   return (
-    <>
+    <div className='flex justify-center'>
       {_id ? (
-        <>
-          <div className="card-body">
-            <div>
-              <div className="card-container">
-                <div className="card-title">{title}</div>
-                <div className="card-description break-all">{body}</div>
-                {getCategoriesView()}
+        <div className="card-body">
+          <div>
+            <div className="card-container">
+              <div className="card-title">{title}</div>
+              <div className="card-description break-words">{body}</div>
+              {getCategoriesView()}
+            </div>
+            <div className="card-container">
+              <div className="card-other-header">
+                {phone && (
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(phone);
+                      notify({
+                        duration: 500,
+                        message: `Phone ${phone} copied!`,
+                      });
+                    }}
+                  >
+                    <PhoneIcon />
+                    <div>{phone}</div>
+                  </div>
+                )}
+                {email && (
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(email);
+                      notify({
+                        duration: 500,
+                        message: `Email ${email} copied!`,
+                      });
+                    }}
+                  >
+                    <EmailIcon />
+                    <div>{email}</div>
+                  </div>
+                )}
+                {nickname && (
+                  <div
+                    className="card-other-container prevent-select"
+                    role="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(nickname);
+                      notify({
+                        duration: 500,
+                        message: `Nickname ${nickname} copied!`,
+                      });
+                    }}
+                  >
+                    <NickNameIcon />
+                    <div>{nickname}</div>
+                  </div>
+                )}
               </div>
-              <div className="card-container">
-                <div className="card-other-header">
-                  {phone && (
-                    <div
-                      className="card-other-container prevent-select"
-                      role="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText(phone);
-                        notify({
-                          duration: 500,
-                          message: `Phone ${phone} copied!`,
-                        });
-                      }}
-                    >
-                      <PhoneIcon />
-                      <div>{phone}</div>
-                    </div>
-                  )}
-                  {email && (
-                    <div
-                      className="card-other-container prevent-select"
-                      role="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText(email);
-                        notify({
-                          duration: 500,
-                          message: `Email ${email} copied!`,
-                        });
-                      }}
-                    >
-                      <EmailIcon />
-                      <div>{email}</div>
-                    </div>
-                  )}
-                  {nickname && (
-                    <div
-                      className="card-other-container prevent-select"
-                      role="button"
-                      onClick={() => {
-                        navigator.clipboard.writeText(nickname);
-                        notify({
-                          duration: 500,
-                          message: `Nickname ${nickname} copied!`,
-                        });
-                      }}
-                    >
-                      <NickNameIcon />
-                      <div>{nickname}</div>
-                    </div>
-                  )}
+              <hr className="card-hr" />
+              <div className="card-other">
+                <div className="card-other-container">
+                  <CalendarIcon />
+                  <div>{getDate(dateOfCreation)}</div>
                 </div>
-                <hr className="card-hr" />
-                <div className="card-other">
+                <div className="card-other-user">
                   <div className="card-other-container">
-                    <CalendarIcon />
-                    <div>{getDate(dateOfCreation)}</div>
+                    <UserIcon />
+                    <div>
+                      {surname} {name}
+                    </div>
                   </div>
-                  <div className="card-other-user">
-                    <div className="card-other-container">
-                      <UserIcon />
-                      <div>
-                        {surname} {name}
-                      </div>
-                    </div>
-                    <div className="card-other-container">
-                      <DoneIcon />
-                      <div>{participators.length}</div>
-                    </div>
+                  <div className="card-other-container">
+                    <DoneIcon />
+                    <div>{participators.length}</div>
                   </div>
                 </div>
               </div>
-              {owner !== userId && userId && (
-                <div className="mt-3">
-                  {/* <ButtonWithIcon
+            </div>
+            {owner !== userId && userId && (
+              <div className="mt-3">
+                {/* <ButtonWithIcon
                     text={isApplied ? 'Відмінити подачу' : 'Подати заявку'}
                     icon={isApplied ? null : ApplyIcon}
                     onClick={() => (isApplied ? leavePost() : applyPost())}
                   /> */}
 
-                  <div
-                    className={`cursor-pointer flex justify-center ${
-                      isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
+                <div
+                  className={`cursor-pointer flex justify-center ${isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
                     } rounded-[4px] p-1 items-center text-[white] gap-1`}
-                    onClick={() => (isApplied ? leavePost() : applyPost())}
-                  >
-                    <div>
-                      {isApplied ? 'Відмінити подачу' : 'Подати заявку'}
-                    </div>
-                    {!isApplied && (
-                      <img src={ApplyIcon} alt={'Подати заявку'} />
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-            {attachments.length > 0 && (
-              <div className="card-container card-imgs">
-                <AwesomeSlider
-                  bullets={false}
-                  infinite={false}
-                  organicArrows={attachments.length > 1}
-                  className="aws-btn"
+                  onClick={() => (isApplied ? leavePost() : applyPost())}
                 >
-                  {attachments.map((e: any) => (
-                    <div key={e.alt} data-src={e.address} />
-                  ))}
-                </AwesomeSlider>
+                  <div>
+                    {isApplied ? 'Відмінити подачу' : 'Подати заявку'}
+                  </div>
+                  {!isApplied && (
+                    <img src={ApplyIcon} alt={'Подати заявку'} />
+                  )}
+                </div>
               </div>
             )}
           </div>
-        </>
+          {attachments.length > 0 && (
+            <div className="card-container card-imgs">
+              <AwesomeSlider
+                bullets={false}
+                infinite={false}
+                organicArrows={attachments.length > 1}
+                className="aws-btn"
+              >
+                {attachments.map((e: any) => (
+                  <div key={e.alt} data-src={e.address} />
+                ))}
+              </AwesomeSlider>
+            </div>
+          )}
+        </div>
       ) : (
         <Placeholder type="rect" className="card-placeholder" />
       )}
-    </>
+    </div>
   );
 };
