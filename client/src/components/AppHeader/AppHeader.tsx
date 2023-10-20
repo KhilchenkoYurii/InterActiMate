@@ -58,6 +58,7 @@ export const AppHeader = () => {
   return (
     <>
       <div className="App-header App-header-big fixed top-0 z-50">
+        <div className="text-sm	text-yellow-500	leading-3	font-black mx-2 flex md:hidden">!!! ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ !!!</div>
         <div className="header-container">
           <AppLogo />
           {userId ? (
@@ -109,16 +110,6 @@ export const AppHeader = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="App-header bottom-0 w-full sm:fixed sm:flex md:hidden items-center">
-        <Link to={'/add-request'}>
-          <ButtonWithIcon
-            icon={PlusFilledIcon}
-            text=""
-            onClick={() => { }}
-          />
-        </Link>
-      </div> */}
     </>
   );
 };

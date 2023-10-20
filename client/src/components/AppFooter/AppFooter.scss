@@ -7,6 +7,12 @@
 }
 
 .disclaimer-mobile {
-  font-size: 12px;
-  line-height: 9px;
+  @media (max-width: 640px) {
+    font-size: 12px;
+    line-height: 9px;
+  }
+}
+
+.width-210 {
+  width: 210px;
 }
