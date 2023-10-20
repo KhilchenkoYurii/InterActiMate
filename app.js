@@ -22,7 +22,33 @@ const app = express();
 //set security http headers
 app.use(
   helmet({
-    crossOriginResourcePolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        'img-src': [
+          "'self'",
+          "'unsafe-inline'",
+          'data:',
+          'localhost',
+          'main-domain.com',
+          '*.main-domain.com',
+          '*.google.com',
+          '*.google.co.in',
+          '*.google-analytics.com',
+          '*.googlesyndication.com',
+          '*.googleadservices.com',
+          '*.googletagservices.com',
+          '*.googleapis.com',
+          '*.doubleclick.net',
+          '*.gstatic.com',
+          'youtu.be',
+          '*.youtu.be',
+          '*.youtube.com',
+          '*.amazonaws.com',
+          '*zeppelin-marine.com.ua',
+        ],
+      },
+    },
   }),
 );
 //request limitation
