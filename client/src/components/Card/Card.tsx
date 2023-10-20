@@ -153,13 +153,14 @@ export const Card = ({
                   </div>
                 </div>
               </div>
-              {owner !== userId && (
+              {owner !== userId && userId && (
                 <div className="mt-3">
                   {/* <ButtonWithIcon
                     text={isApplied ? 'Відмінити подачу' : 'Подати заявку'}
                     icon={isApplied ? null : ApplyIcon}
                     onClick={() => (isApplied ? leavePost() : applyPost())}
                   /> */}
+
                   <div
                     className={`cursor-pointer flex justify-center ${
                       isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
