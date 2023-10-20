@@ -1,15 +1,21 @@
 import "./SearchBar.scss";
 import SearchIcon from "../../assets/icons/search_light.svg";
-import { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import apiService from "../../services/api.service";
-import constants from "../../services/constants";
 import { IRequestCard, RequestCard } from "../RequestCard/RequestCard";
 import CloseIcon from '../../assets/icons/cross.svg';
 
 export const SearchBar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [results, setResults] = useState<IRequestCard[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
   let timeout: any;
+
+  useEffect(() => {
+    if (!!showSearch && inputRef?.current) {
+      inputRef.current.focus();
+    }
+  }, [showSearch]);
 
   const sendSearchRequest = async(value: string) => {
     const query = value.split(' ').join('+');
@@ -33,6 +39,13 @@ export const SearchBar = () => {
     }, 300);
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Escape' && !e.shiftKey) {
+      e.preventDefault();
+      handleCloseSearch();
+    }
+  }
+
   const handleCloseSearch = () => {
     setShowSearch(false);
     setResults([]);
@@ -42,14 +55,21 @@ export const SearchBar = () => {
     <div className="searchbar-container">
       {!showSearch && (
         <>
-          <input type="text" placeholder="Пошук..." className="search" onChange={handleInput} onClick={() => setShowSearch(value => !value)} />
+          <input ref={inputRef} type="text" placeholder="Пошук..." className="search" onClick={() => setShowSearch(value => !value)} />
           <img src={SearchIcon} />
         </>
       )}
       {!!showSearch && (
         <div className="fixed cards-container search-results top-0 left-0 w-full flex overflow-scroll z-50">
           <div className="flex w-full">
-            <input type="text" placeholder="Пошук..." className="search mr-2 p-2 rounded-3xl" onChange={handleInput} />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Пошук..."
+              className="search mr-2 p-2 rounded-3xl"
+              onChange={handleInput}
+              onKeyDown={handleKeyDown}
+            />
             <img src={CloseIcon} className="cursor-pointer" onClick={handleCloseSearch}  />
           </div>
           {results.map((request) => (
