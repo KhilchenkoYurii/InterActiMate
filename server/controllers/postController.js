@@ -3,6 +3,7 @@ const sharp = require('sharp');
 
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
+const Message = require('../models/messageModel');
 const PostStatuses = require('../configs/postStatuses');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
@@ -213,26 +214,62 @@ exports.answerPost = catchAsync(async (req, res, next) => {
     { postId: post.postId },
     { participators: post.participators },
   );
-  const chatData = {
-    ownerId: req.body.userId,
-    chatUsers: [post.owner],
-    chatId: '',
-  };
-  const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
-  const lastNumber = lastChat[0].chatId.slice(3);
-  chatData.chatId = `CHT${Number(lastNumber) + 1}`;
-  const owner = await User.findOne({ userId: chatData.ownerId });
-  const participator = await User.findOne({
-    userId: chatData.chatUsers[0],
-  });
-  const newChat = await Chat.create(chatData);
-  owner.chats.push(newChat.chatId);
-  participator.chats.push(newChat.chatId);
-  await User.findOneAndUpdate({ userId: owner.userId }, { chats: owner.chats });
-  await User.findOneAndUpdate(
-    { userId: participator.userId },
-    { chats: participator.chats },
+  const userExistingChats = await Chat.find({ chatId: user.chats });
+  let chatExist = false;
+  await Promise.all(
+    userExistingChats.map(async (chat) => {
+      if (chat.ownerId === post.owner || chat.chatUsers.includes(post.owner)) {
+        chatExist = true;
+      }
+    }),
   );
+  const participator = await User.findOne({
+    userId: post.owner,
+  });
+  if (!chatExist) {
+    const chatData = {
+      ownerId: user.userId,
+      chatUsers: [post.owner],
+      chatId: '',
+    };
+    const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
+    const lastNumber = lastChat[0].chatId.slice(3);
+    chatData.chatId = `CHT${Number(lastNumber) + 1}`;
+    const owner = user;
+    const newChat = await Chat.create(chatData);
+    owner.chats.push(newChat.chatId);
+    participator.chats.push(newChat.chatId);
+    await User.findOneAndUpdate(
+      { userId: owner.userId },
+      { chats: owner.chats },
+    );
+    await User.findOneAndUpdate(
+      { userId: participator.userId },
+      { chats: participator.chats },
+    );
+  }
+  const message = `Hi, ${user.nickname} Someone answered on your post ${
+    post.title
+  }.\n
+  Here is contacts:
+  Name: ${participator.nickname}.
+  Contact!:
+  email:${participator.email}
+  phone:${participator.phone || '-'}
+  Please, get in touch with them!)`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Your new teammate',
+      message,
+    });
+  } catch (error) {
+    console.log(error);
+    return next(
+      new AppError(`There was error sending the email. Try again later`, 500),
+    );
+  }
   res.status(200).json({
     status: 'success',
     data: {
@@ -291,6 +328,39 @@ exports.leavePost = catchAsync(async (req, res, next) => {
     { postId: post.postId },
     { participators: post.participators },
   );
+  const userExistingChats = await Chat.find({ chatId: user.chats });
+  await Promise.all(
+    userExistingChats.map(async (chat) => {
+      if (chat.ownerId === post.owner || chat.chatUsers.includes(post.owner)) {
+        const chatUsers = await User.find({ chats: chat.chatId });
+        if (!chatUsers) {
+          return next(
+            new AppError(`No chat found with id ${chat.chatId}`, 404),
+          );
+        }
+        chatUsers.forEach(async (chatUser) => {
+          chatUser.chats = chatUser.chats.filter(
+            (chatCount) => chatCount !== chat.chatId,
+          );
+          await User.findOneAndUpdate(
+            { userId: chatUser.userId },
+            { chats: chatUser.chats },
+            {
+              new: true,
+            },
+          );
+        });
+        await Chat.findOneAndDelete({ chatId: chat.chatId });
+        if (!chat) {
+          return next(
+            new AppError(`No chat found with id ${chat.chatId}`, 404),
+          );
+        }
+        await Message.deleteMany({ chatId: chat.chatId });
+      }
+    }),
+  );
+
   res.status(200).json({
     status: 'success',
     data: {

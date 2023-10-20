@@ -57,7 +57,16 @@ exports.getChat = catchAsync(async (req, res, next) => {
       };
       updatedChat.chatId = chatOne.chatId;
       updatedChat.ownerId = chatOne.ownerId;
-      const participator = await User.findOne({ userId: chatOne.chatUsers[0] });
+      let participator;
+      if (chatOne.chatUsers[0] !== user.userId) {
+        participator = await User.findOne({
+          userId: chatOne.chatUsers[0],
+        });
+      } else {
+        participator = await User.findOne({
+          userId: chatOne.ownerId,
+        });
+      }
       updatedChat.participatorsName = participator.nickname;
       updatedChat.participatorsAvatar = participator.avatar;
       const firstMessage = await Message.findOne({
