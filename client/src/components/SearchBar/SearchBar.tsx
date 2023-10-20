@@ -17,7 +17,7 @@ export const SearchBar = () => {
     }
   }, [showSearch]);
 
-  const sendSearchRequest = async(value: string) => {
+  const sendSearchRequest = async (value: string) => {
     const query = value.split(' ').join('+');
 
     const searchResults = await apiService.get(`posts/searchBar?search=${query}`);
@@ -61,20 +61,24 @@ export const SearchBar = () => {
       )}
       {!!showSearch && (
         <div className="fixed cards-container search-results top-0 left-0 w-full flex overflow-scroll z-50">
-          <div className="flex w-full">
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Пошук..."
-              className="search mr-2 p-2 rounded-3xl"
-              onChange={handleInput}
-              onKeyDown={handleKeyDown}
-            />
-            <img src={CloseIcon} className="cursor-pointer" onClick={handleCloseSearch}  />
+          <div className="flex flex-col w-full">
+            <div className="flex w-full">
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Пошук..."
+                className="search mr-2 p-2 rounded-3xl"
+                onChange={handleInput}
+                onKeyDown={handleKeyDown}
+              />
+              <img src={CloseIcon} className="cursor-pointer" onClick={handleCloseSearch} />
+            </div>
+            <div className="flex w-full mt-10">
+              {results.map((request) => (
+                <RequestCard key={request?._id} handleClick={handleCloseSearch} {...request} />
+              ))}
+            </div>
           </div>
-          {results.map((request) => (
-            <RequestCard key={request?._id} handleClick={handleCloseSearch} {...request} />
-          ))}
         </div>
       )}
     </div>
