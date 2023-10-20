@@ -7,7 +7,7 @@
   padding: 0 20px;
 
   &-big {
-    @include mixins.display-flex();
+    @include mixins.display-flex($direction: column);
   }
 
   .header-container {
