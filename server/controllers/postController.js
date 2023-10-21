@@ -248,14 +248,14 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       { chats: participator.chats },
     );
   }
-  const message = `Hi, ${user.nickname} Someone answered on your post ${
+  const message = `Hi, ${participator.nickname} Someone answered on your post ${
     post.title
   }.\n
   Here is contacts:
-  Name: ${participator.nickname}.
+  Name: ${user.nickname}.
   Contact!:
-  email:${participator.email}
-  phone:${participator.phone || '-'}
+  email:${user.email}
+  phone:${user.phone || '-'}
   Please, get in touch with them!)`;
 
   try {
