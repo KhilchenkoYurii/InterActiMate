@@ -20,6 +20,8 @@ interface IFile {
 }
 
 const AddEditRequest = ({ onSubmit }: any) => {
+  const maxTitleLength = 37;
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [href, setHref] = useState<string>('');
@@ -87,7 +89,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
                 value={title}
                 required
                 onChange={(e: any) => {
-                  if (e.target.value.split('').length < 37) {
+                  if (e.target.value.split('').length < maxTitleLength) {
                     setErrors((prev: any) => ({
                       ...prev,
                       title: true,
@@ -107,7 +109,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
               />
               {!error.title && (
                 <span className="text-red-600 font-light text-sm justify-start flex">
-                  Довжина не більше 37 символів
+                  Довжина не більше {maxTitleLength} символів
                 </span>
               )}
             </div>
@@ -166,7 +168,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
       <div className="card-container relative mx-3">
         <div className="pt-10 pb-1">
           {getBlockTitleView('Фото')}
-          <div className="flex flex-row gap-2">
+          {/* <div className="flex flex-row gap-2">
             <input
               type="text"
               value={href}
@@ -189,10 +191,10 @@ const AddEditRequest = ({ onSubmit }: any) => {
               }}
               className="cursor-pointer select-none"
             />
-          </div>
+          </div> */}
           <div>
-            або
-            <br />
+            {/* або
+            <br /> */}
             <div className="flex flex-row flex-wrap justify-center items-center">
               <input
                 type="file"

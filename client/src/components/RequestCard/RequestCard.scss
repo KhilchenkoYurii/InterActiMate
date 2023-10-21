@@ -10,13 +10,14 @@
   width: variables.$card-width;
   max-width: variables.$card-width;
   background: variables.$white100;
-  height: 280px;
+  height: 265px;
   border-radius: variables.$border-radius;
   padding: 10px;
   cursor: pointer;
 
   @media (max-width: 640px) {
     width: calc(50% - 9px);
+    height: 270px;
   }
 
   .card-img-container {
@@ -58,21 +59,26 @@
   }
 
   .info {
-    @include mixins.display-flex(
-      $direction: column,
-      $justify-content: center,
-      $align-items: center
-    );
-    flex: 1;
+    display: flex;
+    align-items: center;
     width: 100%;
-
-    .card-text {
-      line-height: 0.9;
-    }
+    height: 100%;
+  }
+  .card-text {
+    font-size: 16px;
+    line-height: 0.9;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
   }
 
-  .row {
-    @include mixins.display-flex($justify-content: space-between);
-    width: 100%;
+  @media (max-width: 640px) {
+    .card-text {
+      font-size: 14px;
+      line-height: 0.9;
+      text-overflow: ellipsis;
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
   }
 }

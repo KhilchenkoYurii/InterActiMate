@@ -49,17 +49,15 @@ export const RequestCard = ({
           alt={attachments[0] ? attachments[0].alt : 'Image not found'}
         />
       </div>
-      <div className="info">
-        <div className="row mt-2">
-          <div className="card-text sm:text-sm	md:text-xl	mb-1 text-left">{title}</div>
-          <ButtonWithIcon
+      <div className="info mt-2">
+        <div className="card-text text-left">{title}</div>
+        {/* <ButtonWithIcon
             icon={<HeartIcon />}
             isSvg={true}
             text=""
             onClick={() => {}}
             buttonType="primary"
-          />
-        </div>
+          /> */}
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
-@use "../../config/globalstyles/variables";
-@use "../../config/globalstyles/mixins";
+@use '../../config/globalstyles/variables';
+@use '../../config/globalstyles/mixins';
 
 .cards-container {
-  @include  mixins.display-flex($justify-content:none, $align-items: flex-start);
+  @include mixins.display-flex(
+    $justify-content: center,
+    $align-items: flex-start
+  );
   width: 100%;
   // TODO maybe display with grid?
   flex-wrap: wrap;
