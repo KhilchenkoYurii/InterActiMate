@@ -95,7 +95,7 @@ export const HomePage = () => {
       {getTabsView()}
       {/* there's no sense to check possible numbers of columns for mobile, so it's hardcoded */}
       {isMobile && <div className={`cards-container grid grid-cols-2`}>{getRequestsView()}</div>}
-      {!isMobile && <div className={`cards-container grid grid-cols-${numberOfCardsColumns}`}>{getRequestsView()}</div>}
+      {!isMobile && <div className={`cards-container grid grid-cols-${numberOfCardsColumns} justify-items-center`}>{getRequestsView()}</div>}
     </div>
   );
 };
