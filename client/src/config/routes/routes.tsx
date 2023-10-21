@@ -65,7 +65,7 @@ export const allRoutes: IRoute[] = [
     path: '/request',
     component: <RequestPage />,
     hasHeader: true,
-    isGuarded: true,
+    isGuarded: false,
   },
   {
     path: '/add-request',
