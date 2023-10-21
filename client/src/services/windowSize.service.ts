@@ -6,9 +6,14 @@ export default function useWindowSize() {
       function updateSize() {
         setSize([window.innerWidth, window.innerHeight]);
       }
-      window.addEventListener('resize', updateSize);
+
       updateSize();
-      return () => window.removeEventListener('resize', updateSize);
+
+      let updateSizeTimeOut: ReturnType<typeof setTimeout>;
+      window.onresize = () => {
+        clearTimeout(updateSizeTimeOut);
+        updateSizeTimeOut = setTimeout(updateSize, 100);
+      };
     }, []);
     return size;
   }
