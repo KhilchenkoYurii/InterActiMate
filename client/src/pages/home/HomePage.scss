@@ -2,13 +2,8 @@
 @use '../../config/globalstyles/mixins';
 
 .cards-container {
-  @include mixins.display-flex(
-    $justify-content: center,
-    $align-items: flex-start
-  );
   width: 100%;
   // TODO maybe display with grid?
-  flex-wrap: wrap;
   background: variables.$white50;
   gap: 18px;
   padding: 30px 20px;
