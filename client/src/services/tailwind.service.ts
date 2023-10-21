@@ -22,6 +22,6 @@ export const getTailWindGridColsClassFromNumber = (number: Number) => {
     case 10:
       return "grid-cols-10";
     default:
-      return 1;
+      return "grid-cols-1";
   }
 };
