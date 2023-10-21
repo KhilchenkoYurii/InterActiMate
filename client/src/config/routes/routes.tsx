@@ -5,6 +5,7 @@ import { ReactElement } from 'react';
 import { AppHeader } from '../../components/AppHeader/AppHeader';
 import { AppFooter } from '../../components/AppFooter/AppFooter';
 import { SignUpPage } from '../../pages/auth/SignUpPage';
+import { TermsAndConditionsPage } from '../../pages/terms-and-conditions/TermsAndConitionsPage';
 import { RequestPage } from '../../pages/request/RequestPage';
 import { AddRequestPage } from '../../pages/add-request/AddRequestPage';
 import { ChatPage } from '../../pages/chat/ChatPage';
@@ -59,6 +60,12 @@ export const allRoutes: IRoute[] = [
     path: '/sign-up',
     component: <SignUpPage />,
     hasHeader: false,
+    isGuarded: false,
+  },
+  {
+    path: '/terms-and-conditions',
+    component: <TermsAndConditionsPage />,
+    hasHeader: true,
     isGuarded: false,
   },
   {
