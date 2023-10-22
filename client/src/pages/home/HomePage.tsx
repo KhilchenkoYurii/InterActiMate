@@ -11,6 +11,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from '../../store/user/user.actions';
 import constants from '../../services/constants';
 import { userSelector } from '../../store/user/user.selector';
+import useWindowSize from '../../services/windowSize.service';
+import { getTailWindGridColsClassFromNumber } from '../../services/tailwind.service';
+
+const REQUEST_CARD_WIDTH = 250;
+const REQUEST_CARD_GAP = 18;
+const MOBILE_BREAKPOINT = 640;
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,6 +24,19 @@ export const HomePage = () => {
   const [requests, setRequests] = useState<IRequestCard[]>([]);
   const user = useSelector(userSelector);
   const [tabName, setTabName] = useState<string>('Оголошення');
+  const [size] = useWindowSize();
+  const [numberOfCardsColumns, setNumberOfCardsColumns] = useState(1);
+
+  const isMobile = size < MOBILE_BREAKPOINT;
+
+  // updates number of columns to display depending on screen size
+  useEffect(() => {
+    if (isMobile) return;
+    const newCardsColumnsNumber = Math.floor(size / (REQUEST_CARD_WIDTH + REQUEST_CARD_GAP));
+    if (!!newCardsColumnsNumber && newCardsColumnsNumber !== numberOfCardsColumns) {
+      setNumberOfCardsColumns(newCardsColumnsNumber);
+    }
+  }, [size]);
 
   const tabs = [{ name: 'Оголошення' }, { name: 'Подані заявки' }];
 
@@ -75,7 +94,13 @@ export const HomePage = () => {
   return (
     <div>
       {getTabsView()}
-      <div className="cards-container">{getRequestsView()}</div>
+      {/* there's no sense to check possible numbers of columns for mobile, so it's hardcoded */}
+      {isMobile && <div className={`cards-container grid grid-cols-2`}>{getRequestsView()}</div>}
+      {!isMobile &&
+        <div className={`cards-container grid ${getTailWindGridColsClassFromNumber(numberOfCardsColumns)} justify-items-center`}>
+          {getRequestsView()}
+        </div>
+      }
     </div>
   );
 };
