@@ -1,5 +1,5 @@
-@use "../../config/globalstyles/variables";
-@use "../../config/globalstyles/mixins";
+@use "../../../config/globalstyles/variables";
+@use "../../../config/globalstyles/mixins";
 
 .chat-input {
   @include mixins.display-flex();

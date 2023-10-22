@@ -1,15 +1,16 @@
 import SendIcon from "../../assets/icons/send-message.svg";
-import { ReactComponent as TriangleHamburger } from "../../assets/icons/triangle-hamburger.svg";
+// import { ReactComponent as TriangleHamburger } from "../../assets/icons/triangle-hamburger.svg";
 import './ChatPage.scss';
-import { ChatPreview } from "../../components/ChatPreview/ChatPreview";
-import { ChatMessage } from "../../components/ChatMessage/ChatMessage";
-import { ChatInput } from "../../components/ChatInput/ChatInput";
+import { ChatPreview } from "../../components/Chat/ChatPreview/ChatPreview";
+import { ChatMessage } from "../../components/Chat/ChatMessage/ChatMessage";
+import { ChatInput } from "../../components/Chat/ChatInput/ChatInput";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { chatSelector } from "../../store/chat/chat.selector";
-import { fetchChats, fetchChatById, sendMessage, resetChats } from "../../store/chat/chat.action";
+import { fetchChats, fetchChatById, resetChats } from "../../store/chat/chat.action";
 import { socket } from "../../socket";
 import { userSelector } from "../../store/user/user.selector";
+import { RequestLinkCard } from "../../components/RequestLinkCard/RequestLinkCard";
 
 export const ChatPage = () => {
   const dispatch = useDispatch();
@@ -58,17 +59,23 @@ export const ChatPage = () => {
     <div className="chat-page">
       <div className="chat-container">
         <div className="users-container w-1/4 overflow-scroll">
-          <div className="users-container-header">
+          {/* TODO: add filters */}
+          {/* <div className="users-container-header">
             <TriangleHamburger />
-          </div>
+          </div> */}
           {/* TODO: chat type */}
           {chats.map((chat: any) => (
-            <ChatPreview name={chat?.participatorsName} lastMessage={chat?.firstMessage} onChatClick={() => loadChatById(chat.chatId)} />
+            <ChatPreview isActive={currentChat?.chatId === chat.chatId} name={chat?.participatorsName} lastMessage={chat?.firstMessage} onChatClick={() => loadChatById(chat.chatId)} />
           ))}
         </div>
-        <div className="flex flex-col w-full h-full">
+        <div className="flex flex-col w-full h-full relative">
+          {!!currentChat?.relatedPost?.postId && (
+            <div className="w-full">
+              <RequestLinkCard img={currentChat?.relatedPost?.image?.address} title={currentChat.relatedPost.title} postId={currentChat.relatedPost.postId} />
+            </div>
+          )}
           <div className="messages-container flex flex-col-reverse sm:items-end md:items-start pt-4 pr-2 overflow-scroll">
-            {currentChatMessages.map((message: { body: string, sender: string }) => 
+            {currentChatMessages.map((message: { body: string, sender: string }) =>
               <ChatMessage body={message.body} isIncome={message.sender !== user?.userId} />
             )}
           </div>
