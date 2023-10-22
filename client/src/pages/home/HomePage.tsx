@@ -92,7 +92,7 @@ export const HomePage = () => {
   };
 
   return (
-    <div className='flex justify-center home-page-container'>
+    <div className='flex flex-col items-center home-page-container'>
       {getTabsView()}
       {/* there's no sense to check possible numbers of columns for mobile, so it's hardcoded */}
       {isMobile && <div className={`cards-container grid grid-cols-2`}>{getRequestsView()}</div>}
