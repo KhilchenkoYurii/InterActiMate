@@ -72,10 +72,10 @@ export const Card = ({
   };
 
   return (
-    <div className='flex justify-center'>
+    <div className="flex justify-center">
       {_id ? (
         <div className="card-body">
-          <div>
+          <div className="w-full md:max-w-[500px] min-w-[200px]">
             <div className="card-container">
               <div className="card-title">{title}</div>
               <div className="card-description break-words">{body}</div>
@@ -154,23 +154,14 @@ export const Card = ({
             </div>
             {owner !== userId && userId && (
               <div className="mt-3">
-                {/* <ButtonWithIcon
-                    text={isApplied ? 'Відмінити подачу' : 'Подати заявку'}
-                    icon={isApplied ? null : ApplyIcon}
-                    onClick={() => (isApplied ? leavePost() : applyPost())}
-                  /> */}
-
                 <div
-                  className={`cursor-pointer flex justify-center ${isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
-                    } rounded-[4px] p-1 items-center text-[white] gap-1`}
+                  className={`cursor-pointer flex justify-center ${
+                    isApplied ? 'bg-[#c9c7c7]' : 'bg-[#176b87]'
+                  } rounded-[4px] p-1 items-center text-[white] gap-1`}
                   onClick={() => (isApplied ? leavePost() : applyPost())}
                 >
-                  <div>
-                    {isApplied ? 'Відмінити подачу' : 'Подати заявку'}
-                  </div>
-                  {!isApplied && (
-                    <img src={ApplyIcon} alt={'Подати заявку'} />
-                  )}
+                  <div>{isApplied ? 'Відмінити подачу' : 'Подати заявку'}</div>
+                  {!isApplied && <img src={ApplyIcon} alt={'Подати заявку'} />}
                 </div>
               </div>
             )}

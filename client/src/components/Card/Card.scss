@@ -7,13 +7,14 @@
     $justify-content: center,
     $align-items: flex-start
   );
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   gap: 10px;
   text-align: start;
 
   max-width: 60%;
   @media (max-width: 640px) {
     max-width: 80%;
+    flex-wrap: wrap-reverse;
   }
 }
 
@@ -50,6 +51,9 @@
     border: 1.9px solid variables.$primary100;
     border-radius: variables.$border-radius;
     transition: 0.5s;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
   }
   div:hover {
     color: white;
@@ -66,6 +70,9 @@
   box-shadow:
     rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  @media (max-width: 640px) {
+    margin-top: 10px;
+  }
 }
 
 .card-other {
@@ -77,6 +84,16 @@
   flex-wrap: wrap;
   color: variables.$dark-blue;
   gap: 50px;
+
+  @media (max-width: 640px) {
+    gap: 5px;
+    div {
+      text-overflow: ellipsis;
+      white-space: pre-wrap;
+      overflow: hidden;
+      max-width: 200px;
+    }
+  }
 }
 
 .card-icons {
@@ -100,6 +117,13 @@
   gap: 5px;
   transition: variables.$transition-time;
   font-size: 13px;
+
+  div {
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
+    max-width: 200px;
+  }
 }
 
 .card-other-header {
@@ -112,6 +136,22 @@
   flex-wrap: wrap;
   gap: 15px;
   font-size: 13px;
+
+  div div {
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    overflow: hidden;
+    max-width: 170px;
+  }
+
+  @media (max-width: 640px) {
+    @include mixins.display-flex(
+      $direction: column,
+      $justify-content: start,
+      $align-items: start
+    );
+    gap: 2px;
+  }
 }
 
 .card-other-header .card-other-container {
@@ -156,9 +196,12 @@
 }
 
 .card-imgs {
-  width: 30rem;
+  // max-width: 35rem;
+  width: 35rem;
   min-width: 10rem;
-  max-width: 25rem;
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 }
 
 .awssld__content {
@@ -166,6 +209,7 @@
 }
 
 .card-imgs img {
+  object-fit: contain !important;
   border-radius: variables.$border-radius;
 }
 
