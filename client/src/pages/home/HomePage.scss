@@ -1,10 +1,13 @@
 @use '../../config/globalstyles/variables';
 @use '../../config/globalstyles/mixins';
 
+.home-page-container {
+  background: variables.$white50;
+}
+
 .cards-container {
   width: 100%;
-  // TODO maybe display with grid?
-  background: variables.$white50;
+  max-width: 2800px;
   gap: 18px;
   padding: 30px 20px;
   height: 100%;
