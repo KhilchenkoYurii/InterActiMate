@@ -16,7 +16,7 @@ export const Tabs = ({ tabs, setTabName, activeTabName }: ITabsProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row text-center justify-center ">
+    <div className="flex flex-row text-center justify-center w-full">
       {tabs.map((tab: ITabs) => (
         <div
           key={tab.name}
