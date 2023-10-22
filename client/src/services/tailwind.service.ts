@@ -1,5 +1,8 @@
 // this is needed, as tailwind doesn't work properly with dynamic classes
-export const getTailWindGridColsClassFromNumber = (number: Number) => {
+export const getTailWindGridColsClassFromNumber = (number: number) => {
+  if (number > 10) {
+    return "grid-cols-10";
+  }
   switch (number) {
     case 1:
       return "grid-cols-1";
