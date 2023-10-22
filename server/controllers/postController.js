@@ -220,6 +220,7 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       relatedPost: {
         postId: post._id,
         title: post.title,
+        image: post.attachments[0] || null,
       },
     };
     const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
