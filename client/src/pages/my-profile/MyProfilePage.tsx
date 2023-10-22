@@ -28,7 +28,6 @@ export const MyProfilePage = () => {
 
   return (
     <div>
-      <TitleWithIcons title="Мій профіль" />
       <MyProfile {...user} />
     </div>
   );

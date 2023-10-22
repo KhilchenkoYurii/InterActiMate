@@ -1,5 +1,5 @@
-@use "../../config/globalstyles/variables";
-@use "../../config/globalstyles/mixins";
+@use '../../config/globalstyles/variables';
+@use '../../config/globalstyles/mixins';
 
 .card-body {
   @include mixins.display-flex(
@@ -22,6 +22,10 @@
   font-weight: 600;
   margin-bottom: 5px;
   color: variables.$primary100;
+  text-overflow: ellipsis;
+  white-space: pre-wrap;
+  overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .card-description {
@@ -152,7 +156,17 @@
 }
 
 .card-imgs {
-  width: 425px;
+  width: 30rem;
+  min-width: 10rem;
+  max-width: 25rem;
+}
+
+.awssld__content {
+  background-color: unset !important;
+}
+
+.card-imgs img {
+  border-radius: variables.$border-radius;
 }
 
 .aws-btn {
