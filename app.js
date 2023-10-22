@@ -14,6 +14,7 @@ const chatRouter = require('./server/routes/chatRoutes');
 const messageRouter = require('./server/routes/messageRoutes');
 const categoryRouter = require('./server/routes/categoryRoutes');
 const attachmentRouter = require('./server/routes/attachmentRoutes');
+const awsRouter = require('./server/routes/awsRoutes');
 //const AppError = require('./server/utils/appError');
 const globalErrorHandler = require('./server/controllers/errorController');
 
@@ -86,6 +87,7 @@ app.use('/chats', chatRouter);
 app.use('/messages', messageRouter);
 app.use('/categories', categoryRouter);
 app.use('/attachments', attachmentRouter);
+app.use('/aws', awsRouter);
 app.all('*', (req, res, next) => {
   const router = path.resolve(__dirname, 'client', 'build', `index.html`);
   res.sendFile(router);
