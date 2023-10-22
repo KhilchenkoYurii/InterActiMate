@@ -23,18 +23,33 @@ const s3 = new aws.S3({
 });
 
 const uploadFile = async function (file) {
-  const params = {
-    Bucket: process.env.S3_BUCKET,
-    Key: file.originalname,
-    Body: file.buffer,
-    ContentType: file.mimetype,
-  };
+  if (file.originalname) {
+    const params = {
+      Bucket: process.env.S3_BUCKET,
+      Key: file.originalname,
+      Body: file.buffer,
+      ContentType: file.mimetype,
+    };
 
-  try {
-    await s3.upload(params).promise();
-  } catch (error) {
-    console.error(error);
-    return new AppError('Error uploading file to S3!', 500);
+    try {
+      await s3.upload(params).promise();
+    } catch (error) {
+      console.error(error);
+      return new AppError('Error uploading file to S3!', 500);
+    }
+  } else {
+    const params = {
+      ACL: 'public-read',
+      Body: file,
+      Bucket: process.env.S3_BUCKET,
+      Key: file.name,
+    };
+    try {
+      await s3.putObject(params).promise();
+    } catch (error) {
+      console.error(error);
+      return new AppError('Error uploading file to S3!', 500);
+    }
   }
 };
 
