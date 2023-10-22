@@ -232,7 +232,7 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       chatUsers: [post.owner],
       chatId: '',
       relatedPost: {
-        postId: post.postId,
+        postId: post._id,
         title: post.title,
       },
     };
