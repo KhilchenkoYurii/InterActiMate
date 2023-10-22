@@ -20,7 +20,7 @@ interface IFile {
 }
 
 const AddEditRequest = ({ onSubmit }: any) => {
-  const maxTitleLength = 37;
+  const maxTitleLength = 50;
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');

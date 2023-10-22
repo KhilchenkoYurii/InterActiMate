@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 // import EditIcon from '../../assets/icons/Edit_fill.svg';
 import apiService from '../../services/api.service';
 import NoImageUser from '../../assets/icons/user_filled.svg';
+import './MyProfile.scss';
 
 export interface IUser {
   _id: string;
@@ -81,10 +82,10 @@ const MyProfile = (user: IUser) => {
       );
   };
   return (
-    <div className="card-container mx-3">
+    <div className="card-container-profile mt-20 mx-3 ">
       <div className="flex flex-wrap justify-center items-center md:flex-nowrap md:justify-normal flex-row gap-2 whitespace-normal mb-3">
         {/* Avatar */}
-        <div className="max-w-[20rem] m-auto md:m-0 relative">
+        <div className="max-w-[15rem] m-auto md:m-0 relative">
           <img
             src={user.avatar ? user.avatar : NoImageUser}
             alt="Profile Avatar"
