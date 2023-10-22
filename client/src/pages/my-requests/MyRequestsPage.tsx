@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IRequestCard } from '../../components/RequestCard/RequestCard';
+import { IRequest } from '../../components/RequestCard/RequestCard';
 import apiService from '../../services/api.service';
 import { Link, useNavigate } from 'react-router-dom';
 import MyRequests from '../../components/MyRequests/MyRequests';
@@ -11,8 +11,8 @@ function MyRequestsPage() {
   const navigate = useNavigate();
 
   const userId = localStorage.getItem('userId');
-  const [requests, setRequests] = useState<IRequestCard[]>([]);
-  const [archive, setArchive] = useState<IRequestCard[]>([]);
+  const [requests, setRequests] = useState<IRequest[]>([]);
+  const [archive, setArchive] = useState<IRequest[]>([]);
   const [tabName, setTabName] = useState<string>('Мої оголошення');
 
   let tabs = [

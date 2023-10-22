@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { IRequestCard } from '../RequestCard/RequestCard';
+import { IRequest } from '../RequestCard/RequestCard';
 import Button from '@mui/material/Button';
 import constants from '../../services/constants';
 import './MyRequests.scss';
 import apiService from '../../services/api.service';
 
 interface IMyRequests {
-  requests: IRequestCard[];
+  requests: IRequest[];
 }
 
 function MyRequests({ requests }: IMyRequests) {
@@ -22,7 +22,7 @@ function MyRequests({ requests }: IMyRequests) {
 
   return (
     <div className="flex flex-col justify-center items-center my-3">
-      {requests.map((req: IRequestCard) => (
+      {requests.map((req: IRequest) => (
         <div
           key={req._id}
           className="grid grid-rows-2 reqs-container gap-3 my-3"

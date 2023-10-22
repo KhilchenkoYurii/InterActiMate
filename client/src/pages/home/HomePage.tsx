@@ -3,7 +3,7 @@ import { RequestCardPlaceHolder } from '../../components/Placeholders/RequestCar
 import apiService from '../../services/api.service';
 import './HomePage.scss';
 import {
-  IRequestCard,
+  IRequest,
   RequestCard,
 } from '../../components/RequestCard/RequestCard';
 import { Tabs } from '../../components/Tabs/Tabs';
@@ -21,7 +21,7 @@ const MOBILE_BREAKPOINT = 640;
 export const HomePage = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const [requests, setRequests] = useState<IRequestCard[]>([]);
+  const [requests, setRequests] = useState<IRequest[]>([]);
   const user = useSelector(userSelector);
   const [tabName, setTabName] = useState<string>('Оголошення');
   const [size] = useWindowSize();

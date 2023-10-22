@@ -2,12 +2,12 @@ import "./SearchBar.scss";
 import SearchIcon from "../../assets/icons/search_light.svg";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import apiService from "../../services/api.service";
-import { IRequestCard, RequestCard } from "../RequestCard/RequestCard";
+import { IRequest, RequestCard } from "../RequestCard/RequestCard";
 import CloseIcon from '../../assets/icons/cross.svg';
 
 export const SearchBar = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [results, setResults] = useState<IRequestCard[]>([]);
+  const [results, setResults] = useState<IRequest[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   let timeout: any;
 

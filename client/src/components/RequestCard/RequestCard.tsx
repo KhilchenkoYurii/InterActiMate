@@ -11,7 +11,7 @@ interface IAttachments {
 
 export type TStatus = 'Active' | 'Done' | 'Canceled' | 'Banned';
 
-export interface IRequestCard {
+export interface IRequest {
   title: string;
   body: string;
   categories: string[];
@@ -30,7 +30,7 @@ export const RequestCard = ({
   _id,
   attachments,
   handleClick,
-}: IRequestCard) => {
+}: IRequest) => {
   const navigate = useNavigate();
   const navigateToRequest = () => {
     !!handleClick && handleClick();
