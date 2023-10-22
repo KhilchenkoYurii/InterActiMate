@@ -4,16 +4,15 @@
 .App-header {
   background: variables.$primary100;
   height: 67px;
-  padding: 0 20px;
+  width: 100%;
 
   &-big {
     @include mixins.display-flex($direction: column);
   }
 
   .header-container {
-    width: calc(100vw - 40px);
+    width: 100%;
     @include mixins.display-flex();
-    gap: 15px;
   }
 }
 

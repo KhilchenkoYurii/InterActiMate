@@ -57,9 +57,9 @@ export const AppHeader = () => {
 
   return (
     <>
-      <div className="App-header App-header-big fixed top-0 z-50">
+      <div className="App-header App-header-big sm:px-2 md:px-5 fixed top-0 z-50">
         <div className="text-sm	text-yellow-500	leading-3	font-black mx-2 flex md:hidden">!!! ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ !!!</div>
-        <div className="header-container">
+        <div className="header-container sm:gap-2 md:gap-4">
           <AppLogo />
           {userId ? (
             <>
