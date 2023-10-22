@@ -231,6 +231,10 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       ownerId: user.userId,
       chatUsers: [post.owner],
       chatId: '',
+      relatedPost: {
+        postId: post.postId,
+        title: post.title,
+      },
     };
     const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
     const lastNumber = lastChat[0].chatId.slice(3);
@@ -260,7 +264,7 @@ exports.answerPost = catchAsync(async (req, res, next) => {
 
   try {
     await sendEmail({
-      email: user.email,
+      email: participator.email,
       subject: 'Your new teammate',
       message,
     });

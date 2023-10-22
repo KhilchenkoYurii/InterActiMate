@@ -18,5 +18,10 @@ const chatSchema = new Schema({
     required: true,
     unique: false,
   },
+  relatedPost: {
+    type: Object,
+    require: false,
+    unique: false,
+  },
 });
 module.exports = moongoose.model('Chat', chatSchema);
