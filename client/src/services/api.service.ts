@@ -19,6 +19,14 @@ axiosService.interceptors.request.use((config) => {
   return configWithToken;
 });
 
+axiosService.interceptors.response.use((response) => {
+  if (response.status === 401) {
+    window.location.href = '/login';
+  };
+
+  return response;
+});
+
 const get = async(url: string, params?:any) => {
   return await axiosService.get(`${baseURL}/${url}`,params);
 };
