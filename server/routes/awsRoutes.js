@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
   .route('/getFileURL')
-  .get(
+  .post(
     authController.protect,
     authController.restrictTo('User'),
     awsController.uploadImage,
