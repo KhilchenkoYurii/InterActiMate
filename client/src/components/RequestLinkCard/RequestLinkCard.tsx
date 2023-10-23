@@ -14,9 +14,9 @@ export const RequestLinkCard = ({ img, title, postId }: IRequestLink) => (
       <img src={img || constants.imageNotFound} className="h-14 scale-125	" />
     </div>
     <div className="flex pr-2 w-full h-full justify-between pr-2">
-      <div className="flex items-center text-left">{title}</div>
-      <div className="flex h-full">
-        <img src={NewTabIcon} className="w-4 h-4 mt-1" />
+      <div className="flex items-center text-left w-11/12">{title}</div>
+      <div className="flex justify-end h-full w-1/12">
+        <img src={NewTabIcon} className="sm:w-3 h-3 md:w-4 md:h-4 mt-1" />
       </div>
     </div>
   </Link>
