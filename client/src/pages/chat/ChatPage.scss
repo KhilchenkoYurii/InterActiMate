@@ -3,7 +3,7 @@
 
 .chat-page {
   @include mixins.display-flex($direction: column, $justify-content: space-between);
-  height: calc(100vh - 107px);
+  height: calc(100vh - 117px);
   width: 100%;
   background: #F6F6F6;
   overflow: hidden;
@@ -14,8 +14,7 @@
   height: 100%;
   width: 100%;
   background-color: variables.$white100;
-  border-radius: variables.$border-radius;
-  margin-top: 15px;
+  margin-top: 3px;
   overflow: hidden;
 
   .users-container {
