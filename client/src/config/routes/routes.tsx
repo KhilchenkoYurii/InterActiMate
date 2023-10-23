@@ -35,7 +35,7 @@ const DisplayedRoute = ({
   return (
     <>
       {hasHeader && <AppHeader />}
-      <div className={`app-content ${hasHeader && 'mt-16 mb-14'}`}>
+      <div className={`app-content ${hasHeader && 'app-content-with-header'}`}>
         {component}
       </div>
       <AppFooter />

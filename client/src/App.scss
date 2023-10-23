@@ -6,6 +6,11 @@
 
 .app-content {
   min-height: calc(100vh - 134px);
+
+  &-with-header {
+    margin-top: 67px;
+    margin-bottom: 50px;
+  }
 }
 
 .App-logo {
