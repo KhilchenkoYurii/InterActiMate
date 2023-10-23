@@ -267,10 +267,12 @@ const AddEditRequest = ({ onSubmit }: any) => {
                       let fileType = e.target.files[0].type.split('/').pop();
                       if (fileType === 'jpeg' || fileType === 'png') {
                         let url: string = await getImgUrl(e.target.files[0]);
-                        setFile({
-                          file: e.target.files[0],
-                          address: url,
-                        } as IFile);
+                        setTimeout(() => {
+                          setFile({
+                            file: e.target.files[0],
+                            address: url,
+                          } as IFile);
+                        }, 500);
                       }
                     }
                   }}
