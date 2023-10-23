@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import { IRequest } from '../RequestCard/RequestCard';
 import { useNavigate } from 'react-router-dom';
 import { TitleWithIcons } from '../PageTitleWithIcons/TitleWithIcons';
+import { CircularProgress } from '@mui/material';
 
 interface INoteView {
   text: string;
@@ -37,6 +38,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
   const [error, setErrors] = useState({ title: true });
   const [searchParams] = useSearchParams();
   const [isEdit, setIsEdit] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -258,7 +260,11 @@ const AddEditRequest = ({ onSubmit }: any) => {
             <div>
               {/* або
             <br /> */}
+
               <div className="flex flex-row flex-wrap justify-center items-center">
+                <div className="mx-3">
+                  {isImgLoading && <CircularProgress size={20} />}
+                </div>
                 <input
                   type="file"
                   accept="image/png, image/jpeg"
@@ -267,9 +273,9 @@ const AddEditRequest = ({ onSubmit }: any) => {
                       let fileType = e.target.files[0].type.split('/').pop();
                       if (fileType === 'jpeg' || fileType === 'png') {
                         let url: string = await getImgUrl(e.target.files[0]);
-                        console.log('Changes are here 1');
-
+                        setIsImgLoading(true);
                         setTimeout(() => {
+                          setIsImgLoading(false);
                           setFile({
                             file: e.target.files[0],
                             address: url,
@@ -280,6 +286,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
                   }}
                   placeholder="Посилання"
                 />
+
                 {getNoteView({
                   text: '(Підтримує лише .jpg, .png формати)',
                   className: 'text-[#176b87] font-extralight',
