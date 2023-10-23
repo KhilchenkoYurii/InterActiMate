@@ -23,8 +23,8 @@ const get = async(url: string, params?:any) => {
   return await axiosService.get(`${baseURL}/${url}`,params);
 };
 
-const post = async(url: string, params?: any) => {
-  return await axiosService.post(`${baseURL}/${url}`, params);
+const post = async(url: string, params?: any, headers?:any) => {
+  return await axiosService.post(`${baseURL}/${url}`, params, headers);
 };
 
 const put = async(url: string, params?: any) => {

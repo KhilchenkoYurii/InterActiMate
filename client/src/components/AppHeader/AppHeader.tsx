@@ -41,7 +41,6 @@ export const AppHeader = () => {
       onClick: () => {
         apiService.get(`users/logout`);
         localStorage.removeItem('userId');
-        console.log('Im here');
         clearCookieHandler();
         navigate('/login');
         navigate(0);
@@ -58,7 +57,9 @@ export const AppHeader = () => {
   return (
     <>
       <div className="App-header App-header-big sm:px-2 md:px-5 fixed top-0 z-50">
-        <div className="text-sm	text-yellow-500	leading-3	font-black mx-2 flex md:hidden">!!! ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ !!!</div>
+        <div className="text-sm	text-yellow-500	leading-3	font-black mx-2 flex md:hidden">
+          !!! ВЕБСАЙТ ПРАЦЮЄ В ТЕСТОВОМУ РЕЖИМІ !!!
+        </div>
         <div className="header-container sm:gap-2 md:gap-4">
           <AppLogo />
           {userId ? (
@@ -70,7 +71,11 @@ export const AppHeader = () => {
               <Link to={'/chat'} className="hidden md:flex">
                 <ButtonWithIcon icon={ChatIcon} text="Чат" onClick={() => {}} />
               </Link>
-              <Link to={'/add-request'} className="hidden md:flex">
+              <Link
+                onClick={() => setTimeout(() => window.location.reload(), 100)}
+                to={'/add-request'}
+                className="hidden md:flex"
+              >
                 <ButtonWithIcon
                   icon={PlusFilledIcon}
                   text="Додати оголошення"

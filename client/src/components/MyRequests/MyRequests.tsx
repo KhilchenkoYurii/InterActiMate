@@ -20,6 +20,48 @@ function MyRequests({ requests }: IMyRequests) {
     return new Date(date).toLocaleString('ru-RU').split(',').shift();
   };
 
+  const deactivatePost = async (e: any, req: any) => {
+    e.stopPropagation();
+    let answer = window.confirm(
+      `Ви впевнені що хочете деактивувати "${req.title}"?`,
+    );
+
+    if (answer) {
+      try {
+        await apiService.put(`posts/${req.postId}`, {
+          status: constants.postStatus.canceled,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.log('Error: ', error);
+      }
+    }
+  };
+
+  const activatePost = async (e: any, req: any) => {
+    e.stopPropagation();
+    let answer = window.confirm(
+      `Ви впевнені що хочете активувати "${req.title}"?`,
+    );
+
+    if (answer) {
+      try {
+        await apiService.put(`posts/${req.postId}`, {
+          status: constants.postStatus.active,
+        });
+        window.location.reload();
+      } catch (error) {
+        console.log('Error: ', error);
+      }
+    }
+  };
+
+  const editPost = async (e: any, postId: string) => {
+    e.stopPropagation();
+    const queryParams = new URLSearchParams({ postId: postId.toString() });
+    navigate(`/add-request?${queryParams}`);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center my-3">
       {requests.map((req: IRequest) => (
@@ -34,29 +76,17 @@ function MyRequests({ requests }: IMyRequests) {
             <span className="reqs-date">{getDate(req.dateOfCreation)}</span>
             <hr className="max-w-[8rem] mt-2 mb-3" />
             <div className="flex gap-2 flex-wrap">
-              {/* <Button disabled variant="contained">
+              <button
+                onClick={async (e) => await editPost(e, req.postId)}
+                type="button"
+                className="text-[white] bg-[green] rounded-[4px] flex justify-center items-center h-10 min-w-[10rem]"
+              >
                 Редагувати
-              </Button> */}
+              </button>
               {req.status === constants.postStatus.active ? (
                 <div className="w-full md:flex">
                   <button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      let answer = window.confirm(
-                        `Ви впевнені що хочете деактивувати "${req.title}"?`,
-                      );
-
-                      if (answer) {
-                        try {
-                          await apiService.put(`posts/${req.postId}`, {
-                            status: constants.postStatus.canceled,
-                          });
-                          window.location.reload();
-                        } catch (error) {
-                          console.log('Error: ', error);
-                        }
-                      }
-                    }}
+                    onClick={async (e) => await deactivatePost(e, req)}
                     type="button"
                     className="text-[white] bg-[#d32f2f] rounded-[4px] flex justify-center items-center h-10 min-w-[10rem]"
                   >
@@ -68,23 +98,7 @@ function MyRequests({ requests }: IMyRequests) {
                   <button
                     type="button"
                     className="text-[white] bg-[green] rounded-[4px] flex justify-center items-center h-10 min-w-[10rem]"
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      let answer = window.confirm(
-                        `Ви впевнені що хочете активувати "${req.title}"?`,
-                      );
-
-                      if (answer) {
-                        try {
-                          await apiService.put(`posts/${req.postId}`, {
-                            status: constants.postStatus.active,
-                          });
-                          window.location.reload();
-                        } catch (error) {
-                          console.log('Error: ', error);
-                        }
-                      }
-                    }}
+                    onClick={async (e) => await activatePost(e, req)}
                   >
                     Активувати
                   </button>
