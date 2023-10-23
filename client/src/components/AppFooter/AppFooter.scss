@@ -1,15 +1,15 @@
 @use "../../config/globalstyles/variables";
 
 .app-footer {
-  height: 40px;
+  height: 50px;
   width: 100%;
   background: variables.$primary100;
 }
 
 .disclaimer-mobile {
   @media (max-width: 640px) {
-    font-size: 12px;
-    line-height: 9px;
+    font-size: 11px;
+    line-height: 8px;
   }
 }
 
