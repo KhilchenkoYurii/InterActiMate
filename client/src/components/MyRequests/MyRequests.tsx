@@ -79,7 +79,7 @@ function MyRequests({ requests }: IMyRequests) {
               <button
                 onClick={async (e) => await editPost(e, req.postId)}
                 type="button"
-                className="text-[white] bg-[green] rounded-[4px] flex justify-center items-center h-10 min-w-[10rem]"
+                className="text-[white] bg-[#176b87] rounded-[4px] flex justify-center items-center h-10 min-w-[10rem]"
               >
                 Редагувати
               </button>
