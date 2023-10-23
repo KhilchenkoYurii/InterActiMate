@@ -267,6 +267,8 @@ const AddEditRequest = ({ onSubmit }: any) => {
                       let fileType = e.target.files[0].type.split('/').pop();
                       if (fileType === 'jpeg' || fileType === 'png') {
                         let url: string = await getImgUrl(e.target.files[0]);
+                        console.log('Changes are here');
+
                         setTimeout(() => {
                           setFile({
                             file: e.target.files[0],
