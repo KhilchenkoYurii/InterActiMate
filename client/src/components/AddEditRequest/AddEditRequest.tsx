@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import AddIcon from '../../assets/icons/plus-filled.svg';
 import RemoveIcon from '../../assets/icons/Remove_fill.svg';
+import CrossIcon from '../../assets/icons/Close_square_fill.svg';
 import PublishIcon from '../../assets/icons/Publish.svg';
 import apiService from '../../services/api.service';
 import { useSearchParams } from 'react-router-dom';
@@ -198,32 +199,67 @@ const AddEditRequest = ({ onSubmit }: any) => {
           <div className="pt-10 pb-1">
             {getBlockTitleView('Категорії')}
             <div className="flex flex-col gap-1 text-left">
-              <input
-                type="text"
-                value={currCategorie}
-                onChange={(e) =>
-                  !/\s/g.test(currCategorie) &&
-                  setCurrCategorie(e.target.value.replace(/\s/g, ''))
-                }
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && currCategorie !== '') {
-                    e.preventDefault();
-                    setCategories((prev: any): any => [...prev, currCategorie]);
-                    setCurrCategorie('');
+              <div className="flex flex-row gap-2">
+                <input
+                  type="text"
+                  value={currCategorie}
+                  onChange={(e) =>
+                    !/\s/g.test(currCategorie) &&
+                    setCurrCategorie(e.target.value.replace(/\s/g, ''))
                   }
-                }}
-                className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
-                placeholder="Категорії"
-              />
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && currCategorie !== '') {
+                      e.preventDefault();
+                      setCategories((prev: any): any => [
+                        ...prev,
+                        currCategorie,
+                      ]);
+                      setCurrCategorie('');
+                    }
+                  }}
+                  className="w-full bg-[#d9d9d938] rounded-[4px] border-[1px] border-[#00000033] p-[10px] outline-0 resize-none"
+                  placeholder="Категорії"
+                />
+
+                <img
+                  className="cursor-pointer"
+                  onClick={(e: any) => {
+                    if (currCategorie !== '') {
+                      e.preventDefault();
+                      setCategories((prev: any): any => [
+                        ...prev,
+                        currCategorie,
+                      ]);
+                      setCurrCategorie('');
+                    }
+                  }}
+                  src={AddIcon}
+                  alt="Add"
+                />
+              </div>
+
               {getNoteView({
                 text: '(Щоб додати категорію натисніть Enter, пробіл заборонений)',
                 className: 'text-[#176b87] font-extralight text-sm',
               })}
               <div className="card-categories">
                 {categories.map((categorie: string, index: number) => (
-                  <div onClick={() => removeItem(index, false)} key={index}>
-                    {categorie}
-                  </div>
+                  <span
+                    className="relative mr-1 mt-1"
+                    onClick={() => removeItem(index, true)}
+                  >
+                    <span
+                      className="absolute select-none top-[-10px] right-[-10px] cursor-pointer"
+                      key={index}
+                    >
+                      <img
+                        src={CrossIcon}
+                        alt="RemoveIcon"
+                        className="max-w-[1.3rem]"
+                      />
+                    </span>
+                    <div>{categorie}</div>
+                  </span>
                 ))}
               </div>
             </div>
@@ -296,11 +332,22 @@ const AddEditRequest = ({ onSubmit }: any) => {
             {attachments?.length > 0 && (
               <div className="flex flex-wrap gap-3 mt-3">
                 {attachments.map((img, index) => (
-                  <div key={index} className="max-w-[11rem] h-[10rem] relative">
-                    <div
-                      className="select-none text-white flex justify-center align-middle text-center items-center font-extrabold absolute rounded-md top-0 left-0 bg-[black] w-full duration-500 cursor-pointer h-full opacity-0 hover:opacity-50"
-                      onClick={() => removeItem(index, true)}
+                  <div
+                    key={index}
+                    onClick={() => removeItem(index, true)}
+                    className="max-w-[11rem] h-[10rem] relative"
+                  >
+                    <span
+                      className="block md:hidden absolute select-none top-[-10px] right-[-10px] cursor-pointer"
+                      key={index}
                     >
+                      <img
+                        src={CrossIcon}
+                        alt="RemoveIcon"
+                        className="max-w-[1.3rem]"
+                      />
+                    </span>
+                    <div className="hidden md:flex select-none text-white  justify-center align-middle text-center items-center font-extrabold absolute rounded-md top-0 left-0 bg-[black] w-full duration-500 cursor-pointer h-full opacity-0 hover:opacity-50">
                       <img src={RemoveIcon} alt="RemoveIcon" />
                     </div>
                     <img
