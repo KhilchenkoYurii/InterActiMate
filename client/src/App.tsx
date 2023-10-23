@@ -18,7 +18,7 @@ const ChatProvider = ({ children }: any) => {
   const dispatch = useDispatch();
 
   socket.on('receive_message', (receivedMessage: any) => {
-    dispatch(sendMessage({ body: receivedMessage.message, sender: receivedMessage?.userId || '0' }));
+    dispatch(sendMessage({ chatId: receivedMessage.chatId, body: receivedMessage.message, sender: receivedMessage?.userId || '0' }));
   });
 
   socket.on('previous_messages', () => {
