@@ -246,7 +246,7 @@ const AddEditRequest = ({ onSubmit }: any) => {
                 {categories.map((categorie: string, index: number) => (
                   <span
                     className="relative mr-1 mt-1"
-                    onClick={() => removeItem(index, true)}
+                    onClick={() => removeItem(index, false)}
                   >
                     <span
                       className="absolute select-none top-[-10px] right-[-10px] cursor-pointer"
