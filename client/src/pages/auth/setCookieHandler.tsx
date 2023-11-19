@@ -1,4 +1,7 @@
+import Cookies from 'universal-cookie';
+
 const DOMAIN = process.env.REACT_APP_DOMAIN;
+const cookies = new Cookies();
 
 function setCookieHandler(token: string): void {
   let expires = new Date(
@@ -9,26 +12,12 @@ function setCookieHandler(token: string): void {
         60 *
         1000,
   );
-
-  document.cookie = `jwt=${token}; path=/; domain=${
-    DOMAIN || ''
-  }; expires=${expires}; `;
+  cookies.set('jwt', token, { path: '/', expires, domain: DOMAIN || '' });
 }
 
 function clearCookieHandler() {
-  console.log('DomainNew', DOMAIN);
-  const cookies = document.cookie.split(';');
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i];
-    const eqPos = cookie.indexOf('=');
-    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    document.cookie =
-      name + `=; domain=${DOMAIN || ''}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-    document.cookie =
-      name +
-      `=; domain=.${DOMAIN || ''}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-  }
+  cookies.remove('jwt');
+  cookies.update();
 }
 
 export { setCookieHandler, clearCookieHandler };
