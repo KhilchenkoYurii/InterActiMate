@@ -22,6 +22,7 @@ function setCookieHandler(token: string): void {
 
 function clearCookieHandler() {
   cookies.remove('jwt', { path: '/', domain: DOMAIN || '' });
+  cookies.remove('jwt', { path: '/', domain: DOMAIN || '', httpOnly: true });
   cookies.update();
 }
 
