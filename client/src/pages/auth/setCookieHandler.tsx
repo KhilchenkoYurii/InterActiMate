@@ -11,17 +11,17 @@ function setCookieHandler(token: string): void {
         60 *
         60 *
         1000,
-  );
-  console.log(
-    'process.env.REACT_APP_JWT_COOKIE_EXPIRES_IN :',
-    process.env.REACT_APP_JWT_COOKIE_EXPIRES_IN,
-    process.env,
-  );
-  cookies.set('jwt', token, { path: '/', expires, domain: DOMAIN || '' });
+  ).toUTCString();
+
+  cookies.set('jwt', token, {
+    path: '/',
+    expires: new Date(expires),
+    domain: DOMAIN || '',
+  });
 }
 
 function clearCookieHandler() {
-  cookies.remove('jwt');
+  cookies.remove('jwt', { path: '/', domain: DOMAIN || '' });
   cookies.update();
 }
 
