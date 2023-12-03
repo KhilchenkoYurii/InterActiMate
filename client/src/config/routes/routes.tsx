@@ -14,6 +14,7 @@ import MyRequests from '../../pages/my-requests/MyRequestsPage';
 import { MyProfilePage } from '../../pages/my-profile/MyProfilePage';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../store/user/user.selector';
+import { ResetPasswordPage } from '../../pages/auth/ResetPasswordPage';
 
 interface IDisplayedRoute {
   component: ReactElement,
@@ -59,6 +60,12 @@ export const allRoutes: IRoute[] = [
   {
     path: '/sign-up',
     component: <SignUpPage />,
+    hasHeader: false,
+    isGuarded: false,
+  },
+  {
+    path: '/reset-password',
+    component: <ResetPasswordPage />,
     hasHeader: false,
     isGuarded: false,
   },

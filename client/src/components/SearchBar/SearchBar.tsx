@@ -73,7 +73,7 @@ export const SearchBar = () => {
               />
               <img src={CloseIcon} className="cursor-pointer" onClick={handleCloseSearch} />
             </div>
-            <div className="flex w-full gap-4 md:gap-8 flex-wrap overflow-scroll mt-10 pb-10">
+            <div className="flex w-full sm:justify-center md:justify-start gap-4 md:gap-8 flex-wrap overflow-scroll mt-10 sm:pb-20 md:pb-10">
               {results.map((request) => (
                 <RequestCard key={request?._id} handleClick={handleCloseSearch} {...request} />
               ))}
