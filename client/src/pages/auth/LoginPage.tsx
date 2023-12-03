@@ -13,9 +13,8 @@ export const LoginPage = () => {
         email,
         password,
       });
-      console.log('data :', data);
-      // setCookieHandler(data.token);
-      // localStorage.setItem('userId', data.data.user.userId);
+      setCookieHandler(data.data.token);
+      localStorage.setItem('userId', data.data.user.userId);
       nav('/');
     } catch (error: any) {
       console.log('Error: ', error);
