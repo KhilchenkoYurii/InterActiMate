@@ -13,6 +13,7 @@ export const LoginPage = () => {
         email,
         password,
       });
+      console.log('data :', data);
       setCookieHandler(data.data.token);
       localStorage.setItem('userId', data.data.user.userId);
       nav('/');
