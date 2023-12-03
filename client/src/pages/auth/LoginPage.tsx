@@ -15,7 +15,7 @@ export const LoginPage = () => {
       });
       console.log('data :', data);
       setCookieHandler(data.data.token);
-      localStorage.setItem('userId', data.data.user.userId);
+      localStorage.setItem('userId', data.data.data.user.userId);
       nav('/');
     } catch (error: any) {
       console.log('Error: ', error);
