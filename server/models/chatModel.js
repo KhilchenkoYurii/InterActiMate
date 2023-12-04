@@ -23,5 +23,12 @@ const chatSchema = new Schema({
     require: false,
     unique: false,
   },
+  status: {
+    type: String,
+    required: true,
+    unique: false,
+    default: 'Active',
+    enum: ['Active', 'Archived'],
+  },
 });
 module.exports = moongoose.model('Chat', chatSchema);

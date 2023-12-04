@@ -3,7 +3,7 @@ const sharp = require('sharp');
 
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
-const Message = require('../models/messageModel');
+//const Message = require('../models/messageModel');
 const PostStatuses = require('../configs/postStatuses');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
@@ -159,6 +159,7 @@ exports.updatePost = catchAsync(async (req, res, next) => {
 });
 
 exports.answerPost = catchAsync(async (req, res, next) => {
+  // user who answered on post
   const user = await User.findOne({ userId: req.body.userId });
   if (!user) {
     return next(new AppError(`No user found with id ${req.body.userId}`, 404));
@@ -174,12 +175,13 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       ),
     );
   }
+  //add post to answeredPosts
   user.answeredPosts.push(req.body.postId);
   await User.findOneAndUpdate(
     { userId: user.userId },
     { answeredPosts: user.answeredPosts },
   );
-
+  //find post in DB
   const post = await Post.findOne({ postId: req.body.postId });
   if (!post) {
     return next(new AppError(`No post found with id ${req.body.postId}`, 404));
@@ -195,23 +197,41 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       ),
     );
   }
+  // add user to post participators
   post.participators.push(req.body.userId);
   await Post.findOneAndUpdate(
     { postId: post.postId },
     { participators: post.participators },
   );
+  //find all user chats
   const userExistingChats = await Chat.find({ chatId: user.chats });
   let chatExist = false;
+  let existingChat = null;
+  //check if user is already have chat with Post owner
+
   await Promise.all(
     userExistingChats.map(async (chat) => {
-      if (chat.ownerId === post.owner || chat.chatUsers.includes(post.owner)) {
+      if (
+        (chat.ownerId === post.owner || chat.chatUsers.includes(post.owner)) &&
+        String(chat.relatedPost.postId).toString() ===
+          String(post._id).toString()
+      ) {
+        existingChat = chat;
         chatExist = true;
       }
     }),
   );
+  if (existingChat !== null && existingChat.status === 'Archived') {
+    await Chat.findOneAndUpdate(
+      { _id: existingChat._id },
+      { status: 'Active' },
+    );
+  }
+  //find postOwner in DB
   const participator = await User.findOne({
     userId: post.owner,
   });
+  //if chat does not exist - create it
   if (!chatExist) {
     const chatData = {
       ownerId: user.userId,
@@ -222,6 +242,7 @@ exports.answerPost = catchAsync(async (req, res, next) => {
         title: post.title,
         image: post.attachments[0] || null,
       },
+      status: 'Active',
     };
     const lastChat = await Chat.find().limit(1).sort({ _id: -1 });
     const lastNumber = lastChat[0].chatId.slice(3);
@@ -239,20 +260,20 @@ exports.answerPost = catchAsync(async (req, res, next) => {
       { chats: participator.chats },
     );
   }
-  const message = `Hi, ${participator.nickname} Someone answered on your post ${
-    post.title
-  }.\n
-  Here is contacts:
-  Name: ${user.nickname}.
-  Contact!:
-  email:${user.email}
-  phone:${user.phone || '-'}
-  Please, get in touch with them!)`;
-
+  const message = `Привіт, ${
+    participator.nickname
+  } Хтось відгукнувся на твоє оголошення ${post.title}.\n
+  Ось контакти:
+  Ім'я: ${user.nickname}.
+  Контактні дані:
+  Емейл:${user.email}
+  Телефон:${user.phone || '-'}
+  Будь ласк, зв'яжіться з ним!)`;
+  // send maill to postOwner
   try {
     await sendEmail({
       email: participator.email,
-      subject: 'Your new teammate',
+      subject: 'Ваш новий тімейт',
       message,
     });
   } catch (error) {
@@ -270,6 +291,7 @@ exports.answerPost = catchAsync(async (req, res, next) => {
 });
 
 exports.leavePost = catchAsync(async (req, res, next) => {
+  //find user who leave the post
   const user = await User.findOne({ userId: req.body.userId });
   if (!user) {
     return next(new AppError(`No user found with id ${req.body.userId}`, 404));
@@ -287,6 +309,7 @@ exports.leavePost = catchAsync(async (req, res, next) => {
       ),
     );
   }
+  //remove post from answeredPosts
   user.answeredPosts = user.answeredPosts.filter(
     (post) => post !== req.body.postId,
   );
@@ -294,7 +317,7 @@ exports.leavePost = catchAsync(async (req, res, next) => {
     { userId: user.userId },
     { answeredPosts: user.answeredPosts },
   );
-
+  // find post in db
   const post = await Post.findOne({ postId: req.body.postId });
   if (!post) {
     return next(new AppError(`No post found with id ${req.body.postId}`, 404));
@@ -312,6 +335,7 @@ exports.leavePost = catchAsync(async (req, res, next) => {
       ),
     );
   }
+  //remove user from participators
   post.participators = post.participators.filter(
     (usr) => usr !== req.body.userId,
   );
@@ -319,35 +343,43 @@ exports.leavePost = catchAsync(async (req, res, next) => {
     { postId: post.postId },
     { participators: post.participators },
   );
+  // find all chats for user
   const userExistingChats = await Chat.find({ chatId: user.chats });
   await Promise.all(
     userExistingChats.map(async (chat) => {
       if (chat.ownerId === post.owner || chat.chatUsers.includes(post.owner)) {
-        const chatUsers = await User.find({ chats: chat.chatId });
-        if (!chatUsers) {
-          return next(
-            new AppError(`No chat found with id ${chat.chatId}`, 404),
-          );
-        }
-        chatUsers.forEach(async (chatUser) => {
-          chatUser.chats = chatUser.chats.filter(
-            (chatCount) => chatCount !== chat.chatId,
-          );
-          await User.findOneAndUpdate(
-            { userId: chatUser.userId },
-            { chats: chatUser.chats },
-            {
-              new: true,
-            },
-          );
-        });
-        await Chat.findOneAndDelete({ chatId: chat.chatId });
-        if (!chat) {
-          return next(
-            new AppError(`No chat found with id ${chat.chatId}`, 404),
-          );
-        }
-        await Message.deleteMany({ chatId: chat.chatId });
+        await Chat.findOneAndUpdate(
+          { chatId: chat.chatId },
+          { status: 'Archived' },
+          {
+            new: true,
+          },
+        );
+        // const chatUsers = await User.find({ chats: chat.chatId });
+        // if (!chatUsers) {
+        //   return next(
+        //     new AppError(`No chat found with id ${chat.chatId}`, 404),
+        //   );
+        // }
+        // chatUsers.forEach(async (chatUser) => {
+        //   chatUser.chats = chatUser.chats.filter(
+        //     (chatCount) => chatCount !== chat.chatId,
+        //   );
+        //   await User.findOneAndUpdate(
+        //     { userId: chatUser.userId },
+        //     { chats: chatUser.chats },
+        //     {
+        //       new: true,
+        //     },
+        //   );
+        // });
+        // await Chat.findOneAndDelete({ chatId: chat.chatId });
+        // if (!chat) {
+        //   return next(
+        //     new AppError(`No chat found with id ${chat.chatId}`, 404),
+        //   );
+        // }
+        // await Message.deleteMany({ chatId: chat.chatId });
       }
     }),
   );
@@ -402,6 +434,29 @@ exports.changePostStatus = catchAsync(async (req, res, next) => {
     { status: req.params.status },
     { new: true },
   );
+  // if (req.params.status === 'Active') {
+  //   await Chat.findOneAndUpdate(
+  //     {
+  //       $match: {
+  //         $expr: {
+  //           $eq: [{ $getField: 'postId' }, post._id],
+  //         },
+  //       },
+  //     },
+  //     { status: 'Active' },
+  //   );
+  // } else {
+  //   await Chat.findOneAndUpdate(
+  //     {
+  //       $match: {
+  //         $expr: {
+  //           $eq: [{ $getField: 'postId' }, post._id],
+  //         },
+  //       },
+  //     },
+  //     { status: 'Archived' },
+  //   );
+  // }
   if (!post) {
     return next(new AppError(`No post found with id ${req.params.id}`, 404));
   }

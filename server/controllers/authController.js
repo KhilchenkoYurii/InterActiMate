@@ -37,8 +37,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     nickname: req.body.nickname,
     email: req.body.email,
     password: req.body.password,
-    name:req.body.name,
-    surname: req.body.surname
+    name: req.body.name,
+    surname: req.body.surname,
   };
   const lastUser = await User.find().limit(1).sort({ _id: -1 });
   const lastNumber = lastUser[0].userId.slice(3);
