@@ -61,6 +61,14 @@
   }
 }
 
+.svg-hover svg path {
+  transition: 0.7s;
+}
+
+.svg-hover:hover svg path {
+  fill: white;
+}
+
 .card-container {
   display: block;
   background-color: white;
