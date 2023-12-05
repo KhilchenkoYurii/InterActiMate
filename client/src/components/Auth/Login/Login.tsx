@@ -93,7 +93,7 @@ const Login = ({ onSubmit }: ILogin) => {
                 error={errors['password']}
               />
             </div>
-            <Link to={'/resetpassword'} className="link-forget">
+            <Link to={'/reset-password'} className="link-forget">
               Забули пароль?
             </Link>
             <button

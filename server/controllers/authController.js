@@ -125,14 +125,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   //   'host',
   // )}/api/v1/users/resetPassword/${resetToken}`;
 
-  const message = `Forgot your password? There is your new password ${newRandopassword}.\n
-  Please, change it after next login.
-  If you did not forget your password, please ignore  this email!`;
+  const message = `Забули свій пароль? Ось ваш новий ${newRandopassword}\n`;
 
   try {
     await sendEmail({
       email: user.email,
-      subject: 'Your new password',
+      subject: 'Ваш новий пароль',
       message,
     });
     await user.save({ validateBeforeSave: false });
