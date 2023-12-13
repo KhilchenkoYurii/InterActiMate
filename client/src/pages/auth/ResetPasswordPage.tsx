@@ -12,6 +12,8 @@ export const ResetPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState({} as IErrors);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [shouldValidate, setShouldValidate] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   useEffect(() => {
     if (email !== '' && !Object.keys(errors).length) {
@@ -21,6 +23,18 @@ export const ResetPasswordPage = () => {
     }
   }, [email, errors]);
 
+  const handleChange = (value: string) => {
+    setEmail(value);
+    if (shouldValidate) {
+      setErrors(errorHandler({ email }));
+    }
+  }
+
+  const handleBlur = () => {
+    setShouldValidate(true);
+    setErrors(errorHandler({ email }))
+  };
+
   function handleSubmit(event: any) {
     event.preventDefault();
 
@@ -28,10 +42,11 @@ export const ResetPasswordPage = () => {
       resetPassword();
       setEmail('');
       setIsDisabled(true);
+      setEmailSubmitted(true);
     }
   }
 
-  const resetPassword = async() => {
+  const resetPassword = async () => {
     const response = await apiService.post('users/forgotPassword', { email });
     console.log('response::', response);
   }
@@ -39,29 +54,33 @@ export const ResetPasswordPage = () => {
   return (
     <form action="reset-password" onSubmit={handleSubmit}>
       <div className="background-container">
-        <div className="auth-container gap-3 md">
-          <div className="input-title">
-            Введіть e-mail акаунту, який потрібно відновити:
-          </div>
-          <div className="w-full">
-            <InputWithIcon
-              icon={MailIcon}
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              onBlur={() => setErrors(errorHandler({ email }))}
-              error={errors['email']}
-            />
-          </div>
-          <button
-            disabled={isDisabled}
-            className={
-              isDisabled
-                ? 'button opacity-50 pointer-events-none bg-gray-400 text-white mb-4'
-                : 'button button-submit mb-4'
-            }
-          >
-            Скинути пароль
-          </button>
+        <div className="auth-container gap-3 rounded-lg">
+          {emailSubmitted
+            ? <span className="text-lg">Дані для відновлення паролю відправлено на вашу пошту!</span>
+            : <>
+              <div className="input-title">
+                Введіть e-mail акаунту, який потрібно відновити:
+              </div>
+              <div className="w-full">
+                <InputWithIcon
+                  icon={MailIcon}
+                  value={email}
+                  onChange={(event) => handleChange(event.target.value)}
+                  onBlur={handleBlur}
+                  error={errors['email']}
+                />
+              </div>
+              <button
+                disabled={isDisabled}
+                className={
+                  isDisabled
+                    ? 'button opacity-50 pointer-events-none bg-gray-400 text-white mb-4'
+                    : 'button button-submit mb-4'
+                }
+              >
+                Скинути пароль
+              </button>
+            </>}
         </div>
       </div>
     </form>
