@@ -47,7 +47,7 @@ export const ResetPasswordPage = () => {
   }
 
   const resetPassword = async () => {
-    const response = await apiService.post('users/forgotPassword', { email });
+    const response = await apiService.patch('users/forgotPassword', { email });
     console.log('response::', response);
   }
 
