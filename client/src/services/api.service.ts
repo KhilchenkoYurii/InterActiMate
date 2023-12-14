@@ -39,6 +39,10 @@ const put = async(url: string, params?: any) => {
   return await axiosService.put(`${baseURL}/${url}`, params);
 };
 
+const patch = async(url: string, params?: any) => {
+  return await axiosService.patch(`${baseURL}/${url}`, params);
+};
+
 const del = async(url: string, params?: any) => {
   return await axiosService.delete(`${baseURL}/${url}`, params);
 };
@@ -47,5 +51,6 @@ export default {
   get,
   post,
   put,
+  patch,
   del
 };
