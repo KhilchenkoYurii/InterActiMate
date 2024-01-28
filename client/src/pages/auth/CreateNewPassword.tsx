@@ -5,18 +5,16 @@ import { InputWithIcon } from "../../components/InputWithIcon/InputWithIcon";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-interface IResetPasswordErrors {
-  password?: string;
-  passwordConfirm?: string;
-}
+const PASSWORD_LENGTH_ERROR = 'Пароль повинен бути не менше 8 символів';
+const PASSWORD_MATCH_ERROR = 'Паролі повинні збігатись';
 
 export const CreateNewPasswordPage = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().min(8, 'Пароль повинен бути не менше 8 символів').required(),
-    passwordConfirm: Yup.string().min(8, 'Пароль повинен бути не менше 8 символів').required().oneOf([Yup.ref('password'), ''], 'Паролі повинні збігатись'),
+    password: Yup.string().min(8, PASSWORD_LENGTH_ERROR).required(),
+    passwordConfirm: Yup.string().min(8, PASSWORD_LENGTH_ERROR).required().oneOf([Yup.ref('password'), ''], PASSWORD_MATCH_ERROR),
   });
 
   const createNewPassword = async ({ password, passwordConfirm }: { password: string, passwordConfirm: string }) => {
