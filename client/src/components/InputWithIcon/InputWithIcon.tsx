@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 import './InputWithIcon.scss';
 import PassIcon from '../../assets/icons/Pass.svg';
 import ShowPassIcon from '../../assets/icons/showPass.svg';
@@ -19,7 +19,8 @@ export const InputWithIcon = ({
   onChange,
   onBlur,
   error,
-}: IInputWithIcon) => {
+  ...rest
+}: IInputWithIcon & InputHTMLAttributes<HTMLInputElement>) => {
   const [showPass, setShowPass] = useState(false);
   return (
     <div>
@@ -37,6 +38,7 @@ export const InputWithIcon = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          {...rest}
         />
 
         {isPass && (

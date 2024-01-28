@@ -15,6 +15,7 @@ import { MyProfilePage } from '../../pages/my-profile/MyProfilePage';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../store/user/user.selector';
 import { ResetPasswordPage } from '../../pages/auth/ResetPasswordPage';
+import { CreateNewPasswordPage } from '../../pages/auth/CreateNewPassword';
 
 interface IDisplayedRoute {
   component: ReactElement,
@@ -66,6 +67,12 @@ export const allRoutes: IRoute[] = [
   {
     path: '/reset-password',
     component: <ResetPasswordPage />,
+    hasHeader: false,
+    isGuarded: false,
+  },
+  {
+    path: '/create-new-password',
+    component: <CreateNewPasswordPage />,
     hasHeader: false,
     isGuarded: false,
   },
