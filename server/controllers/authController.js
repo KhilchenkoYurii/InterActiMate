@@ -120,7 +120,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   //3 send it to user`s email
   const resetURL = `${req.protocol}://${req.get(
     'host',
-  )}/users/resetPassword/${resetToken}`;
+  )}/create-new-password?token=${resetToken}`;
 
   const message = `Забули свій пароль? Оновіть його за цим посиланням ${resetURL}\n`;
 
